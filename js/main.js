@@ -5,6 +5,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ============================================================
+  // FOOTER YEAR
+  // ============================================================
+  document.querySelectorAll('[data-current-year]').forEach(el => {
+    el.textContent = new Date().getFullYear();
+  });
+
+  // ============================================================
   // NAVBAR SCROLL EFFECT
   // ============================================================
   const navbar = document.querySelector('.navbar');
