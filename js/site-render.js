@@ -5,7 +5,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
   if (!window.LiteraryLabCMS) return;
 
-  const data = await window.LiteraryLabCMS.loadSiteData({ forceFresh: true });
+  const data = await window.LiteraryLabCMS.loadSiteData();
   const page = window.location.pathname.split('/').pop() || 'index.html';
 
   applySharedContent(data.shared);
@@ -63,9 +63,10 @@ function createPlaceholder(label, index) {
 function buildPortfolioCard(item, index, tall = false) {
   const classes = ['portfolio-item'];
   if (tall) classes.push('portfolio-item-tall');
+  const imageFit = item.imageFit === 'contain' ? 'fit-contain' : 'fit-cover';
 
   const imageMarkup = item.imageSrc
-    ? `<img class="managed-portfolio-image" src="${escapeHtml(item.imageSrc)}" alt="${escapeHtml(item.alt || item.title || 'Portfolio item')}" loading="lazy" />`
+    ? `<img class="managed-portfolio-image ${imageFit}" src="${escapeHtml(item.imageSrc)}" alt="${escapeHtml(item.alt || item.title || 'Portfolio item')}" loading="lazy" decoding="async" />`
     : createPlaceholder(item.title || 'Portfolio Item', index);
 
   return `
@@ -135,7 +136,8 @@ function renderHomePage(data) {
 
   const previewGrid = document.querySelector('.portfolio-grid');
   if (previewGrid) {
-    previewGrid.innerHTML = portfolio.items.slice(0, 6).map((item, index) => buildPortfolioCard(item, index, false)).join('');
+    const homeItems = portfolio.items.filter((item) => item.showOnHome !== false).slice(0, 6);
+    previewGrid.innerHTML = homeItems.map((item, index) => buildPortfolioCard(item, index, false)).join('');
   }
 
   const testimonialsGrid = document.querySelector('.testimonials-grid');

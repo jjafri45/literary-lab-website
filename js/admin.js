@@ -223,7 +223,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         label: 'Cover Design',
         title: 'New Portfolio Item',
         alt: 'Portfolio item',
-        imageSrc: ''
+        imageSrc: '',
+        imageFit: 'cover',
+        showOnHome: true
       });
       renderPortfolio();
     });
@@ -258,6 +260,20 @@ document.addEventListener('DOMContentLoaded', async () => {
               <label>Alt Text</label>
               <input type="text" data-portfolio-field="alt" data-index="${index}" value="${escapeAttr(item.alt)}" />
             </div>
+            <div class="admin-field">
+              <label>Image Fit</label>
+              <select data-portfolio-field="imageFit" data-index="${index}">
+                <option value="cover"${item.imageFit === 'cover' ? ' selected' : ''}>cover</option>
+                <option value="contain"${item.imageFit === 'contain' ? ' selected' : ''}>contain</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label>Show On Homepage</label>
+              <select data-portfolio-field="showOnHome" data-index="${index}">
+                <option value="true"${item.showOnHome !== false ? ' selected' : ''}>Yes</option>
+                <option value="false"${item.showOnHome === false ? ' selected' : ''}>No</option>
+              </select>
+            </div>
             <div class="admin-field" style="grid-column:1 / -1;">
               <label>Upload Image</label>
               <div class="admin-inline">
@@ -280,6 +296,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       input.addEventListener('input', (event) => {
         const index = Number(event.target.dataset.index);
         const key = event.target.dataset.portfolioField;
+        if (key === 'showOnHome') {
+          data.portfolio.items[index].showOnHome = event.target.value === 'true';
+          return;
+        }
         data.portfolio.items[index][key] = event.target.value;
       });
     });
@@ -309,10 +329,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!file) return;
         const index = Number(event.target.dataset.index);
         const path = event.target.dataset.path;
-        data.portfolio.items[index].imageSrc = await fileToPreviewUrl(file);
-        queueAsset(path, file, 'portfolio', data.portfolio.items[index].title || `portfolio-${index + 1}`);
+        const processedFile = await optimizeImageFile(file, {
+          maxWidth: 1400,
+          maxHeight: 2100,
+          quality: 0.82
+        });
+        data.portfolio.items[index].imageSrc = await fileToPreviewUrl(processedFile);
+        queueAsset(path, processedFile, 'portfolio', data.portfolio.items[index].title || `portfolio-${index + 1}`);
         renderPortfolio();
-        setStatus('Image staged. Save to Website to commit it to GitHub.');
+        setStatus('Portfolio image optimized and staged. Save to Website to commit it to GitHub.');
       });
     });
   }
@@ -555,10 +580,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!file) return;
         const index = Number(event.target.dataset.index);
         const path = event.target.dataset.path;
-        data.about.team[index].imageSrc = await fileToPreviewUrl(file);
-        queueAsset(path, file, 'team', data.about.team[index].name || `team-${index + 1}`);
+        const processedFile = await optimizeImageFile(file, {
+          maxWidth: 1200,
+          maxHeight: 1200,
+          quality: 0.84
+        });
+        data.about.team[index].imageSrc = await fileToPreviewUrl(processedFile);
+        queueAsset(path, processedFile, 'team', data.about.team[index].name || `team-${index + 1}`);
         renderAbout();
-        setStatus('Team image staged. Save to Website to commit it to GitHub.');
+        setStatus('Team image optimized and staged. Save to Website to commit it to GitHub.');
       });
     });
   }
@@ -634,15 +664,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         const file = event.target.files && event.target.files[0];
         if (!file) return;
         const { group, key, path, folder } = event.target.dataset;
-        const imageSrc = await fileToPreviewUrl(file);
+        const processedFile = await optimizeImageFile(file, {
+          maxWidth: 1800,
+          maxHeight: 1400,
+          quality: 0.84
+        });
+        const imageSrc = await fileToPreviewUrl(processedFile);
         if (group === 'about') {
           data.about.visualImage = imageSrc;
         } else {
           data.services.visuals[key] = imageSrc;
         }
-        queueAsset(path, file, folder, key);
+        queueAsset(path, processedFile, folder, key);
         renderImages();
-        setStatus('Page image staged. Save to Website to commit it to GitHub.');
+        setStatus('Page image optimized and staged. Save to Website to commit it to GitHub.');
       });
     });
   }
@@ -728,4 +763,29 @@ function fileToPreviewUrl(file) {
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
+}
+
+async function optimizeImageFile(file, options) {
+  if (!file.type.startsWith('image/')) return file;
+
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, options.maxWidth / bitmap.width, options.maxHeight / bitmap.height);
+  const width = Math.max(1, Math.round(bitmap.width * scale));
+  const height = Math.max(1, Math.round(bitmap.height * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d');
+  context.drawImage(bitmap, 0, 0, width, height);
+  bitmap.close();
+
+  const outputType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+  const blob = await new Promise((resolve) => {
+    canvas.toBlob(resolve, outputType, outputType === 'image/png' ? undefined : options.quality);
+  });
+
+  if (!blob || blob.size >= file.size) return file;
+  const extension = outputType === 'image/png' ? 'png' : 'jpg';
+  const nextName = file.name.replace(/\.[^.]+$/, '') || 'image';
+  return new File([blob], `${nextName}.${extension}`, { type: outputType });
 }

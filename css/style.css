@@ -326,7 +326,16 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
   height: 100%;
   object-fit: contain !important;
   background: linear-gradient(145deg, var(--bg-card-hover), var(--bg-card));
-  padding: 14px;
+  padding: 10px;
+  object-position: center;
+}
+.managed-portfolio-image.fit-cover {
+  object-fit: cover !important;
+  background: none;
+  padding: 0;
+}
+.managed-portfolio-image.fit-contain {
+  object-fit: contain !important;
 }
 .portfolio-item:hover .managed-portfolio-image { transform: scale(1.03); }
 
