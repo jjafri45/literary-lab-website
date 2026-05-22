@@ -69,70 +69,70 @@
         "label": "Cover Design",
         "title": "Book Cover Design",
         "alt": "Book cover design portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234511-book-cover-design.png"
       },
       {
         "category": "interior",
         "label": "Book Interior",
         "title": "Interior Formatting",
         "alt": "Interior formatting portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234515-interior-formatting.png"
       },
       {
         "category": "covers",
         "label": "Cover Design",
         "title": "Creative Cover",
         "alt": "Creative cover design portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234520-creative-cover.png"
       },
       {
         "category": "ebook",
         "label": "eBook Conversion",
         "title": "eBook Design",
         "alt": "eBook design portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234523-ebook-design.png"
       },
       {
         "category": "covers",
         "label": "Cover Design",
         "title": "Non-Fiction Cover",
         "alt": "Non-fiction cover design portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234527-non-fiction-cover.png"
       },
       {
         "category": "interior",
         "label": "Book Interior",
         "title": "Chapter Layouts",
         "alt": "Chapter layouts portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234531-chapter-layouts.png"
       },
       {
         "category": "covers",
         "label": "Cover Design",
         "title": "Fiction Cover",
         "alt": "Fiction cover portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234535-fiction-cover.png"
       },
       {
         "category": "interior",
         "label": "Book Interior",
         "title": "Formatted Spread",
         "alt": "Formatted spread portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234539-formatted-spread.png"
       },
       {
         "category": "ebook",
         "label": "eBook",
         "title": "Kindle Edition",
         "alt": "Kindle edition portfolio item",
-        "imageSrc": ""
+        "imageSrc": "images/cms/portfolio/20260522234545-kindle-edition.png"
       }
     ]
   },
   "services": {
     "visuals": {
-      "interior": "",
-      "covers": "",
+      "interior": "images/cms/services/20260522234549-interior.jpg",
+      "covers": "images/cms/services/20260522234551-covers.png",
       "ebook": "",
       "consult": ""
     },
@@ -191,7 +191,7 @@
     ]
   },
   "about": {
-    "visualImage": "",
+    "visualImage": "images/cms/about/20260522234548-visualimage.png",
     "storyStats": [
       {
         "value": "200+",
