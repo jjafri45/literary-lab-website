@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Literary Lab Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body class="admin-page">
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <span class="admin-kicker">Literary Lab CMS</span>
+        <h1>Content Dashboard</h1>
+        <p>Edits are stored in this browser. Use export after changes if you want a portable backup.</p>
+      </div>
+      <div class="admin-actions">
+        <button type="button" class="btn btn-outline" id="exportDataBtn">Export JSON</button>
+        <label class="btn btn-outline admin-upload-button">
+          Import JSON
+          <input type="file" id="importDataInput" accept="application/json" hidden />
+        </label>
+        <button type="button" class="btn btn-outline" id="resetDataBtn">Reset</button>
+        <button type="button" class="btn btn-primary" id="saveDataBtn">Save Changes</button>
+      </div>
+    </header>
+
+    <p class="admin-status" id="adminStatus" role="status"></p>
+
+    <section class="admin-section">
+      <div class="admin-section-head">
+        <h2>Shared Contact</h2>
+        <p>Email, WhatsApp, and footer credit used across the site.</p>
+      </div>
+      <div id="sharedSection"></div>
+    </section>
+
+    <section class="admin-section">
+      <div class="admin-section-head">
+        <h2>Home Page</h2>
+        <p>Hero text and the four top stats.</p>
+      </div>
+      <div id="homeSection"></div>
+    </section>
+
+    <section class="admin-section">
+      <div class="admin-section-head">
+        <h2>Portfolio</h2>
+        <p>Images keep the existing card size and are displayed with contain behavior inside the frame.</p>
+      </div>
+      <div id="portfolioSection"></div>
+    </section>
+
+    <section class="admin-section">
+      <div class="admin-section-head">
+        <h2>Pricing</h2>
+        <p>Service packages on the Services page.</p>
+      </div>
+      <div id="pricingSection"></div>
+    </section>
+
+    <section class="admin-section">
+      <div class="admin-section-head">
+        <h2>About Page</h2>
+        <p>Story stats and team members.</p>
+      </div>
+      <div id="aboutSection"></div>
+    </section>
+
+    <section class="admin-section">
+      <div class="admin-section-head">
+        <h2>Page Images</h2>
+        <p>Optional images for the About page and the four Services visuals.</p>
+      </div>
+      <div id="imageSection"></div>
+    </section>
+  </main>
+
+  <script src="js/site-data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>📖</text></svg>" />
 </head>
-<body>
+<body data-page="about">
 
 <!-- NAVBAR -->
 <nav class="navbar" role="navigation">
@@ -56,7 +56,7 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-image-frame reveal">
-        <div class="about-visual">
+        <div class="about-visual" id="aboutVisual">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
             <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
           </svg>
@@ -72,7 +72,7 @@
         <p style="margin-bottom:20px;">Based in Pakistan and serving clients across the US, UK, Canada, Australia, and beyond, we've helped over 200 authors bring their books to market with covers that sell and interiors that read beautifully.</p>
         <p>Every project is handled personally by our design team. We use Adobe InDesign — the industry standard — to produce files that meet the exact specifications of every major publishing platform, so your book publishes without errors.</p>
 
-        <div style="display:flex; gap:32px; margin-top:40px; flex-wrap:wrap;">
+        <div style="display:flex; gap:32px; margin-top:40px; flex-wrap:wrap;" id="aboutStoryStats">
           <div>
             <span style="font-family:var(--font-display); font-size:2.4rem; font-weight:700; color:var(--accent); display:block; line-height:1;">200+</span>
             <span style="font-size:0.78rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-muted);">Books Designed</span>
@@ -145,7 +145,7 @@
       <div class="divider divider-center"></div>
       <p class="section-subtitle">A small, dedicated crew of designers and publishing specialists who love what they do.</p>
     </div>
-    <div class="team-grid reveal reveal-delay-1">
+    <div class="team-grid reveal reveal-delay-1" id="teamGrid">
 
       <div class="team-card">
         <div class="team-photo">
@@ -269,6 +269,8 @@
   <span>Chat with Us</span>
 </a>
 
+<script src="js/site-data.js"></script>
+<script src="js/site-render.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
