@@ -1,11 +1,11 @@
 /* ============================================================
-   LITERARY LAB — Page Content Renderer
+   LITERARY LAB - Page Content Renderer
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (!window.LiteraryLabCMS) return;
 
-  const data = window.LiteraryLabCMS.loadSiteData();
+  const data = await window.LiteraryLabCMS.loadSiteData({ forceFresh: true });
   const page = window.location.pathname.split('/').pop() || 'index.html';
 
   applySharedContent(data.shared);
@@ -29,6 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'contact.html') {
     renderContactPage(data.shared);
   }
+
+  document.dispatchEvent(new CustomEvent('literarylab:content-rendered', {
+    detail: { page, data }
+  }));
 });
 
 function escapeHtml(value) {
@@ -121,7 +125,7 @@ function renderHomePage(data) {
 
   const statsContainer = document.querySelector('.stats-bar .container');
   if (statsContainer) {
-    statsContainer.innerHTML = home.stats.map((item, index) => `
+    statsContainer.innerHTML = home.stats.map((item) => `
       <div class="stat-item">
         <span class="stat-number" data-target="${escapeHtml(item.target)}" data-suffix="${escapeHtml(item.suffix || '')}" data-prefix="${escapeHtml(item.prefix || '')}">${escapeHtml((item.prefix || '') + item.target + (item.suffix || ''))}</span>
         <span class="stat-label">${escapeHtml(item.label)}</span>

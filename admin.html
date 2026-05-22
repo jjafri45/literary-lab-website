@@ -16,20 +16,43 @@
       <div>
         <span class="admin-kicker">Literary Lab CMS</span>
         <h1>Content Dashboard</h1>
-        <p>Edits are stored in this browser. Use export after changes if you want a portable backup.</p>
+        <p>Uploads and text changes publish into the GitHub repo so the live website updates after GitHub Pages deploys the new commit.</p>
       </div>
       <div class="admin-actions">
+        <button type="button" class="btn btn-outline" id="loadLiveDataBtn">Reload Live Data</button>
         <button type="button" class="btn btn-outline" id="exportDataBtn">Export JSON</button>
         <label class="btn btn-outline admin-upload-button">
           Import JSON
           <input type="file" id="importDataInput" accept="application/json" hidden />
         </label>
         <button type="button" class="btn btn-outline" id="resetDataBtn">Reset</button>
-        <button type="button" class="btn btn-primary" id="saveDataBtn">Save Changes</button>
+        <button type="button" class="btn btn-primary" id="saveDataBtn">Save To Website</button>
       </div>
     </header>
 
     <p class="admin-status" id="adminStatus" role="status"></p>
+
+    <section class="admin-section">
+      <div class="admin-section-head">
+        <h2>Publishing</h2>
+        <p>Use a GitHub fine-grained personal access token with contents write access to this repo.</p>
+      </div>
+      <div class="admin-publish-grid">
+        <div class="admin-field">
+          <label>Repository</label>
+          <div class="admin-static-field" id="repoSummary"></div>
+        </div>
+        <div class="admin-field">
+          <label>GitHub Token</label>
+          <input type="password" id="githubToken" placeholder="github_pat_..." autocomplete="off" />
+          <p class="admin-micro">Token is only used from this browser to create commits in the repo.</p>
+        </div>
+      </div>
+      <label class="admin-checkbox">
+        <input type="checkbox" id="rememberToken" />
+        <span>Remember this token in this browser</span>
+      </label>
+    </section>
 
     <section class="admin-section">
       <div class="admin-section-head">

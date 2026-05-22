@@ -1,12 +1,13 @@
 /* ============================================================
-   LITERARY LAB — Admin Dashboard
+   LITERARY LAB - Admin Dashboard
    ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (!window.LiteraryLabCMS) return;
 
   const cms = window.LiteraryLabCMS;
-  let data = cms.loadSiteData();
+  let data = await cms.loadSiteData({ forceFresh: true });
+  const pendingAssets = new Map();
 
   const statusEl = document.getElementById('adminStatus');
   const sharedSection = document.getElementById('sharedSection');
@@ -15,14 +16,65 @@ document.addEventListener('DOMContentLoaded', () => {
   const pricingSection = document.getElementById('pricingSection');
   const aboutSection = document.getElementById('aboutSection');
   const imageSection = document.getElementById('imageSection');
+  const githubTokenInput = document.getElementById('githubToken');
+  const rememberTokenInput = document.getElementById('rememberToken');
+  const repoSummary = document.getElementById('repoSummary');
 
-  function setStatus(message) {
+  repoSummary.textContent = `${cms.REPO_CONFIG.owner}/${cms.REPO_CONFIG.repo} (${cms.REPO_CONFIG.branch})`;
+  githubTokenInput.value = cms.loadAdminToken();
+  rememberTokenInput.checked = Boolean(githubTokenInput.value);
+
+  function setStatus(message, isError = false) {
     statusEl.textContent = message;
+    statusEl.classList.toggle('is-error', isError);
   }
 
-  function saveAll() {
-    cms.saveSiteData(data);
-    setStatus('Changes saved. Open the site in this browser to see the updated content.');
+  function activeToken() {
+    return githubTokenInput.value.trim();
+  }
+
+  function syncTokenPreference() {
+    if (rememberTokenInput.checked) {
+      cms.saveAdminToken(activeToken());
+    } else {
+      cms.saveAdminToken('');
+    }
+  }
+
+  function queueAsset(path, file, folder, label) {
+    pendingAssets.set(path, { path, file, folder, label });
+  }
+
+  function clearQueuedAsset(path) {
+    pendingAssets.delete(path);
+  }
+
+  async function loadLiveData() {
+    data = await cms.loadSiteData({ forceFresh: true });
+    pendingAssets.clear();
+    renderAll();
+    setStatus('Loaded the latest live content file from GitHub Pages.');
+  }
+
+  async function saveAll() {
+    try {
+      const token = activeToken();
+      if (!token) {
+        setStatus('Enter a GitHub token with repository contents write access before saving.', true);
+        return;
+      }
+
+      syncTokenPreference();
+      setStatus('Publishing content and uploaded images to GitHub...');
+      const published = await cms.publishSiteData(data, Array.from(pendingAssets.values()), token);
+      data = published;
+      pendingAssets.clear();
+      renderAll();
+      setStatus('Published to GitHub. GitHub Pages will update after the new commit deploys.');
+    } catch (error) {
+      console.error(error);
+      setStatus(error.message || 'Publishing failed.', true);
+    }
   }
 
   function renderAll() {
@@ -32,15 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPricing();
     renderAbout();
     renderImages();
-  }
-
-  function createTextField(label, value, attrs = '') {
-    return `
-      <div class="admin-field">
-        <label>${label}</label>
-        <input type="text" value="${escapeAttr(value)}" ${attrs} />
-      </div>
-    `;
   }
 
   function renderShared() {
@@ -168,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderPortfolio() {
     portfolioSection.innerHTML = `
       <div class="admin-toolbar">
-        <p class="admin-note">These items feed both the home page preview and the full portfolio page.</p>
+        <p class="admin-note">Uploaded images keep the current card size. The live site displays them with contain mode inside the existing frame.</p>
         <button type="button" class="btn btn-outline" id="addPortfolioItemBtn">Add Portfolio Item</button>
       </div>
       <div class="admin-list" id="portfolioList"></div>
@@ -186,49 +229,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const list = portfolioSection.querySelector('#portfolioList');
-    list.innerHTML = data.portfolio.items.map((item, index) => `
-      <div class="admin-card">
-        <div class="admin-card-head">
-          <h3>Portfolio Item ${index + 1}</h3>
-          <button type="button" class="btn btn-outline remove-portfolio-btn" data-index="${index}">Remove</button>
-        </div>
-        <div class="admin-grid">
-          <div class="admin-field">
-            <label>Title</label>
-            <input type="text" data-portfolio-field="title" data-index="${index}" value="${escapeAttr(item.title)}" />
+    list.innerHTML = data.portfolio.items.map((item, index) => {
+      const path = `portfolio.items.${index}.imageSrc`;
+      return `
+        <div class="admin-card">
+          <div class="admin-card-head">
+            <h3>Portfolio Item ${index + 1}</h3>
+            <button type="button" class="btn btn-outline remove-portfolio-btn" data-index="${index}">Remove</button>
           </div>
-          <div class="admin-field">
-            <label>Category Label</label>
-            <input type="text" data-portfolio-field="label" data-index="${index}" value="${escapeAttr(item.label)}" />
-          </div>
-          <div class="admin-field">
-            <label>Filter Category</label>
-            <select data-portfolio-field="category" data-index="${index}">
-              <option value="covers"${item.category === 'covers' ? ' selected' : ''}>covers</option>
-              <option value="interior"${item.category === 'interior' ? ' selected' : ''}>interior</option>
-              <option value="ebook"${item.category === 'ebook' ? ' selected' : ''}>ebook</option>
-            </select>
-          </div>
-          <div class="admin-field">
-            <label>Alt Text</label>
-            <input type="text" data-portfolio-field="alt" data-index="${index}" value="${escapeAttr(item.alt)}" />
-          </div>
-          <div class="admin-field" style="grid-column:1 / -1;">
-            <label>Upload Image</label>
-            <div class="admin-inline">
-              <div class="admin-image-preview">
-                ${item.imageSrc ? `<img src="${escapeAttr(item.imageSrc)}" alt="" />` : '<div class="admin-image-empty">No image</div>'}
+          <div class="admin-grid">
+            <div class="admin-field">
+              <label>Title</label>
+              <input type="text" data-portfolio-field="title" data-index="${index}" value="${escapeAttr(item.title)}" />
+            </div>
+            <div class="admin-field">
+              <label>Category Label</label>
+              <input type="text" data-portfolio-field="label" data-index="${index}" value="${escapeAttr(item.label)}" />
+            </div>
+            <div class="admin-field">
+              <label>Filter Category</label>
+              <select data-portfolio-field="category" data-index="${index}">
+                <option value="covers"${item.category === 'covers' ? ' selected' : ''}>covers</option>
+                <option value="interior"${item.category === 'interior' ? ' selected' : ''}>interior</option>
+                <option value="ebook"${item.category === 'ebook' ? ' selected' : ''}>ebook</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label>Alt Text</label>
+              <input type="text" data-portfolio-field="alt" data-index="${index}" value="${escapeAttr(item.alt)}" />
+            </div>
+            <div class="admin-field" style="grid-column:1 / -1;">
+              <label>Upload Image</label>
+              <div class="admin-inline">
+                <div class="admin-image-preview">
+                  ${item.imageSrc ? `<img src="${escapeAttr(item.imageSrc)}" alt="" />` : '<div class="admin-image-empty">No image</div>'}
+                </div>
+                <label class="btn btn-outline admin-upload-button">
+                  Choose Image
+                  <input type="file" class="portfolio-image-input" data-index="${index}" data-path="${path}" accept="image/*" hidden />
+                </label>
+                <button type="button" class="btn btn-outline clear-portfolio-image-btn" data-index="${index}" data-path="${path}">Clear Image</button>
               </div>
-              <label class="btn btn-outline admin-upload-button">
-                Choose Image
-                <input type="file" class="portfolio-image-input" data-index="${index}" accept="image/*" hidden />
-              </label>
-              <button type="button" class="btn btn-outline clear-portfolio-image-btn" data-index="${index}">Clear Image</button>
             </div>
           </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     list.querySelectorAll('[data-portfolio-field]').forEach((input) => {
       input.addEventListener('input', (event) => {
@@ -240,13 +286,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     list.querySelectorAll('.remove-portfolio-btn').forEach((button) => {
       button.addEventListener('click', () => {
-        data.portfolio.items.splice(Number(button.dataset.index), 1);
+        const index = Number(button.dataset.index);
+        clearQueuedAsset(`portfolio.items.${index}.imageSrc`);
+        data.portfolio.items.splice(index, 1);
+        rebuildPortfolioQueue();
         renderPortfolio();
       });
     });
 
     list.querySelectorAll('.clear-portfolio-image-btn').forEach((button) => {
       button.addEventListener('click', () => {
+        const path = button.dataset.path;
+        clearQueuedAsset(path);
         data.portfolio.items[Number(button.dataset.index)].imageSrc = '';
         renderPortfolio();
       });
@@ -257,11 +308,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = event.target.files && event.target.files[0];
         if (!file) return;
         const index = Number(event.target.dataset.index);
-        data.portfolio.items[index].imageSrc = await fileToDataUrl(file, 1200);
+        const path = event.target.dataset.path;
+        data.portfolio.items[index].imageSrc = await fileToPreviewUrl(file);
+        queueAsset(path, file, 'portfolio', data.portfolio.items[index].title || `portfolio-${index + 1}`);
         renderPortfolio();
-        setStatus('Portfolio image prepared. Save changes to publish it in this browser.');
+        setStatus('Image staged. Save to Website to commit it to GitHub.');
       });
     });
+  }
+
+  function rebuildPortfolioQueue() {
+    const nextQueue = new Map();
+    data.portfolio.items.forEach((item, index) => {
+      const oldPrefix = `portfolio.items.${index + 1}.imageSrc`;
+      const newPath = `portfolio.items.${index}.imageSrc`;
+      if (pendingAssets.has(newPath)) {
+        nextQueue.set(newPath, pendingAssets.get(newPath));
+      } else if (pendingAssets.has(oldPrefix)) {
+        const queued = pendingAssets.get(oldPrefix);
+        nextQueue.set(newPath, { ...queued, path: newPath });
+      }
+    });
+    pendingAssets.forEach((asset, path) => {
+      if (!path.startsWith('portfolio.items.')) nextQueue.set(path, asset);
+    });
+    pendingAssets.clear();
+    nextQueue.forEach((asset, path) => pendingAssets.set(path, asset));
   }
 
   function renderPricing() {
@@ -411,41 +483,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const teamList = aboutSection.querySelector('#teamList');
-    teamList.innerHTML = data.about.team.map((member, index) => `
-      <div class="admin-card">
-        <div class="admin-card-head">
-          <h3>Team Member ${index + 1}</h3>
-          <button type="button" class="btn btn-outline remove-team-btn" data-index="${index}">Remove</button>
-        </div>
-        <div class="admin-grid">
-          <div class="admin-field">
-            <label>Name</label>
-            <input type="text" data-team-field="name" data-index="${index}" value="${escapeAttr(member.name)}" />
+    teamList.innerHTML = data.about.team.map((member, index) => {
+      const path = `about.team.${index}.imageSrc`;
+      return `
+        <div class="admin-card">
+          <div class="admin-card-head">
+            <h3>Team Member ${index + 1}</h3>
+            <button type="button" class="btn btn-outline remove-team-btn" data-index="${index}">Remove</button>
           </div>
-          <div class="admin-field">
-            <label>Role</label>
-            <input type="text" data-team-field="role" data-index="${index}" value="${escapeAttr(member.role)}" />
-          </div>
-          <div class="admin-field" style="grid-column:1 / -1;">
-            <label>Bio</label>
-            <textarea data-team-field="bio" data-index="${index}">${escapeHtml(member.bio)}</textarea>
-          </div>
-          <div class="admin-field" style="grid-column:1 / -1;">
-            <label>Photo</label>
-            <div class="admin-inline">
-              <div class="admin-image-preview square">
-                ${member.imageSrc ? `<img src="${escapeAttr(member.imageSrc)}" alt="" />` : '<div class="admin-image-empty">No image</div>'}
+          <div class="admin-grid">
+            <div class="admin-field">
+              <label>Name</label>
+              <input type="text" data-team-field="name" data-index="${index}" value="${escapeAttr(member.name)}" />
+            </div>
+            <div class="admin-field">
+              <label>Role</label>
+              <input type="text" data-team-field="role" data-index="${index}" value="${escapeAttr(member.role)}" />
+            </div>
+            <div class="admin-field" style="grid-column:1 / -1;">
+              <label>Bio</label>
+              <textarea data-team-field="bio" data-index="${index}">${escapeHtml(member.bio)}</textarea>
+            </div>
+            <div class="admin-field" style="grid-column:1 / -1;">
+              <label>Photo</label>
+              <div class="admin-inline">
+                <div class="admin-image-preview square">
+                  ${member.imageSrc ? `<img src="${escapeAttr(member.imageSrc)}" alt="" />` : '<div class="admin-image-empty">No image</div>'}
+                </div>
+                <label class="btn btn-outline admin-upload-button">
+                  Choose Photo
+                  <input type="file" class="team-image-input" data-index="${index}" data-path="${path}" accept="image/*" hidden />
+                </label>
+                <button type="button" class="btn btn-outline clear-team-image-btn" data-index="${index}" data-path="${path}">Clear Photo</button>
               </div>
-              <label class="btn btn-outline admin-upload-button">
-                Choose Photo
-                <input type="file" class="team-image-input" data-index="${index}" accept="image/*" hidden />
-              </label>
-              <button type="button" class="btn btn-outline clear-team-image-btn" data-index="${index}">Clear Photo</button>
             </div>
           </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
 
     teamList.querySelectorAll('[data-team-field]').forEach((input) => {
       input.addEventListener('input', (event) => {
@@ -457,13 +532,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     teamList.querySelectorAll('.remove-team-btn').forEach((button) => {
       button.addEventListener('click', () => {
-        data.about.team.splice(Number(button.dataset.index), 1);
+        const index = Number(button.dataset.index);
+        clearQueuedAsset(`about.team.${index}.imageSrc`);
+        data.about.team.splice(index, 1);
+        rebuildTeamQueue();
         renderAbout();
       });
     });
 
     teamList.querySelectorAll('.clear-team-image-btn').forEach((button) => {
       button.addEventListener('click', () => {
+        const path = button.dataset.path;
+        clearQueuedAsset(path);
         data.about.team[Number(button.dataset.index)].imageSrc = '';
         renderAbout();
       });
@@ -474,20 +554,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const file = event.target.files && event.target.files[0];
         if (!file) return;
         const index = Number(event.target.dataset.index);
-        data.about.team[index].imageSrc = await fileToDataUrl(file, 1000);
+        const path = event.target.dataset.path;
+        data.about.team[index].imageSrc = await fileToPreviewUrl(file);
+        queueAsset(path, file, 'team', data.about.team[index].name || `team-${index + 1}`);
         renderAbout();
-        setStatus('Team image prepared. Save changes to publish it in this browser.');
+        setStatus('Team image staged. Save to Website to commit it to GitHub.');
       });
     });
   }
 
+  function rebuildTeamQueue() {
+    const nextQueue = new Map();
+    data.about.team.forEach((member, index) => {
+      const oldPrefix = `about.team.${index + 1}.imageSrc`;
+      const newPath = `about.team.${index}.imageSrc`;
+      if (pendingAssets.has(newPath)) {
+        nextQueue.set(newPath, pendingAssets.get(newPath));
+      } else if (pendingAssets.has(oldPrefix)) {
+        const queued = pendingAssets.get(oldPrefix);
+        nextQueue.set(newPath, { ...queued, path: newPath });
+      }
+    });
+    pendingAssets.forEach((asset, path) => {
+      if (!path.startsWith('about.team.')) nextQueue.set(path, asset);
+    });
+    pendingAssets.clear();
+    nextQueue.forEach((asset, path) => pendingAssets.set(path, asset));
+  }
+
   function renderImages() {
     const imageFields = [
-      { key: 'visualImage', label: 'About Story Image', group: 'about', previewClass: 'wide' },
-      { key: 'interior', label: 'Services: Interior Visual', group: 'services', previewClass: 'wide' },
-      { key: 'covers', label: 'Services: Cover Visual', group: 'services', previewClass: 'wide' },
-      { key: 'ebook', label: 'Services: eBook Visual', group: 'services', previewClass: 'wide' },
-      { key: 'consult', label: 'Services: Consultation Visual', group: 'services', previewClass: 'wide' }
+      { key: 'visualImage', label: 'About Story Image', group: 'about', previewClass: 'wide', path: 'about.visualImage', folder: 'about' },
+      { key: 'interior', label: 'Services: Interior Visual', group: 'services', previewClass: 'wide', path: 'services.visuals.interior', folder: 'services' },
+      { key: 'covers', label: 'Services: Cover Visual', group: 'services', previewClass: 'wide', path: 'services.visuals.covers', folder: 'services' },
+      { key: 'ebook', label: 'Services: eBook Visual', group: 'services', previewClass: 'wide', path: 'services.visuals.ebook', folder: 'services' },
+      { key: 'consult', label: 'Services: Consultation Visual', group: 'services', previewClass: 'wide', path: 'services.visuals.consult', folder: 'services' }
     ];
 
     imageSection.innerHTML = `
@@ -505,9 +606,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <label class="btn btn-outline admin-upload-button">
                   Choose Image
-                  <input type="file" class="page-image-input" data-group="${field.group}" data-key="${field.key}" accept="image/*" hidden />
+                  <input type="file" class="page-image-input" data-group="${field.group}" data-key="${field.key}" data-path="${field.path}" data-folder="${field.folder}" accept="image/*" hidden />
                 </label>
-                <button type="button" class="btn btn-outline clear-page-image-btn" data-group="${field.group}" data-key="${field.key}">Clear Image</button>
+                <button type="button" class="btn btn-outline clear-page-image-btn" data-group="${field.group}" data-key="${field.key}" data-path="${field.path}">Clear Image</button>
               </div>
             </div>
           `;
@@ -517,7 +618,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     imageSection.querySelectorAll('.clear-page-image-btn').forEach((button) => {
       button.addEventListener('click', () => {
-        const { group, key } = button.dataset;
+        const { group, key, path } = button.dataset;
+        clearQueuedAsset(path);
         if (group === 'about') {
           data.about.visualImage = '';
         } else {
@@ -531,20 +633,22 @@ document.addEventListener('DOMContentLoaded', () => {
       input.addEventListener('change', async (event) => {
         const file = event.target.files && event.target.files[0];
         if (!file) return;
-        const { group, key } = event.target.dataset;
-        const imageSrc = await fileToDataUrl(file, 1400);
+        const { group, key, path, folder } = event.target.dataset;
+        const imageSrc = await fileToPreviewUrl(file);
         if (group === 'about') {
           data.about.visualImage = imageSrc;
         } else {
           data.services.visuals[key] = imageSrc;
         }
+        queueAsset(path, file, folder, key);
         renderImages();
-        setStatus('Page image prepared. Save changes to publish it in this browser.');
+        setStatus('Page image staged. Save to Website to commit it to GitHub.');
       });
     });
   }
 
   document.getElementById('saveDataBtn').addEventListener('click', saveAll);
+  document.getElementById('loadLiveDataBtn').addEventListener('click', loadLiveData);
 
   document.getElementById('exportDataBtn').addEventListener('click', () => {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -554,7 +658,7 @@ document.addEventListener('DOMContentLoaded', () => {
     link.download = 'literary-lab-content.json';
     link.click();
     URL.revokeObjectURL(url);
-    setStatus('Exported current dashboard data to JSON.');
+    setStatus('Exported the current dashboard data as JSON.');
   });
 
   document.getElementById('importDataInput').addEventListener('change', async (event) => {
@@ -562,19 +666,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!file) return;
     const text = await file.text();
     data = mergeImportedData(cms.DEFAULT_DATA, JSON.parse(text));
-    saveAll();
+    pendingAssets.clear();
     renderAll();
-    setStatus('Imported content JSON and saved it to this browser.');
+    setStatus('Imported JSON into the editor. Save to Website to publish it.');
     event.target.value = '';
   });
 
   document.getElementById('resetDataBtn').addEventListener('click', () => {
     data = cms.resetSiteData();
+    pendingAssets.clear();
     renderAll();
-    setStatus('Dashboard reset to default content. Save only if you want to keep the reset.');
+    setStatus('Reset the editor to default content. Save to Website if you want to publish this reset.');
   });
 
+  githubTokenInput.addEventListener('input', () => {
+    if (rememberTokenInput.checked) syncTokenPreference();
+  });
+
+  rememberTokenInput.addEventListener('change', syncTokenPreference);
+
   renderAll();
+  setStatus('Loaded the live content file. Uploads are staged locally until you click Save to Website.');
 });
 
 function escapeAttr(value) {
@@ -609,36 +721,11 @@ function mergeImportedData(defaults, imported) {
   return imported === undefined ? defaults : imported;
 }
 
-async function fileToDataUrl(file, maxSide) {
-  const source = await readFileAsDataUrl(file);
-  const image = await loadImage(source);
-  const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
-  const width = Math.max(1, Math.round(image.width * scale));
-  const height = Math.max(1, Math.round(image.height * scale));
-  const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(image, 0, 0, width, height);
-  const type = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
-  const quality = type === 'image/png' ? undefined : 0.86;
-  return canvas.toDataURL(type, quality);
-}
-
-function readFileAsDataUrl(file) {
+function fileToPreviewUrl(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
     reader.onerror = reject;
     reader.readAsDataURL(file);
-  });
-}
-
-function loadImage(src) {
-  return new Promise((resolve, reject) => {
-    const image = new Image();
-    image.onload = () => resolve(image);
-    image.onerror = reject;
-    image.src = src;
   });
 }
