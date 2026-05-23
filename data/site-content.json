@@ -87,7 +87,7 @@
         "label": "Cover Design",
         "title": "Creative Cover",
         "alt": "Creative cover design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260522234520-creative-cover.png",
+        "imageSrc": "images/cms/portfolio/20260523202114-creative-cover.jpg",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -96,7 +96,7 @@
         "label": "eBook Conversion",
         "title": "eBook Design",
         "alt": "eBook design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260522234523-ebook-design.png",
+        "imageSrc": "images/cms/portfolio/20260523202116-ebook-design.jpg",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -105,7 +105,7 @@
         "label": "Cover Design",
         "title": "Non-Fiction Cover",
         "alt": "Non-fiction cover design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260522234527-non-fiction-cover.png",
+        "imageSrc": "images/cms/portfolio/20260523202117-non-fiction-cover.jpg",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -123,7 +123,7 @@
         "label": "Cover Design",
         "title": "Fiction Cover",
         "alt": "Fiction cover portfolio item",
-        "imageSrc": "images/cms/portfolio/20260522234535-fiction-cover.png",
+        "imageSrc": "images/cms/portfolio/20260523202119-fiction-cover.png",
         "imageFit": "cover",
         "showOnHome": false
       },
@@ -141,7 +141,7 @@
         "label": "eBook",
         "title": "Kindle Edition",
         "alt": "Kindle edition portfolio item",
-        "imageSrc": "images/cms/portfolio/20260522234545-kindle-edition.png",
+        "imageSrc": "images/cms/portfolio/20260523202127-kindle-edition.jpg",
         "imageFit": "cover",
         "showOnHome": false
       }
