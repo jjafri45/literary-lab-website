@@ -360,11 +360,18 @@
 
     if (!response.ok) {
       const message = await response.text();
-      throw new Error(`GitHub API ${response.status}: ${message}`);
+      const error = new Error(`GitHub API ${response.status}: ${message}`);
+      error.status = response.status;
+      error.responseText = message;
+      throw error;
     }
 
     if (response.status === 204) return null;
     return response.json();
+  }
+
+  function isFastForwardConflict(error) {
+    return error && error.status === 422 && String(error.responseText || error.message || '').includes('not a fast forward');
   }
 
   async function publishSiteData(data, assets, token) {
@@ -372,43 +379,53 @@
       throw new Error('GitHub token is required to publish changes.');
     }
 
-    const payload = deepClone(data);
-    const treeEntries = [];
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      const payload = deepClone(data);
+      const treeEntries = [];
 
-    for (const asset of assets) {
-      const targetPath = createAssetPath(asset);
-      const fileBuffer = await asset.file.arrayBuffer();
-      const blobSha = await createBlob(token, arrayBufferToBase64(fileBuffer), 'base64');
+      for (const asset of assets) {
+        const targetPath = createAssetPath(asset);
+        const fileBuffer = await asset.file.arrayBuffer();
+        const blobSha = await createBlob(token, arrayBufferToBase64(fileBuffer), 'base64');
+        treeEntries.push({
+          path: targetPath,
+          mode: '100644',
+          type: 'blob',
+          sha: blobSha
+        });
+        setByPath(payload, asset.path, targetPath);
+      }
+
+      const contentSha = await createBlob(token, JSON.stringify(payload, null, 2) + '\n', 'utf-8');
       treeEntries.push({
-        path: targetPath,
+        path: REPO_CONFIG.contentPath,
         mode: '100644',
         type: 'blob',
-        sha: blobSha
+        sha: contentSha
       });
-      setByPath(payload, asset.path, targetPath);
+
+      const branchRef = await getBranchRef(token);
+      const headCommitSha = branchRef.object.sha;
+      const headCommit = await getCommit(token, headCommitSha);
+      const newTreeSha = await createTree(token, headCommit.tree.sha, treeEntries);
+
+      const message = assets.length
+        ? `Update Literary Lab content and ${assets.length} image${assets.length === 1 ? '' : 's'}`
+        : 'Update Literary Lab content';
+
+      const newCommitSha = await createCommit(token, message, newTreeSha, headCommitSha);
+
+      try {
+        await updateBranch(token, newCommitSha);
+        return payload;
+      } catch (error) {
+        if (!isFastForwardConflict(error) || attempt === 2) {
+          throw error;
+        }
+      }
     }
 
-    const contentSha = await createBlob(token, JSON.stringify(payload, null, 2) + '\n', 'utf-8');
-    treeEntries.push({
-      path: REPO_CONFIG.contentPath,
-      mode: '100644',
-      type: 'blob',
-      sha: contentSha
-    });
-
-    const branchRef = await getBranchRef(token);
-    const headCommitSha = branchRef.object.sha;
-    const headCommit = await getCommit(token, headCommitSha);
-    const newTreeSha = await createTree(token, headCommit.tree.sha, treeEntries);
-
-    const message = assets.length
-      ? `Update Literary Lab content and ${assets.length} image${assets.length === 1 ? '' : 's'}`
-      : 'Update Literary Lab content';
-
-    const newCommitSha = await createCommit(token, message, newTreeSha, headCommitSha);
-    await updateBranch(token, newCommitSha);
-
-    return payload;
+    throw new Error('Publishing failed after multiple retries.');
   }
 
   window.LiteraryLabCMS = {
