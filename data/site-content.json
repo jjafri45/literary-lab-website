@@ -66,26 +66,26 @@
     "items": [
       {
         "category": "covers",
-        "label": "Cover Design",
-        "title": "Book Cover Design",
-        "alt": "Book cover design portfolio item",
+        "label": "",
+        "title": "",
+        "alt": "",
         "imageSrc": "images/cms/portfolio/20260523201557-book-cover-design.jpg",
         "imageFit": "cover",
         "showOnHome": true
       },
       {
         "category": "interior",
-        "label": "Book Interior",
-        "title": "Interior Formatting",
-        "alt": "Interior formatting portfolio item",
+        "label": "",
+        "title": "",
+        "alt": "",
         "imageSrc": "images/cms/portfolio/20260522234515-interior-formatting.png",
         "imageFit": "contain",
         "showOnHome": true
       },
       {
         "category": "covers",
-        "label": "Cover Design",
-        "title": "Creative Cover",
+        "label": "",
+        "title": "",
         "alt": "Creative cover design portfolio item",
         "imageSrc": "images/cms/portfolio/20260523202114-creative-cover.jpg",
         "imageFit": "cover",
@@ -93,8 +93,8 @@
       },
       {
         "category": "ebook",
-        "label": "eBook Conversion",
-        "title": "eBook Design",
+        "label": "",
+        "title": "",
         "alt": "eBook design portfolio item",
         "imageSrc": "images/cms/portfolio/20260523202116-ebook-design.jpg",
         "imageFit": "cover",
@@ -102,8 +102,8 @@
       },
       {
         "category": "covers",
-        "label": "Cover Design",
-        "title": "Non-Fiction Cover",
+        "label": "",
+        "title": "",
         "alt": "Non-fiction cover design portfolio item",
         "imageSrc": "images/cms/portfolio/20260523202117-non-fiction-cover.jpg",
         "imageFit": "cover",
@@ -111,8 +111,8 @@
       },
       {
         "category": "interior",
-        "label": "Book Interior",
-        "title": "Chapter Layouts",
+        "label": "",
+        "title": "",
         "alt": "Chapter layouts portfolio item",
         "imageSrc": "images/cms/portfolio/20260522234531-chapter-layouts.png",
         "imageFit": "contain",
@@ -120,8 +120,8 @@
       },
       {
         "category": "covers",
-        "label": "Cover Design",
-        "title": "Fiction Cover",
+        "label": "",
+        "title": "",
         "alt": "Fiction cover portfolio item",
         "imageSrc": "images/cms/portfolio/20260523202119-fiction-cover.png",
         "imageFit": "cover",
@@ -129,8 +129,8 @@
       },
       {
         "category": "interior",
-        "label": "Book Interior",
-        "title": "Formatted Spread",
+        "label": "",
+        "title": "",
         "alt": "Formatted spread portfolio item",
         "imageSrc": "images/cms/portfolio/20260522234539-formatted-spread.png",
         "imageFit": "contain",
@@ -138,12 +138,21 @@
       },
       {
         "category": "ebook",
-        "label": "eBook",
-        "title": "Kindle Edition",
+        "label": "",
+        "title": "",
         "alt": "Kindle edition portfolio item",
         "imageSrc": "images/cms/portfolio/20260523202127-kindle-edition.jpg",
         "imageFit": "cover",
         "showOnHome": false
+      },
+      {
+        "category": "covers",
+        "label": "",
+        "title": "",
+        "alt": "Portfolio item",
+        "imageSrc": "images/cms/portfolio/20260524145645-new-portfolio-item.jpg",
+        "imageFit": "cover",
+        "showOnHome": true
       }
     ]
   },
