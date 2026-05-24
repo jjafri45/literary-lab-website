@@ -210,11 +210,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function renderPortfolio() {
     portfolioSection.innerHTML = `
-      <div class="admin-toolbar">
+      <div class="admin-toolbar admin-toolbar-stack">
         <p class="admin-note">Portfolio items are organized into two live sections: Book Cover Design and Interior Layout Design. Anything marked interior goes to the interior section; all other items go to the cover section.</p>
-        <button type="button" class="btn btn-outline" id="addPortfolioItemBtn">Add Portfolio Item</button>
       </div>
       <div class="admin-list" id="portfolioList"></div>
+      <div class="admin-toolbar admin-toolbar-bottom">
+        <button type="button" class="btn btn-outline" id="addPortfolioItemBtn">Add Portfolio Item</button>
+      </div>
     `;
 
     portfolioSection.querySelector('#addPortfolioItemBtn').addEventListener('click', () => {

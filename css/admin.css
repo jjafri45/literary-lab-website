@@ -194,6 +194,16 @@
   margin-bottom: 16px;
 }
 
+.admin-toolbar-stack {
+  align-items: flex-start;
+}
+
+.admin-toolbar-bottom {
+  justify-content: flex-end;
+  margin-top: 18px;
+  margin-bottom: 0;
+}
+
 .admin-note {
   color: var(--text-muted);
   font-size: 0.92rem;
@@ -236,5 +246,9 @@
 
   .admin-publish-grid {
     grid-template-columns: 1fr;
+  }
+
+  .admin-toolbar-bottom {
+    justify-content: flex-start;
   }
 }
