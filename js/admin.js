@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderPortfolio() {
     portfolioSection.innerHTML = `
       <div class="admin-toolbar">
-        <p class="admin-note">Uploaded images keep the current card size. The live site displays them with contain mode inside the existing frame.</p>
+        <p class="admin-note">Portfolio items are organized into two live sections: Book Cover Design and Interior Layout Design. Anything marked interior goes to the interior section; all other items go to the cover section.</p>
         <button type="button" class="btn btn-outline" id="addPortfolioItemBtn">Add Portfolio Item</button>
       </div>
       <div class="admin-list" id="portfolioList"></div>
@@ -249,11 +249,11 @@ document.addEventListener('DOMContentLoaded', async () => {
               <input type="text" data-portfolio-field="label" data-index="${index}" value="${escapeAttr(item.label)}" />
             </div>
             <div class="admin-field">
-              <label>Filter Category</label>
+              <label>Portfolio Section</label>
               <select data-portfolio-field="category" data-index="${index}">
-                <option value="covers"${item.category === 'covers' ? ' selected' : ''}>covers</option>
-                <option value="interior"${item.category === 'interior' ? ' selected' : ''}>interior</option>
-                <option value="ebook"${item.category === 'ebook' ? ' selected' : ''}>ebook</option>
+                <option value="covers"${item.category === 'covers' ? ' selected' : ''}>Book Cover Design</option>
+                <option value="interior"${item.category === 'interior' ? ' selected' : ''}>Interior Layout Design</option>
+                <option value="ebook"${item.category === 'ebook' ? ' selected' : ''}>Book Cover Design (eBook)</option>
               </select>
             </div>
             <div class="admin-field">

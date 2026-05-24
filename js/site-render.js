@@ -159,9 +159,15 @@ function renderHomePage(data) {
 }
 
 function renderPortfolioPage(portfolio) {
-  const fullGrid = document.querySelector('.portfolio-grid-full');
-  if (!fullGrid) return;
-  fullGrid.innerHTML = portfolio.items.map((item, index) => buildPortfolioCard(item, index, true)).join('');
+  const coversGrid = document.getElementById('portfolioCoversGrid');
+  const interiorGrid = document.getElementById('portfolioInteriorGrid');
+  if (!coversGrid || !interiorGrid) return;
+
+  const coverItems = portfolio.items.filter((item) => item.category !== 'interior');
+  const interiorItems = portfolio.items.filter((item) => item.category === 'interior');
+
+  coversGrid.innerHTML = coverItems.map((item, index) => buildPortfolioCard(item, index, true)).join('');
+  interiorGrid.innerHTML = interiorItems.map((item, index) => buildPortfolioCard(item, index, true)).join('');
 }
 
 function renderServicesPage(services) {
