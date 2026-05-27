@@ -9,7 +9,7 @@
   "home": {
     "heroEyebrow": "Pakistan's Premier Book Design Studio",
     "heroTitleHtml": "Where Stories<br>Find Their <em>Perfect</em><br>Form",
-    "heroBody": "Professional book covers, print-ready interior formatting, and publishing support - crafted with precision for self-published authors worldwide.",
+    "heroBody": "From manuscript to published — professional book covers, interior formatting, and publishing support crafted for self-published authors worldwide.",
     "primaryCtaLabel": "Start Your Project",
     "secondaryCtaLabel": "View Our Work",
     "stats": [
@@ -27,9 +27,9 @@
       },
       {
         "target": "5",
-        "suffix": "",
+        "suffix": ".0",
         "prefix": "★ ",
-        "label": "Average Rating"
+        "label": "Rating"
       },
       {
         "target": "100",
@@ -213,6 +213,22 @@
           "High-res print PDF",
           "Web-optimized JPG",
           "Unlimited revisions"
+        ]
+      },
+      {
+        "title": "Proofreading",
+        "description": "Up to 80,000 words",
+        "price": "49",
+        "label": "Per Project",
+        "featured": false,
+        "buttonLabel": "Get Started",
+        "buttonStyle": "outline",
+        "features": [
+          "Full manuscript proofread",
+          "Grammar & spelling corrections",
+          "Tracked changes in Word",
+          "5–7 day turnaround",
+          "One revision round included"
         ]
       }
     ]
