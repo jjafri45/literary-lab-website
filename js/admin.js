@@ -477,6 +477,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       data.blogs.posts.unshift({
         id: `blog-${Date.now()}`,
         title: 'New Blog Post',
+        slug: `new-blog-post-${Date.now()}`,
+        metaDescription: '',
+        tags: [],
         contentHtml: '<p>Start writing here...</p>'
       });
       renderBlogs();
@@ -493,6 +496,18 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="admin-field" style="grid-column:1 / -1;">
             <label>Title</label>
             <input type="text" data-blog-field="title" data-index="${index}" value="${escapeAttr(post.title)}" />
+          </div>
+          <div class="admin-field">
+            <label>Slug</label>
+            <input type="text" data-blog-field="slug" data-index="${index}" value="${escapeAttr(post.slug || '')}" placeholder="my-blog-post" />
+          </div>
+          <div class="admin-field">
+            <label>Tags</label>
+            <input type="text" data-blog-field="tags" data-index="${index}" value="${escapeAttr(Array.isArray(post.tags) ? post.tags.join(', ') : '')}" placeholder="self-publishing, kdp, proofreading" />
+          </div>
+          <div class="admin-field" style="grid-column:1 / -1;">
+            <label>Meta Description</label>
+            <textarea data-blog-field="metaDescription" data-index="${index}" placeholder="Short search snippet for this blog post">${escapeHtml(post.metaDescription || '')}</textarea>
           </div>
           <div class="admin-field" style="grid-column:1 / -1;">
             <label>Content</label>
@@ -526,6 +541,31 @@ document.addEventListener('DOMContentLoaded', async () => {
       input.addEventListener('input', (event) => {
         const index = Number(event.target.dataset.index);
         data.blogs.posts[index].title = event.target.value;
+      });
+    });
+
+    list.querySelectorAll('[data-blog-field="slug"]').forEach((input) => {
+      input.addEventListener('input', (event) => {
+        const index = Number(event.target.dataset.index);
+        data.blogs.posts[index].slug = slugifyText(event.target.value);
+        event.target.value = data.blogs.posts[index].slug;
+      });
+    });
+
+    list.querySelectorAll('[data-blog-field="tags"]').forEach((input) => {
+      input.addEventListener('input', (event) => {
+        const index = Number(event.target.dataset.index);
+        data.blogs.posts[index].tags = event.target.value
+          .split(',')
+          .map((value) => value.trim())
+          .filter(Boolean);
+      });
+    });
+
+    list.querySelectorAll('[data-blog-field="metaDescription"]').forEach((input) => {
+      input.addEventListener('input', (event) => {
+        const index = Number(event.target.dataset.index);
+        data.blogs.posts[index].metaDescription = event.target.value;
       });
     });
 
@@ -926,6 +966,14 @@ function sanitizeRichHtml(html) {
 
   toRemove.forEach((node) => node.remove());
   return template.innerHTML.trim();
+}
+
+function slugifyText(value) {
+  return String(value ?? '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80);
 }
 
 function mergeImportedData(defaults, imported) {

@@ -7,9 +7,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const data = await window.LiteraryLabCMS.loadSiteData();
   const page = window.location.pathname.split('/').pop() || 'index.html';
+  const selectedBlog = page === 'blog.html' ? findBlogBySlug(data.blogs) : null;
 
   applySharedContent(data.shared);
-  applySeoMetadata(page);
+  applySeoMetadata(page, selectedBlog);
 
   if (page === 'index.html') {
     renderHomePage(data);
@@ -31,12 +32,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderContactPage(data.shared);
   }
 
+  if (page === 'blogs.html') {
+    renderBlogsPage(data.blogs);
+  }
+
+  if (page === 'blog.html') {
+    renderBlogPage(selectedBlog);
+  }
+
   document.dispatchEvent(new CustomEvent('literarylab:content-rendered', {
     detail: { page, data }
   }));
 });
 
-function applySeoMetadata(page) {
+function applySeoMetadata(page, selectedBlog) {
   const metaMap = {
     'index.html': {
       title: 'Literary Lab - Book Design, Formatting, and Publishing Support for Self-Published Authors',
@@ -61,7 +70,27 @@ function applySeoMetadata(page) {
       description: 'Browse published books Literary Lab has helped bring to Amazon, with direct links to each live listing.',
       ogTitle: 'Published Books - Literary Lab | Amazon Publishing Proof',
       ogDescription: 'Real Amazon listings that show Literary Lab publishing support from rough manuscript to live book page.'
-    }
+    },
+    'blogs.html': {
+      title: 'Blog - Literary Lab | Self-Publishing Advice for Authors',
+      description: 'Read Literary Lab articles on self-publishing, proofreading, book covers, interior formatting, and preparing your manuscript for Amazon.',
+      ogTitle: 'Blog - Literary Lab | Advice for Self-Published Authors',
+      ogDescription: 'Actionable advice for self-published authors on formatting, proofreading, covers, and publishing-ready book files.'
+    },
+    'blog.html': selectedBlog
+      ? {
+          title: `${selectedBlog.title} - Literary Lab Blog`,
+          description: selectedBlog.metaDescription || selectedBlog.excerpt,
+          ogTitle: `${selectedBlog.title} - Literary Lab Blog`,
+          ogDescription: selectedBlog.metaDescription || selectedBlog.excerpt,
+          canonical: `${window.location.origin}${window.location.pathname}?slug=${encodeURIComponent(selectedBlog.slug)}`
+        }
+      : {
+          title: 'Blog Post - Literary Lab',
+          description: 'Read publishing guidance from Literary Lab for self-published and first-time authors.',
+          ogTitle: 'Blog Post - Literary Lab',
+          ogDescription: 'Read publishing guidance from Literary Lab for self-published and first-time authors.'
+        }
   };
 
   const meta = metaMap[page];
@@ -77,6 +106,9 @@ function applySeoMetadata(page) {
 
   const ogDescription = document.querySelector('meta[property="og:description"]');
   if (ogDescription) ogDescription.setAttribute('content', meta.ogDescription);
+
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical && meta.canonical) canonical.setAttribute('href', meta.canonical);
 }
 
 function escapeHtml(value) {
@@ -288,4 +320,123 @@ function renderContactPage(shared) {
   if (whatsappLink) {
     whatsappLink.textContent = shared.whatsappDisplay;
   }
+}
+
+function normalizeBlogPost(post, index) {
+  const safeTitle = post?.title || `Blog Post ${index + 1}`;
+  const safeSlug = post?.slug || slugifyValue(safeTitle) || `blog-post-${index + 1}`;
+  const contentHtml = String(post?.contentHtml || '').trim();
+  const tags = Array.isArray(post?.tags) ? post.tags.map((tag) => String(tag).trim()).filter(Boolean) : [];
+  const excerpt = truncateText(stripHtml(contentHtml), 180);
+  return {
+    id: post?.id || `blog-${index + 1}`,
+    title: safeTitle,
+    slug: safeSlug,
+    metaDescription: post?.metaDescription || excerpt,
+    tags,
+    contentHtml,
+    excerpt
+  };
+}
+
+function normalizeBlogsCollection(blogs) {
+  return (blogs?.posts || []).map(normalizeBlogPost);
+}
+
+function slugifyValue(value) {
+  return String(value ?? '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80);
+}
+
+function stripHtml(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = String(html || '');
+  return (temp.textContent || temp.innerText || '').replace(/\s+/g, ' ').trim();
+}
+
+function truncateText(value, maxLength) {
+  const text = String(value || '').trim();
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength - 1).trim()}…`;
+}
+
+function findBlogBySlug(blogs) {
+  const slug = new URLSearchParams(window.location.search).get('slug');
+  if (!slug) return null;
+  return normalizeBlogsCollection(blogs).find((post) => post.slug === slug) || null;
+}
+
+function renderBlogsPage(blogs) {
+  const grid = document.getElementById('blogsGrid');
+  if (!grid) return;
+
+  const posts = normalizeBlogsCollection(blogs);
+  if (!posts.length) {
+    grid.innerHTML = `
+      <div class="blog-empty-state">
+        <h2>No blog posts yet</h2>
+        <p>Use the admin panel to publish the first Literary Lab article.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = posts.map((post) => `
+    <article class="blog-card">
+      <div class="blog-card-inner">
+        <div class="blog-tag-row">
+          ${(post.tags.length ? post.tags : ['literary lab']).slice(0, 4).map((tag) => `<span class="blog-tag">${escapeHtml(tag)}</span>`).join('')}
+        </div>
+        <h3>${escapeHtml(post.title)}</h3>
+        <p>${escapeHtml(post.metaDescription || post.excerpt)}</p>
+        <a href="blog.html?slug=${encodeURIComponent(post.slug)}" class="btn btn-outline">Read Article</a>
+      </div>
+    </article>
+  `).join('');
+}
+
+function renderBlogPage(selectedBlog) {
+  const content = document.getElementById('blogArticleContent');
+  const emptyState = document.getElementById('blogEmptyState');
+  const title = document.getElementById('blogTitle');
+  const description = document.getElementById('blogMetaDescription');
+  const kicker = document.getElementById('blogKicker');
+  const breadcrumb = document.getElementById('blogBreadcrumb');
+  if (!content || !emptyState || !title || !description || !kicker || !breadcrumb) return;
+
+  if (!selectedBlog) {
+    content.hidden = true;
+    emptyState.hidden = false;
+    title.textContent = 'Blog post not found';
+    description.textContent = 'The requested article could not be loaded.';
+    return;
+  }
+
+  title.textContent = selectedBlog.title;
+  description.textContent = selectedBlog.metaDescription || selectedBlog.excerpt;
+  kicker.textContent = selectedBlog.tags[0] || 'Literary Lab Blog';
+  breadcrumb.innerHTML = `
+    <a href="index.html">Home</a>
+    <span class="breadcrumb-sep">></span>
+    <a href="blogs.html">Blog</a>
+    <span class="breadcrumb-sep">></span>
+    <span>${escapeHtml(selectedBlog.title)}</span>
+  `;
+  content.hidden = false;
+  emptyState.hidden = true;
+  content.innerHTML = `
+    <div class="blog-tag-row blog-tag-row-top">
+      ${selectedBlog.tags.map((tag) => `<span class="blog-tag">${escapeHtml(tag)}</span>`).join('')}
+    </div>
+    <div class="blog-article-body">
+      ${selectedBlog.contentHtml}
+    </div>
+    <div class="blog-article-cta">
+      <p>Need help turning your manuscript into a professional, publishing-ready book?</p>
+      <a href="contact.html" class="btn btn-primary">Get My Book Plan</a>
+    </div>
+  `;
 }
