@@ -147,16 +147,7 @@
       ]
     },
     blogs: {
-      posts: [
-        {
-          id: 'blog-welcome',
-          title: 'Welcome to the Literary Lab Blog',
-          slug: 'welcome-to-the-literary-lab-blog',
-          metaDescription: 'Insights for self-published authors on book covers, formatting, proofreading, and getting manuscripts ready for Amazon.',
-          tags: ['self-publishing', 'book design'],
-          contentHtml: '<p>This is a placeholder post. Replace it from the admin dashboard when you are ready to publish real blog content.</p>'
-        }
-      ]
+      posts: []
     },
     about: {
       visualImage: '',
