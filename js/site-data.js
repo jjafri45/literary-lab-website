@@ -24,7 +24,7 @@
       heroEyebrow: 'For self-published and first-time authors',
       heroTitleHtml: 'Turn Your Rough Manuscript Into a Book Readers Can Trust',
       heroBody: 'Editing, proofreading, cover design, interior formatting, and publishing support in one place - built for authors who want a professional book without guessing their way through Amazon.',
-      primaryCtaLabel: 'Get My Book Plan',
+      primaryCtaLabel: 'Get a Free Book Readiness Review',
       secondaryCtaLabel: 'See Published Proof',
       stats: [
         { target: '200', suffix: '+', prefix: '', label: 'Books Designed' },

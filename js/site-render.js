@@ -60,10 +60,10 @@ function applySeoMetadata(page, selectedBlog) {
       ogDescription: 'Professional proofreading, cover design, formatting, and publishing-ready book services for self-published authors.'
     },
     'contact.html': {
-      title: 'Contact Us - Literary Lab | Get Your Book Plan',
-      description: 'Tell Literary Lab about your manuscript and get a clear plan for proofreading, cover design, formatting, and publishing support within 24 hours.',
-      ogTitle: 'Contact - Literary Lab | Get Your Book Plan',
-      ogDescription: 'Tell us what stage your manuscript is in and get a clear publishing plan within 24 hours.'
+      title: 'Contact Us - Literary Lab | Get a Free Book Readiness Review',
+      description: 'Tell Literary Lab about your manuscript and get a free readiness review for proofreading, cover design, formatting, and publishing support within 24 hours.',
+      ogTitle: 'Contact - Literary Lab | Free Book Readiness Review',
+      ogDescription: 'Tell us what stage your manuscript is in and get a clear readiness review within 24 hours.'
     },
     'published.html': {
       title: 'Published Books - Literary Lab | Amazon Publishing Proof',
@@ -436,7 +436,7 @@ function renderBlogPage(selectedBlog) {
     </div>
     <div class="blog-article-cta">
       <p>Need help turning your manuscript into a professional, publishing-ready book?</p>
-      <a href="contact.html" class="btn btn-primary">Get My Book Plan</a>
+      <a href="contact.html" class="btn btn-primary">Get a Free Book Readiness Review</a>
     </div>
   `;
 }
