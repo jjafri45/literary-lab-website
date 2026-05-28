@@ -113,6 +113,60 @@
   min-height: 100px;
 }
 
+.admin-richtext-shell {
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.admin-richtext-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-richtext-toolbar .btn {
+  min-width: 42px;
+  padding: 10px 12px;
+}
+
+.admin-richtext-editor {
+  min-height: 280px;
+  padding: 14px;
+  color: var(--text-primary);
+  line-height: 1.7;
+  outline: none;
+}
+
+.admin-richtext-editor:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+}
+
+.admin-richtext-editor a {
+  color: var(--accent-light);
+  text-decoration: underline;
+}
+
+.admin-richtext-editor ul,
+.admin-richtext-editor ol {
+  padding-left: 22px;
+}
+
+.admin-richtext-editor h1,
+.admin-richtext-editor h2,
+.admin-richtext-editor h3 {
+  margin: 0.9em 0 0.4em;
+}
+
+.admin-richtext-meta {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
 .admin-static-field {
   min-height: 48px;
   display: flex;

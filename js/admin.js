@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const homeSection = document.getElementById('homeSection');
   const portfolioSection = document.getElementById('portfolioSection');
   const pricingSection = document.getElementById('pricingSection');
+  const blogsSection = document.getElementById('blogsSection');
   const aboutSection = document.getElementById('aboutSection');
   const imageSection = document.getElementById('imageSection');
   const githubTokenInput = document.getElementById('githubToken');
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderHome();
     renderPortfolio();
     renderPricing();
+    renderBlogs();
     renderAbout();
     renderImages();
   }
@@ -460,6 +462,132 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  function renderBlogs() {
+    blogsSection.innerHTML = `
+      <div class="admin-toolbar admin-toolbar-stack">
+        <p class="admin-note">Blog content is saved as rich HTML so headings, bold text, links, lists, and pasted formatting are preserved when you publish.</p>
+      </div>
+      <div class="admin-list" id="blogsList"></div>
+      <div class="admin-toolbar admin-toolbar-bottom">
+        <button type="button" class="btn btn-outline" id="addBlogBtn">Add Blog</button>
+      </div>
+    `;
+
+    blogsSection.querySelector('#addBlogBtn').addEventListener('click', () => {
+      data.blogs.posts.unshift({
+        id: `blog-${Date.now()}`,
+        title: 'New Blog Post',
+        contentHtml: '<p>Start writing here...</p>'
+      });
+      renderBlogs();
+    });
+
+    const list = blogsSection.querySelector('#blogsList');
+    list.innerHTML = data.blogs.posts.map((post, index) => `
+      <div class="admin-card">
+        <div class="admin-card-head">
+          <h3>Blog ${index + 1}</h3>
+          <button type="button" class="btn btn-outline remove-blog-btn" data-index="${index}">Remove</button>
+        </div>
+        <div class="admin-grid">
+          <div class="admin-field" style="grid-column:1 / -1;">
+            <label>Title</label>
+            <input type="text" data-blog-field="title" data-index="${index}" value="${escapeAttr(post.title)}" />
+          </div>
+          <div class="admin-field" style="grid-column:1 / -1;">
+            <label>Content</label>
+            <div class="admin-richtext-shell">
+              <div class="admin-richtext-toolbar" data-editor-index="${index}">
+                <button type="button" class="btn btn-outline" data-editor-command="bold" data-index="${index}"><strong>B</strong></button>
+                <button type="button" class="btn btn-outline" data-editor-command="italic" data-index="${index}"><em>I</em></button>
+                <button type="button" class="btn btn-outline" data-editor-command="underline" data-index="${index}"><u>U</u></button>
+                <button type="button" class="btn btn-outline" data-editor-command="formatBlock" data-command-value="h2" data-index="${index}">H2</button>
+                <button type="button" class="btn btn-outline" data-editor-command="formatBlock" data-command-value="h3" data-index="${index}">H3</button>
+                <button type="button" class="btn btn-outline" data-editor-command="insertUnorderedList" data-index="${index}">• List</button>
+                <button type="button" class="btn btn-outline" data-editor-command="insertOrderedList" data-index="${index}">1. List</button>
+                <button type="button" class="btn btn-outline" data-editor-command="createLink" data-index="${index}">Link</button>
+                <button type="button" class="btn btn-outline" data-editor-command="removeFormat" data-index="${index}">Clear</button>
+              </div>
+              <div
+                class="admin-richtext-editor"
+                contenteditable="true"
+                spellcheck="true"
+                data-blog-editor="${index}"
+                data-placeholder="Paste or write formatted blog content here..."
+              >${sanitizeRichHtml(post.contentHtml || '')}</div>
+            </div>
+            <div class="admin-richtext-meta">Formatted paste is preserved. Content is stored as safe HTML.</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('[data-blog-field="title"]').forEach((input) => {
+      input.addEventListener('input', (event) => {
+        const index = Number(event.target.dataset.index);
+        data.blogs.posts[index].title = event.target.value;
+      });
+    });
+
+    list.querySelectorAll('.remove-blog-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        data.blogs.posts.splice(Number(button.dataset.index), 1);
+        renderBlogs();
+      });
+    });
+
+    list.querySelectorAll('[data-blog-editor]').forEach((editor) => {
+      editor.addEventListener('input', (event) => {
+        const index = Number(event.currentTarget.dataset.blogEditor);
+        data.blogs.posts[index].contentHtml = sanitizeRichHtml(event.currentTarget.innerHTML);
+      });
+
+      editor.addEventListener('blur', (event) => {
+        const index = Number(event.currentTarget.dataset.blogEditor);
+        const sanitized = sanitizeRichHtml(event.currentTarget.innerHTML);
+        event.currentTarget.innerHTML = sanitized;
+        data.blogs.posts[index].contentHtml = sanitized;
+      });
+
+      editor.addEventListener('paste', () => {
+        window.setTimeout(() => {
+          const index = Number(editor.dataset.blogEditor);
+          const sanitized = sanitizeRichHtml(editor.innerHTML);
+          editor.innerHTML = sanitized;
+          data.blogs.posts[index].contentHtml = sanitized;
+        }, 0);
+      });
+    });
+
+    list.querySelectorAll('[data-editor-command]').forEach((button) => {
+      button.addEventListener('mousedown', (event) => {
+        event.preventDefault();
+      });
+
+      button.addEventListener('click', () => {
+        const index = Number(button.dataset.index);
+        const editor = list.querySelector(`[data-blog-editor="${index}"]`);
+        if (!editor) return;
+        editor.focus();
+
+        const command = button.dataset.editorCommand;
+        if (command === 'createLink') {
+          const value = window.prompt('Enter the full URL', 'https://');
+          if (!value) return;
+          document.execCommand(command, false, value);
+        } else if (command === 'formatBlock') {
+          document.execCommand(command, false, button.dataset.commandValue);
+        } else {
+          document.execCommand(command, false, null);
+        }
+
+        const sanitized = sanitizeRichHtml(editor.innerHTML);
+        editor.innerHTML = sanitized;
+        data.blogs.posts[index].contentHtml = sanitized;
+      });
+    });
+  }
+
   function renderAbout() {
     aboutSection.innerHTML = `
       <div class="admin-list">
@@ -739,6 +867,65 @@ function escapeHtml(value) {
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
+}
+
+function sanitizeRichHtml(html) {
+  const template = document.createElement('template');
+  template.innerHTML = String(html ?? '');
+
+  const blockedTags = new Set(['SCRIPT', 'STYLE', 'IFRAME', 'OBJECT', 'EMBED', 'FORM', 'INPUT', 'BUTTON', 'TEXTAREA', 'SELECT']);
+  const allowedBlockTags = new Set(['P', 'BR', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'UL', 'OL', 'LI', 'BLOCKQUOTE']);
+  const allowedInlineTags = new Set(['STRONG', 'B', 'EM', 'I', 'U', 'A', 'SPAN']);
+
+  const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_ELEMENT, null);
+  const toRemove = [];
+
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (blockedTags.has(node.tagName)) {
+      toRemove.push(node);
+      continue;
+    }
+
+    if (!allowedBlockTags.has(node.tagName) && !allowedInlineTags.has(node.tagName)) {
+      const fragment = document.createDocumentFragment();
+      while (node.firstChild) {
+        fragment.appendChild(node.firstChild);
+      }
+      node.parentNode.replaceChild(fragment, node);
+      continue;
+    }
+
+    Array.from(node.attributes).forEach((attr) => {
+      const name = attr.name.toLowerCase();
+      const value = attr.value.trim();
+      if (name.startsWith('on') || name === 'style' || name === 'id' || name === 'class') {
+        node.removeAttribute(attr.name);
+        return;
+      }
+      if ((name === 'href' || name === 'src') && /^javascript:/i.test(value)) {
+        node.removeAttribute(attr.name);
+        return;
+      }
+      if (node.tagName !== 'A' && name !== 'href') {
+        node.removeAttribute(attr.name);
+      }
+    });
+
+    if (node.tagName === 'A') {
+      const href = node.getAttribute('href') || '';
+      if (href) {
+        node.setAttribute('target', '_blank');
+        node.setAttribute('rel', 'noopener noreferrer');
+      } else {
+        node.removeAttribute('target');
+        node.removeAttribute('rel');
+      }
+    }
+  }
+
+  toRemove.forEach((node) => node.remove());
+  return template.innerHTML.trim();
 }
 
 function mergeImportedData(defaults, imported) {

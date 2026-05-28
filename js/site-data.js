@@ -146,6 +146,9 @@
         }
       ]
     },
+    blogs: {
+      posts: []
+    },
     about: {
       visualImage: '',
       storyStats: [

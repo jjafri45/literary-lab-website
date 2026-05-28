@@ -133,6 +133,9 @@
       }
     ]
   },
+  "blogs": {
+    "posts": []
+  },
   "about": {
     "visualImage": "images/cms/about/20260522234548-visualimage.png",
     "storyStats": [
