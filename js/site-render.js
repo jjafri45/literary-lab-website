@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const page = window.location.pathname.split('/').pop() || 'index.html';
 
   applySharedContent(data.shared);
+  applySeoMetadata(page);
 
   if (page === 'index.html') {
     renderHomePage(data);
@@ -34,6 +35,49 @@ document.addEventListener('DOMContentLoaded', async () => {
     detail: { page, data }
   }));
 });
+
+function applySeoMetadata(page) {
+  const metaMap = {
+    'index.html': {
+      title: 'Literary Lab - Book Design, Formatting, and Publishing Support for Self-Published Authors',
+      description: 'Literary Lab helps self-published authors with proofreading, book cover design, interior formatting, and Amazon-ready publishing files for Kindle, paperback, and hardcover.',
+      ogTitle: 'Literary Lab - Book Design and Publishing Support for Self-Published Authors',
+      ogDescription: 'Proofreading, covers, interior formatting, and publishing-ready book files for self-published authors who want a professional launch.'
+    },
+    'services.html': {
+      title: 'Services - Literary Lab | Book Formatting, Cover Design, Proofreading, and Publishing Support',
+      description: 'Choose proofreading, book cover design, interior formatting, eBook conversion, or a full author launch package. Built for self-published authors and Amazon-ready delivery.',
+      ogTitle: 'Services - Literary Lab | Self-Publishing Support for Authors',
+      ogDescription: 'Professional proofreading, cover design, formatting, and publishing-ready book services for self-published authors.'
+    },
+    'contact.html': {
+      title: 'Contact Us - Literary Lab | Get Your Book Plan',
+      description: 'Tell Literary Lab about your manuscript and get a clear plan for proofreading, cover design, formatting, and publishing support within 24 hours.',
+      ogTitle: 'Contact - Literary Lab | Get Your Book Plan',
+      ogDescription: 'Tell us what stage your manuscript is in and get a clear publishing plan within 24 hours.'
+    },
+    'published.html': {
+      title: 'Published Books - Literary Lab | Amazon Publishing Proof',
+      description: 'Browse published books Literary Lab has helped bring to Amazon, with direct links to each live listing.',
+      ogTitle: 'Published Books - Literary Lab | Amazon Publishing Proof',
+      ogDescription: 'Real Amazon listings that show Literary Lab publishing support from rough manuscript to live book page.'
+    }
+  };
+
+  const meta = metaMap[page];
+  if (!meta) return;
+
+  document.title = meta.title;
+
+  const description = document.querySelector('meta[name="description"]');
+  if (description) description.setAttribute('content', meta.description);
+
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', meta.ogTitle);
+
+  const ogDescription = document.querySelector('meta[property="og:description"]');
+  if (ogDescription) ogDescription.setAttribute('content', meta.ogDescription);
+}
 
 function escapeHtml(value) {
   return String(value ?? '')

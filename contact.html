@@ -72,6 +72,7 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="published.html">Published</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html" class="nav-cta active">Get a Quote</a></li>
     </ul>
@@ -82,6 +83,7 @@
   <a href="index.html">Home</a>
   <a href="services.html">Services</a>
   <a href="portfolio.html">Portfolio</a>
+  <a href="published.html">Published</a>
   <a href="about.html">About</a>
   <a href="contact.html">Contact</a>
 </div>
@@ -158,9 +160,10 @@
 
       <!-- RIGHT: Form -->
       <div class="reveal reveal-delay-2">
-        <span class="section-label">Project Inquiry</span>
-        <h2 class="section-title" style="font-size:clamp(1.6rem,2.8vw,2.2rem);">Get a <em>Free Quote</em></h2>
+        <span class="section-label">Project Start</span>
+        <h2 class="section-title" style="font-size:clamp(1.6rem,2.8vw,2.2rem);">Get Your <em>Book Plan</em></h2>
         <div class="divider"></div>
+        <p style="margin-bottom:28px;">Tell us where the manuscript stands, what format you want to publish in, and what support you think you need. We will reply with the clearest next step instead of a generic quote.</p>
 
         <!--
         ============================================================
@@ -213,6 +216,31 @@
 
           <div class="form-row">
             <div class="form-group">
+              <label for="stage">Project Stage *</label>
+              <select id="stage" name="project_stage" required>
+                <option value="" disabled selected>Select current stage...</option>
+                <option value="rough-manuscript">Rough manuscript</option>
+                <option value="edited-manuscript">Edited manuscript</option>
+                <option value="needs-proofreading">Needs proofreading first</option>
+                <option value="needs-cover-and-formatting">Needs cover and formatting</option>
+                <option value="ready-for-publishing-help">Ready for publishing help</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="formats">Formats Needed *</label>
+              <select id="formats" name="formats_needed" required>
+                <option value="" disabled selected>Select format goal...</option>
+                <option value="kindle-only">Kindle only</option>
+                <option value="paperback-only">Paperback only</option>
+                <option value="hardcover-and-paperback">Paperback + Hardcover</option>
+                <option value="kindle-and-print">Kindle + Print</option>
+                <option value="not-sure">Not sure yet</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
               <label for="genre">Book Genre</label>
               <select id="genre" name="genre">
                 <option value="" disabled selected>Genre…</option>
@@ -242,9 +270,23 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="budget">Budget Range</label>
+              <select id="budget" name="budget_range">
+                <option value="" disabled selected>Select budget...</option>
+                <option>Under $100</option>
+                <option>$100 - $250</option>
+                <option>$250 - $500</option>
+                <option>$500+</option>
+                <option>Need guidance first</option>
+              </select>
+            </div>
+            <div class="form-group">
             <label for="deadline">Target Launch / Deadline</label>
             <input type="text" id="deadline" name="deadline" placeholder="e.g. End of June 2026, ASAP, No rush…" />
+          </div>
+
           </div>
 
           <div class="form-group">
@@ -253,7 +295,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:17px;">
-            Send Inquiry
+            Get My Project Scope
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
 
@@ -359,7 +401,7 @@
         </div>
       </div>
       <div class="footer-col"><h5>Services</h5><ul><li><a href="services.html#interior">Book Formatting</a></li><li><a href="services.html#covers">Cover Design</a></li><li><a href="services.html#ebook">eBook Conversion</a></li><li><a href="services.html#consult">Consultation</a></li><li><a href="services.html#editing">Proofreading</a></li></ul></div>
-      <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About Us</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About Us</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="published.html">Published Books</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div class="footer-col"><h5>Get in Touch</h5><ul><li><a href="mailto:lab@zorqstudio.com">lab@zorqstudio.com</a></li><li><a href="https://wa.me/923472590983" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="contact.html">Request a Quote</a></li></ul></div>
     </div>
     <div class="footer-bottom">

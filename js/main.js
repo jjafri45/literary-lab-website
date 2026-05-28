@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initActiveNavLink();
   initContactForm();
   initSmoothScroll();
+  initFaqAccordions();
 
   initializeDynamicSections();
   document.addEventListener('literarylab:content-rendered', initializeDynamicSections);
@@ -77,6 +78,7 @@ function initRevealObserver() {
 function initializeDynamicSections() {
   initAnimatedCounters();
   initPortfolioFilter();
+  initFaqAccordions();
 }
 
 function initAnimatedCounters() {
@@ -210,5 +212,22 @@ function initSmoothScroll() {
     });
 
     anchor.dataset.bound = 'true';
+  });
+}
+
+function initFaqAccordions() {
+  document.querySelectorAll('.faq-item').forEach((item, index) => {
+    const trigger = item.querySelector('.faq-q');
+    if (!trigger || trigger.dataset.bound === 'true') return;
+
+    if (index === 0) {
+      item.classList.add('open');
+    }
+
+    trigger.addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+
+    trigger.dataset.bound = 'true';
   });
 }

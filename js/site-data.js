@@ -21,35 +21,35 @@
       footerCreditUrl: 'https://zorqstudio.com/'
     },
     home: {
-      heroEyebrow: "Pakistan's Premier Book Design Studio",
-      heroTitleHtml: 'Where Stories<br>Find Their <em>Perfect</em><br>Form',
-      heroBody: 'Professional book covers, print-ready interior formatting, and publishing support - crafted with precision for self-published authors worldwide.',
-      primaryCtaLabel: 'Start Your Project',
-      secondaryCtaLabel: 'View Our Work',
+      heroEyebrow: 'For self-published and first-time authors',
+      heroTitleHtml: 'Turn Your Rough Manuscript Into a Book Readers Can Trust',
+      heroBody: 'Editing, proofreading, cover design, interior formatting, and publishing support in one place - built for authors who want a professional book without guessing their way through Amazon.',
+      primaryCtaLabel: 'Get My Book Plan',
+      secondaryCtaLabel: 'See Published Proof',
       stats: [
         { target: '200', suffix: '+', prefix: '', label: 'Books Designed' },
-        { target: '150', suffix: '+', prefix: '', label: 'Happy Authors' },
-        { target: '5', suffix: '', prefix: '★ ', label: 'Average Rating' },
-        { target: '100', suffix: '%', prefix: '', label: 'Satisfaction Guaranteed' }
+        { target: '150', suffix: '+', prefix: '', label: 'Authors Helped' },
+        { target: '5', suffix: '.0', prefix: '* ', label: 'Rating' },
+        { target: '100', suffix: '%', prefix: '', label: 'Upload-Ready Delivery' }
       ],
       testimonials: [
         {
-          stars: '★★★★★',
-          text: 'The interior formatting was flawless - KDP accepted the file on the first upload. The layout looks genuinely professional, exactly what I wanted for my debut novel.',
+          stars: '*****',
+          text: 'The interior formatting was flawless and KDP accepted the file on the first upload. As a first-time author, that removed a huge amount of stress and made the whole launch feel manageable.',
           initials: 'SR',
           author: 'Sarah Reynolds',
           role: 'Fiction Author, UK'
         },
         {
-          stars: '★★★★★',
-          text: 'My book cover went from invisible to ranking on the first page of Amazon. Literary Lab understood my genre instantly and delivered a design that truly sells.',
+          stars: '*****',
+          text: 'My book cover went from invisible to looking commercially ready. They understood the genre, made the thumbnail stronger, and the final package looked like something readers could trust immediately.',
           initials: 'MK',
           author: 'Marcus K.',
           role: 'Business Author, USA'
         },
         {
-          stars: '★★★★★',
-          text: 'Fast, professional, and the communication was excellent throughout. They handled both my print and eBook versions perfectly. Will use again for my next book.',
+          stars: '*****',
+          text: 'Fast, professional, and clear from start to finish. They handled the print files, Kindle version, and revisions without making me guess what came next, which is exactly what new authors need.',
           initials: 'PA',
           author: 'Priya Anand',
           role: 'Non-Fiction Author, India'
@@ -78,54 +78,70 @@
       },
       pricing: [
         {
-          title: 'Interior Formatting',
-          description: 'Up to 80,000 words',
+          title: 'Manuscript to Print-Ready',
+          description: 'For authors with a finished draft',
           price: '99',
-          label: 'Per Project',
+          label: 'Flat Project Rate',
           featured: false,
           buttonLabel: 'Get Started',
           buttonStyle: 'outline',
           features: [
-            'Adobe InDesign layout',
-            'KDP / IngramSpark specs',
-            'Front matter included',
-            'Page numbers & TOC',
-            'Print-ready PDF',
+            'Interior formatting in Adobe InDesign',
+            'KDP and IngramSpark specs',
+            'Front matter and chapter styling',
+            'Page numbers, TOC, headers and footers',
+            'Print-ready PDF delivery',
             'Unlimited revisions'
           ]
         },
         {
-          title: 'Cover + Interior Bundle',
-          description: 'Most popular package',
+          title: 'Author Launch Package',
+          description: 'Best for first-time self-publishers',
           price: '249',
-          label: 'Per Project',
+          label: 'Flat Project Rate',
           featured: true,
           buttonLabel: 'Get Started',
           buttonStyle: 'primary',
           features: [
-            'Custom cover design',
-            'Full print wrap + eBook cover',
-            'Interior formatting',
-            'KDP & IngramSpark ready',
-            'All file formats included',
+            'Custom cover design for Kindle and print',
+            'Full print wrap plus eBook cover',
+            'Interior formatting and export',
+            'KDP and IngramSpark ready files',
+            'Clear deliverables and launch assets',
             'Unlimited revisions'
           ]
         },
         {
-          title: 'Cover Design Only',
-          description: 'Print wrap + eBook file',
+          title: 'Cover That Converts',
+          description: 'For authors who need stronger first impressions',
           price: '149',
-          label: 'Per Project',
+          label: 'Flat Project Rate',
           featured: false,
           buttonLabel: 'Get Started',
           buttonStyle: 'outline',
           features: [
-            'Custom genre-targeted design',
-            'Front, spine & back cover',
-            'Separate eBook cover',
+            'Custom genre-targeted cover design',
+            'Front, spine and back cover',
+            'Separate Kindle cover file',
             'High-res print PDF',
-            'Web-optimized JPG',
+            'Thumbnail-friendly web JPG',
             'Unlimited revisions'
+          ]
+        },
+        {
+          title: 'Proofreading Before Design',
+          description: 'For rough or nearly-finished manuscripts',
+          price: '49',
+          label: 'Flat Project Rate',
+          featured: false,
+          buttonLabel: 'Get Started',
+          buttonStyle: 'outline',
+          features: [
+            'Full manuscript proofread',
+            'Grammar and spelling corrections',
+            'Tracked changes in Word',
+            '5-7 day turnaround',
+            'One revision round included'
           ]
         }
       ]
@@ -134,7 +150,7 @@
       visualImage: '',
       storyStats: [
         { value: '200+', label: 'Books Designed' },
-        { value: '5★', label: 'Average Rating' },
+        { value: '5*', label: 'Average Rating' },
         { value: '24h', label: 'Response Time' }
       ],
       team: [
