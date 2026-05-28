@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   applySharedContent(data.shared);
   applySeoMetadata(page, selectedBlog);
+  injectStructuredData(page, data, selectedBlog);
 
   if (page === 'index.html') {
     renderHomePage(data);
@@ -46,36 +47,76 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function applySeoMetadata(page, selectedBlog) {
+  const origin = getSiteOrigin();
+  const pageUrls = {
+    'index.html': `${origin}/literary-lab-website/`,
+    'services.html': `${origin}/literary-lab-website/services.html`,
+    'portfolio.html': `${origin}/literary-lab-website/portfolio.html`,
+    'about.html': `${origin}/literary-lab-website/about.html`,
+    'contact.html': `${origin}/literary-lab-website/contact.html`,
+    'published.html': `${origin}/literary-lab-website/published.html`,
+    'blogs.html': `${origin}/literary-lab-website/blogs.html`,
+    'blog.html': selectedBlog
+      ? `${origin}/literary-lab-website/blog.html?slug=${encodeURIComponent(selectedBlog.slug)}`
+      : `${origin}/literary-lab-website/blog.html`
+  };
+
   const metaMap = {
     'index.html': {
       title: 'Literary Lab - Book Design, Formatting, and Publishing Support for Self-Published Authors',
       description: 'Literary Lab helps self-published authors with proofreading, book cover design, interior formatting, and Amazon-ready publishing files for Kindle, paperback, and hardcover.',
       ogTitle: 'Literary Lab - Book Design and Publishing Support for Self-Published Authors',
-      ogDescription: 'Proofreading, covers, interior formatting, and publishing-ready book files for self-published authors who want a professional launch.'
+      ogDescription: 'Proofreading, covers, interior formatting, and publishing-ready book files for self-published authors who want a professional launch.',
+      canonical: pageUrls['index.html'],
+      ogUrl: pageUrls['index.html']
     },
     'services.html': {
       title: 'Services - Literary Lab | Book Formatting, Cover Design, Proofreading, and Publishing Support',
       description: 'Choose proofreading, book cover design, interior formatting, eBook conversion, or a full author launch package. Built for self-published authors and Amazon-ready delivery.',
       ogTitle: 'Services - Literary Lab | Self-Publishing Support for Authors',
-      ogDescription: 'Professional proofreading, cover design, formatting, and publishing-ready book services for self-published authors.'
+      ogDescription: 'Professional proofreading, cover design, formatting, and publishing-ready book services for self-published authors.',
+      canonical: pageUrls['services.html'],
+      ogUrl: pageUrls['services.html']
+    },
+    'portfolio.html': {
+      title: 'Portfolio - Literary Lab | Book Cover and Interior Design Work',
+      description: 'Browse Literary Lab portfolio samples for book covers and interior layouts created for self-published authors.',
+      ogTitle: 'Portfolio - Literary Lab | Book Cover and Interior Design Work',
+      ogDescription: 'Book cover design and interior layout samples for self-published authors.',
+      canonical: pageUrls['portfolio.html'],
+      ogUrl: pageUrls['portfolio.html']
+    },
+    'about.html': {
+      title: 'About Literary Lab | Book Design Studio for Self-Published Authors',
+      description: 'Meet Literary Lab, a Pakistan-based book design studio helping self-published authors with proofreading, covers, formatting, and publishing support.',
+      ogTitle: 'About Literary Lab | Book Design Studio for Authors',
+      ogDescription: 'Meet the studio behind Literary Lab and the publishing support built for self-published authors.',
+      canonical: pageUrls['about.html'],
+      ogUrl: pageUrls['about.html']
     },
     'contact.html': {
       title: 'Contact Us - Literary Lab | Get a Free Book Readiness Review',
       description: 'Tell Literary Lab about your manuscript and get a free readiness review for proofreading, cover design, formatting, and publishing support within 24 hours.',
       ogTitle: 'Contact - Literary Lab | Free Book Readiness Review',
-      ogDescription: 'Tell us what stage your manuscript is in and get a clear readiness review within 24 hours.'
+      ogDescription: 'Tell us what stage your manuscript is in and get a clear readiness review within 24 hours.',
+      canonical: pageUrls['contact.html'],
+      ogUrl: pageUrls['contact.html']
     },
     'published.html': {
       title: 'Published Books - Literary Lab | Amazon Publishing Proof',
       description: 'Browse published books Literary Lab has helped bring to Amazon, with direct links to each live listing.',
       ogTitle: 'Published Books - Literary Lab | Amazon Publishing Proof',
-      ogDescription: 'Real Amazon listings that show Literary Lab publishing support from rough manuscript to live book page.'
+      ogDescription: 'Real Amazon listings that show Literary Lab publishing support from rough manuscript to live book page.',
+      canonical: pageUrls['published.html'],
+      ogUrl: pageUrls['published.html']
     },
     'blogs.html': {
       title: 'Blog - Literary Lab | Self-Publishing Advice for Authors',
       description: 'Read Literary Lab articles on self-publishing, proofreading, book covers, interior formatting, and preparing your manuscript for Amazon.',
       ogTitle: 'Blog - Literary Lab | Advice for Self-Published Authors',
-      ogDescription: 'Actionable advice for self-published authors on formatting, proofreading, covers, and publishing-ready book files.'
+      ogDescription: 'Actionable advice for self-published authors on formatting, proofreading, covers, and publishing-ready book files.',
+      canonical: pageUrls['blogs.html'],
+      ogUrl: pageUrls['blogs.html']
     },
     'blog.html': selectedBlog
       ? {
@@ -83,13 +124,16 @@ function applySeoMetadata(page, selectedBlog) {
           description: selectedBlog.metaDescription || selectedBlog.excerpt,
           ogTitle: `${selectedBlog.title} - Literary Lab Blog`,
           ogDescription: selectedBlog.metaDescription || selectedBlog.excerpt,
-          canonical: `${window.location.origin}${window.location.pathname}?slug=${encodeURIComponent(selectedBlog.slug)}`
+          canonical: pageUrls['blog.html'],
+          ogUrl: pageUrls['blog.html']
         }
       : {
           title: 'Blog Post - Literary Lab',
           description: 'Read publishing guidance from Literary Lab for self-published and first-time authors.',
           ogTitle: 'Blog Post - Literary Lab',
-          ogDescription: 'Read publishing guidance from Literary Lab for self-published and first-time authors.'
+          ogDescription: 'Read publishing guidance from Literary Lab for self-published and first-time authors.',
+          canonical: pageUrls['blog.html'],
+          ogUrl: pageUrls['blog.html']
         }
   };
 
@@ -107,8 +151,143 @@ function applySeoMetadata(page, selectedBlog) {
   const ogDescription = document.querySelector('meta[property="og:description"]');
   if (ogDescription) ogDescription.setAttribute('content', meta.ogDescription);
 
+  const ogUrl = document.querySelector('meta[property="og:url"]');
+  if (ogUrl && meta.ogUrl) ogUrl.setAttribute('content', meta.ogUrl);
+
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical && meta.canonical) canonical.setAttribute('href', meta.canonical);
+}
+
+function injectStructuredData(page, data, selectedBlog) {
+  const schemaId = 'literarylab-structured-data';
+  const existing = document.getElementById(schemaId);
+  if (existing) existing.remove();
+
+  const origin = getSiteOrigin();
+  const baseUrl = `${origin}/literary-lab-website`;
+  const organization = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    '@id': `${baseUrl}/#organization`,
+    name: 'Literary Lab',
+    url: `${baseUrl}/`,
+    image: `${baseUrl}/images/cms/published/brand-loud-amazon-laptop.png`,
+    email: 'mailto:lab@zorqstudio.com',
+    telephone: '+923472590983',
+    areaServed: 'Worldwide',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Karachi',
+      addressCountry: 'PK'
+    },
+    sameAs: [
+      'https://www.facebook.com/literarylab/',
+      'https://www.instagram.com/literarylabofficial/',
+      'https://wa.me/923472590983'
+    ],
+    description: 'Literary Lab helps self-published authors with proofreading, book cover design, interior formatting, eBook conversion, and publishing-ready files.'
+  };
+
+  const schema = [organization];
+
+  if (page === 'index.html') {
+    schema.push({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Literary Lab',
+      url: `${baseUrl}/`
+    });
+  }
+
+  if (page === 'services.html') {
+    schema.push({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Literary Lab Services',
+      itemListElement: (data.services?.pricing || []).map((item, index) => ({
+        '@type': 'Offer',
+        position: index + 1,
+        name: item.title,
+        price: item.price,
+        priceCurrency: 'USD',
+        description: item.description,
+        url: `${baseUrl}/services.html`
+      }))
+    });
+  }
+
+  if (page === 'blogs.html') {
+    const posts = normalizeBlogsCollection(data.blogs);
+    schema.push({
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      name: 'Literary Lab Blog',
+      url: `${baseUrl}/blogs.html`,
+      blogPost: posts.map((post) => ({
+        '@type': 'BlogPosting',
+        headline: post.title,
+        url: `${baseUrl}/blog.html?slug=${encodeURIComponent(post.slug)}`,
+        description: post.metaDescription || post.excerpt,
+        keywords: post.tags.join(', ')
+      }))
+    });
+  }
+
+  if (page === 'blog.html' && selectedBlog) {
+    schema.push({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: selectedBlog.title,
+      description: selectedBlog.metaDescription || selectedBlog.excerpt,
+      url: `${baseUrl}/blog.html?slug=${encodeURIComponent(selectedBlog.slug)}`,
+      articleSection: selectedBlog.tags[0] || 'Self-publishing',
+      keywords: selectedBlog.tags.join(', '),
+      author: {
+        '@type': 'Organization',
+        name: 'Literary Lab'
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Literary Lab'
+      }
+    });
+  }
+
+  const faqItems = Array.from(document.querySelectorAll('.faq-item')).map((item) => {
+    const question = item.querySelector('.faq-q')?.textContent?.trim();
+    const answer = item.querySelector('.faq-a')?.textContent?.trim();
+    if (!question || !answer) return null;
+    return {
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: answer
+      }
+    };
+  }).filter(Boolean);
+
+  if (faqItems.length) {
+    schema.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems
+    });
+  }
+
+  const script = document.createElement('script');
+  script.id = schemaId;
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify(schema.length === 1 ? schema[0] : schema);
+  document.head.appendChild(script);
+}
+
+function getSiteOrigin() {
+  const origin = window.location.origin;
+  if (!origin || origin === 'null' || origin.startsWith('file')) {
+    return 'https://jjafri45.github.io';
+  }
+  return origin;
 }
 
 function escapeHtml(value) {

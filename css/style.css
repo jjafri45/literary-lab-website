@@ -1071,6 +1071,103 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
 .form-success h4 { color: var(--accent); margin-bottom: 10px; }
 
 /* ============================================================
+   TRUST / COMPARISON / POLICY
+   ============================================================ */
+.trust-grid,
+.policy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.trust-card,
+.policy-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 30px 28px;
+  transition: var(--transition);
+}
+
+.trust-card:hover,
+.policy-card:hover {
+  border-color: var(--accent-border);
+  transform: translateY(-3px);
+}
+
+.trust-card h3,
+.policy-card h3,
+.comparison-title {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.trust-list {
+  display: grid;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.7;
+  padding-left: 18px;
+}
+
+.trust-list li::marker {
+  color: var(--accent);
+}
+
+.comparison-wrap {
+  margin-bottom: 34px;
+  background: linear-gradient(180deg, rgba(159,122,234,0.08), rgba(16,10,28,0.25));
+  border: 1px solid var(--accent-border);
+  padding: 28px;
+}
+
+.comparison-wrap p {
+  max-width: 760px;
+}
+
+.comparison-table {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1.2fr 1fr;
+  gap: 18px;
+  padding: 18px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  align-items: start;
+}
+
+.comparison-head {
+  background: rgba(159,122,234,0.08);
+  border-color: var(--accent-border);
+  color: var(--text-primary);
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.comparison-row strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.comparison-row span {
+  color: var(--text-secondary);
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+.published-section-head {
+  margin-bottom: 18px;
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 footer { background: var(--bg-secondary); border-top: 1px solid var(--border-gold); padding: 80px 0 36px; }
@@ -1111,8 +1208,20 @@ footer { background: var(--bg-secondary); border-top: 1px solid var(--border-gol
   .quick-path-grid,
   .case-studies-grid,
   .process-detail-grid,
-  .blog-grid {
+  .blog-grid,
+  .trust-grid,
+  .policy-grid {
     grid-template-columns: 1fr;
+  }
+  .comparison-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .comparison-head {
+    display: none;
+  }
+  .comparison-wrap {
+    padding: 22px;
   }
   .hero .container {
     grid-template-columns: 1fr;

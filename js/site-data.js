@@ -91,7 +91,7 @@
             'Front matter and chapter styling',
             'Page numbers, TOC, headers and footers',
             'Print-ready PDF delivery',
-            'Unlimited revisions'
+            'Revisions within the approved formatting scope'
           ]
         },
         {
@@ -108,7 +108,7 @@
             'Interior formatting and export',
             'KDP and IngramSpark ready files',
             'Clear deliverables and launch assets',
-            'Unlimited revisions'
+            'Revisions within the approved package scope'
           ]
         },
         {
@@ -125,7 +125,7 @@
             'Separate Kindle cover file',
             'High-res print PDF',
             'Thumbnail-friendly web JPG',
-            'Unlimited revisions'
+            'Revisions within the approved cover direction'
           ]
         },
         {
