@@ -76,9 +76,39 @@ function initRevealObserver() {
 }
 
 function initializeDynamicSections() {
+  reorderHomeSections();
   initAnimatedCounters();
   initPortfolioFilter();
   initFaqAccordions();
+}
+
+function reorderHomeSections() {
+  if (document.body.dataset.page !== 'home') return;
+
+  const footer = document.querySelector('footer');
+  if (!footer) return;
+
+  const sectionOrder = [
+    'proof-bar',
+    'start-here',
+    'portfolio-preview',
+    'published-proof',
+    'services-overview',
+    'case-studies',
+    'process',
+    'testimonials',
+    'trust-policy',
+    'about-teaser',
+    'faq',
+    'final-cta'
+  ];
+
+  sectionOrder.forEach((key) => {
+    const section = document.querySelector(`[data-home-section="${key}"]`);
+    if (section) {
+      document.body.insertBefore(section, footer);
+    }
+  });
 }
 
 function initAnimatedCounters() {

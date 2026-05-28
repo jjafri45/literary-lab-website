@@ -399,6 +399,10 @@ function renderHomePage(data) {
   if (testimonialsGrid) {
     testimonialsGrid.innerHTML = home.testimonials.map((item) => `
       <div class="testimonial-card">
+        <div class="testimonial-proof-header">
+          <span>${escapeHtml(item.source || 'Client Review')}</span>
+          <span>${escapeHtml(item.proof || 'Publishing Support')}</span>
+        </div>
         <div class="stars">${escapeHtml(item.stars)}</div>
         <p>${escapeHtml(item.text)}</p>
         <div class="author-wrap">

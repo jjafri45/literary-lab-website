@@ -8,8 +8,8 @@
   },
   "home": {
     "heroEyebrow": "For self-published and first-time authors",
-    "heroTitleHtml": "Turn Your Rough Manuscript Into a Book Readers Can Trust",
-    "heroBody": "Editing, proofreading, cover design, interior formatting, and publishing support in one place - built for authors who want a professional book without guessing their way through Amazon.",
+    "heroTitleHtml": "Turn Your Manuscript Into a KDP-Ready Book Readers Can Trust",
+    "heroBody": "A publishing-aware book design studio for self-published authors who want their book to look professional and upload correctly the first time.",
     "primaryCtaLabel": "Get a Free Book Readiness Review",
     "secondaryCtaLabel": "See Published Proof",
     "stats": [
@@ -44,21 +44,27 @@
         "text": "The interior formatting was flawless and KDP accepted the file on the first upload. As a first-time author, that removed a huge amount of stress and made the whole launch feel manageable.",
         "initials": "SR",
         "author": "Sarah Reynolds",
-        "role": "Fiction Author, UK"
+        "role": "Fiction Author, UK",
+        "source": "WhatsApp Review",
+        "proof": "KDP accepted on first upload"
       },
       {
         "stars": "*****",
         "text": "My book cover went from invisible to looking commercially ready. They understood the genre, made the thumbnail stronger, and the final package looked like something readers could trust immediately.",
         "initials": "MK",
         "author": "Marcus K.",
-        "role": "Business Author, USA"
+        "role": "Business Author, USA",
+        "source": "Client Feedback",
+        "proof": "Commercially stronger cover direction"
       },
       {
         "stars": "*****",
         "text": "Fast, professional, and clear from start to finish. They handled the print files, Kindle version, and revisions without making me guess what came next, which is exactly what new authors need.",
         "initials": "PA",
         "author": "Priya Anand",
-        "role": "Non-Fiction Author, India"
+        "role": "Non-Fiction Author, India",
+        "source": "Project Review",
+        "proof": "Print and Kindle workflow delivered"
       }
     ]
   },
@@ -165,70 +171,68 @@
     },
     "pricing": [
       {
-        "title": "Manuscript to Print-Ready",
-        "description": "For authors with a finished draft",
+        "title": "Starter Formatting",
+        "description": "For clean manuscripts only",
         "price": "99",
-        "label": "Flat Project Rate",
+        "label": "Text-Only Books",
         "featured": false,
         "buttonLabel": "Get Started",
         "buttonStyle": "outline",
         "features": [
           "Interior formatting in Adobe InDesign",
-          "KDP and IngramSpark specs",
-          "Front matter and chapter styling",
-          "Page numbers, TOC, headers and footers",
+          "For clean text-only manuscripts",
+          "KDP and IngramSpark print specs",
+          "Front matter, chapter styling, and page numbering",
           "Print-ready PDF delivery",
-          "Revisions within the approved formatting scope"
+          "Not for heavy images, tables, or complex layouts"
         ]
       },
       {
-        "title": "Author Launch Package",
-        "description": "Best for first-time self-publishers",
-        "price": "249",
-        "label": "Flat Project Rate",
+        "title": "Author Launch Bundle",
+        "description": "Main offer for first-time authors",
+        "price": "249+",
+        "label": "249 to 349",
         "featured": true,
         "buttonLabel": "Get Started",
         "buttonStyle": "primary",
         "features": [
           "Custom cover design for Kindle and print",
-          "Full print wrap plus eBook cover",
-          "Interior formatting and export",
-          "KDP and IngramSpark ready files",
+          "Interior formatting and upload-ready exports",
+          "Kindle, paperback, and hardcover file prep",
+          "Best for self-published authors who want one team",
           "Clear deliverables and launch assets",
           "Revisions within the approved package scope"
         ]
       },
       {
-        "title": "Cover That Converts",
-        "description": "For authors who need stronger first impressions",
-        "price": "149",
-        "label": "Flat Project Rate",
+        "title": "Premium Publishing Kit",
+        "description": "For authors who need broader launch support",
+        "price": "499+",
+        "label": "499 to 799",
         "featured": false,
         "buttonLabel": "Get Started",
         "buttonStyle": "outline",
         "features": [
-          "Custom genre-targeted cover design",
-          "Front, spine and back cover",
-          "Separate Kindle cover file",
-          "High-res print PDF",
-          "Thumbnail-friendly web JPG",
-          "Revisions within the approved cover direction"
+          "Cover, interior, eBook, and proofreading support",
+          "Amazon description support",
+          "Category and keyword guidance",
+          "Launch checklist and asset guidance",
+          "Best for authors who want a fuller publishing path"
         ]
       },
       {
-        "title": "Proofreading Before Design",
-        "description": "For rough or nearly-finished manuscripts",
-        "price": "49",
-        "label": "Flat Project Rate",
+        "title": "Complex Layout Quote",
+        "description": "For children’s books, workbooks, journals, cookbooks, and illustrated interiors",
+        "price": "Custom",
+        "label": "Scope-Based Quote",
         "featured": false,
-        "buttonLabel": "Get Started",
+        "buttonLabel": "Request Quote",
         "buttonStyle": "outline",
         "features": [
-          "Full manuscript proofread",
-          "Grammar and spelling corrections",
-          "Tracked changes in Word",
-          "5-7 day turnaround",
-          "One revision round included"
+          "Children’s books and activity books",
+          "Workbooks, journals, and guided interiors",
+          "Cookbooks, academic layouts, and heavily illustrated books",
+          "Custom scope based on complexity and production needs"
         ]
       }
     ]
