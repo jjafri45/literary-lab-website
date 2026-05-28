@@ -319,9 +319,10 @@ function buildPortfolioCard(item, index, tall = false) {
   const classes = ['portfolio-item'];
   if (tall) classes.push('portfolio-item-tall');
   const imageFit = item.imageFit === 'contain' ? 'fit-contain' : 'fit-cover';
+  const loadingMode = tall ? 'eager' : 'lazy';
 
   const imageMarkup = item.imageSrc
-    ? `<img class="managed-portfolio-image ${imageFit}" src="${escapeHtml(item.imageSrc)}" alt="${escapeHtml(item.alt || item.title || 'Portfolio item')}" loading="lazy" decoding="async" />`
+    ? `<img class="managed-portfolio-image ${imageFit}" src="${escapeHtml(item.imageSrc)}" alt="${escapeHtml(item.alt || item.title || 'Portfolio item')}" loading="${loadingMode}" decoding="async" />`
     : createPlaceholder(item.title || 'Portfolio Item', index);
 
   return `

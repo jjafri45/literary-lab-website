@@ -3,6 +3,7 @@
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.body.classList.add('js-ready');
   applyFooterYear();
   initNavbar();
   initMobileMenu();
