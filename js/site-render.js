@@ -498,11 +498,14 @@ function renderServicesPage(services) {
   pricingGrid.innerHTML = services.pricing.map((pkg) => {
     const cardClass = pkg.featured ? 'pricing-card featured' : 'pricing-card';
     const buttonClass = pkg.buttonStyle === 'primary' ? 'btn btn-primary' : 'btn btn-outline';
+    const amountMarkup = pkg.price === 'Custom'
+      ? `<div class="price-amount price-amount-custom">${escapeHtml(pkg.price)}</div>`
+      : `<div class="price-amount"><sup>$</sup>${escapeHtml(pkg.price)}</div>`;
     return `
       <div class="${cardClass}">
         <h3>${escapeHtml(pkg.title)}</h3>
         <p class="price-desc">${escapeHtml(pkg.description)}</p>
-        <div class="price-amount"><sup>$</sup>${escapeHtml(pkg.price)}</div>
+        ${amountMarkup}
         <span class="price-label">${escapeHtml(pkg.label)}</span>
         <ul class="price-features">
           ${pkg.features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join('')}
