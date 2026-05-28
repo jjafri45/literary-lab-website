@@ -553,6 +553,13 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
 .testimonial-card  { background: var(--bg-card); border: 1px solid var(--border); padding: 36px 34px; position: relative; transition: var(--transition); }
 .testimonial-card:hover { border-color: var(--border-gold); }
 .testimonial-card::before { content: '\201C'; font-family: var(--font-display); font-size: 5rem; color: var(--accent-dim); position: absolute; top: 18px; left: 30px; line-height: 1; }
+.testimonial-card::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--gradient-accent);
+}
 .testimonial-proof-header {
   display: flex;
   justify-content: space-between;
@@ -840,6 +847,71 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
 .proof-card {
   background: var(--bg-card);
   padding: 28px 24px;
+}
+.proof-card-media {
+  display: grid;
+  gap: 16px;
+}
+.proof-media-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  min-height: 180px;
+}
+.proof-media-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.proof-card-evidence {
+  display: grid;
+  gap: 16px;
+}
+.proof-evidence-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.proof-evidence-head span {
+  border: 1px solid var(--accent-border);
+  padding: 7px 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: rgba(159,122,234,0.08);
+}
+.proof-evidence-body {
+  display: grid;
+  gap: 12px;
+}
+.proof-evidence-quote {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  padding: 16px;
+}
+.proof-evidence-quote strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.proof-evidence-quote p,
+.proof-evidence-list li {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+.proof-evidence-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 18px;
 }
 .proof-value {
   display: block;
