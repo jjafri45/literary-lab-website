@@ -64,21 +64,21 @@
     },
     portfolio: {
       items: [
-        { category: 'covers', label: 'Cover Design', title: 'Book Cover Design', alt: 'Book cover design portfolio item', imageSrc: '', imageFit: 'cover', showOnHome: true },
-        { category: 'interior', label: 'Book Interior', title: 'Interior Formatting', alt: 'Interior formatting portfolio item', imageSrc: '', imageFit: 'contain', showOnHome: true },
-        { category: 'covers', label: 'Cover Design', title: 'Creative Cover', alt: 'Creative cover design portfolio item', imageSrc: '', imageFit: 'cover', showOnHome: true },
-        { category: 'ebook', label: 'eBook Conversion', title: 'eBook Design', alt: 'eBook design portfolio item', imageSrc: '', imageFit: 'cover', showOnHome: true },
-        { category: 'covers', label: 'Cover Design', title: 'Non-Fiction Cover', alt: 'Non-fiction cover design portfolio item', imageSrc: '', imageFit: 'cover', showOnHome: true },
-        { category: 'interior', label: 'Book Interior', title: 'Chapter Layouts', alt: 'Chapter layouts portfolio item', imageSrc: '', imageFit: 'contain', showOnHome: true },
-        { category: 'covers', label: 'Cover Design', title: 'Fiction Cover', alt: 'Fiction cover portfolio item', imageSrc: '', imageFit: 'cover', showOnHome: false },
-        { category: 'interior', label: 'Book Interior', title: 'Formatted Spread', alt: 'Formatted spread portfolio item', imageSrc: '', imageFit: 'contain', showOnHome: false },
-        { category: 'ebook', label: 'eBook', title: 'Kindle Edition', alt: 'Kindle edition portfolio item', imageSrc: '', imageFit: 'cover', showOnHome: false }
+        { category: 'covers', label: 'Cover Design', title: 'Book Cover Design', alt: 'Book cover design portfolio item', imageSrc: 'images/cms/portfolio/20260523201557-book-cover-design.jpg', imageFit: 'cover', showOnHome: true },
+        { category: 'interior', label: 'Book Interior', title: 'Interior Formatting', alt: 'Interior formatting portfolio item', imageSrc: 'images/cms/portfolio/20260522234515-interior-formatting.png', imageFit: 'contain', showOnHome: true },
+        { category: 'covers', label: 'Cover Design', title: 'Creative Cover', alt: 'Creative cover design portfolio item', imageSrc: 'images/cms/portfolio/20260523202114-creative-cover.jpg', imageFit: 'cover', showOnHome: true },
+        { category: 'ebook', label: 'eBook Conversion', title: 'eBook Design', alt: 'eBook design portfolio item', imageSrc: 'images/cms/portfolio/20260523202116-ebook-design.jpg', imageFit: 'cover', showOnHome: true },
+        { category: 'covers', label: 'Cover Design', title: 'Non-Fiction Cover', alt: 'Non-fiction cover design portfolio item', imageSrc: 'images/cms/portfolio/20260523202117-non-fiction-cover.jpg', imageFit: 'cover', showOnHome: true },
+        { category: 'interior', label: 'Book Interior', title: 'Chapter Layouts', alt: 'Chapter layouts portfolio item', imageSrc: 'images/cms/portfolio/20260522234531-chapter-layouts.png', imageFit: 'contain', showOnHome: true },
+        { category: 'covers', label: 'Cover Design', title: 'Fiction Cover', alt: 'Fiction cover portfolio item', imageSrc: 'images/cms/portfolio/20260523202119-fiction-cover.png', imageFit: 'cover', showOnHome: false },
+        { category: 'interior', label: 'Book Interior', title: 'Formatted Spread', alt: 'Formatted spread portfolio item', imageSrc: 'images/cms/portfolio/20260522234539-formatted-spread.png', imageFit: 'contain', showOnHome: false },
+        { category: 'ebook', label: 'eBook', title: 'Kindle Edition', alt: 'Kindle edition portfolio item', imageSrc: 'images/cms/portfolio/20260523202127-kindle-edition.jpg', imageFit: 'cover', showOnHome: false }
       ]
     },
     services: {
       visuals: {
-        interior: '',
-        covers: '',
+        interior: 'images/cms/services/20260522234549-interior.jpg',
+        covers: 'images/cms/services/20260522234551-covers.png',
         ebook: '',
         consult: ''
       },
@@ -154,7 +154,7 @@
       posts: []
     },
     about: {
-      visualImage: '',
+      visualImage: 'images/cms/about/20260522234548-visualimage.png',
       storyStats: [
         { value: '200+', label: 'Books Designed' },
         { value: '5*', label: 'Average Rating' },

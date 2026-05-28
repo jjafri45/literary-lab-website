@@ -5,8 +5,20 @@
 document.addEventListener('DOMContentLoaded', async () => {
   if (!window.LiteraryLabCMS) return;
 
-  const data = await window.LiteraryLabCMS.loadSiteData();
   const page = window.location.pathname.split('/').pop() || 'index.html';
+  const fallbackData = window.LiteraryLabCMS.resetSiteData();
+
+  renderCurrentPage(page, fallbackData);
+
+  try {
+    const data = await window.LiteraryLabCMS.loadSiteData();
+    renderCurrentPage(page, data);
+  } catch (error) {
+    console.warn('Failed to render fresh Literary Lab content.', error);
+  }
+});
+
+function renderCurrentPage(page, data) {
   const selectedBlog = page === 'blog.html' ? findBlogBySlug(data.blogs) : null;
 
   applySharedContent(data.shared);
@@ -44,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.dispatchEvent(new CustomEvent('literarylab:content-rendered', {
     detail: { page, data }
   }));
-});
+}
 
 function applySeoMetadata(page, selectedBlog) {
   const origin = getSiteOrigin();
@@ -315,14 +327,50 @@ function createPlaceholder(label, index) {
   `;
 }
 
+function createServicePlaceholder(key) {
+  const labels = {
+    ebook: {
+      eyebrow: 'Digital Delivery',
+      title: 'Kindle and EPUB-ready exports',
+      body: 'Prepared for self-published authors who need clean digital files without format confusion.'
+    },
+    consult: {
+      eyebrow: 'Publishing Guidance',
+      title: 'Clear next steps before you upload',
+      body: 'Trim size, platform fit, file readiness, and the practical publishing path for first-time authors.'
+    },
+    editing: {
+      eyebrow: 'Manuscript Cleanup',
+      title: 'Proofreading before design begins',
+      body: 'Polish the manuscript first so the layout, cover, and publishing files all start from stronger copy.'
+    }
+  };
+
+  const content = labels[key] || {
+    eyebrow: 'Service Visual',
+    title: 'Publishing support built around your manuscript',
+    body: 'Structured guidance, cleaner files, and production-ready deliverables for independent authors.'
+  };
+
+  return `
+    <div class="service-visual-copy">
+      <span>${escapeHtml(content.eyebrow)}</span>
+      <strong>${escapeHtml(content.title)}</strong>
+      <p>${escapeHtml(content.body)}</p>
+    </div>
+  `;
+}
+
 function buildPortfolioCard(item, index, tall = false) {
   const classes = ['portfolio-item'];
   if (tall) classes.push('portfolio-item-tall');
   const imageFit = item.imageFit === 'contain' ? 'fit-contain' : 'fit-cover';
   const loadingMode = tall ? 'eager' : 'lazy';
+  const decodingMode = tall ? 'sync' : 'async';
+  const fetchPriority = tall && index < 4 ? 'high' : 'auto';
 
   const imageMarkup = item.imageSrc
-    ? `<img class="managed-portfolio-image ${imageFit}" src="${escapeHtml(item.imageSrc)}" alt="${escapeHtml(item.alt || item.title || 'Portfolio item')}" loading="${loadingMode}" decoding="async" />`
+    ? `<img class="managed-portfolio-image ${imageFit}" src="${escapeHtml(item.imageSrc)}" alt="${escapeHtml(item.alt || item.title || 'Portfolio item')}" loading="${loadingMode}" decoding="${decodingMode}" fetchpriority="${fetchPriority}" />`
     : createPlaceholder(item.title || 'Portfolio Item', index);
 
   return `
@@ -434,7 +482,11 @@ function renderServicesPage(services) {
   document.querySelectorAll('[data-service-visual]').forEach((slot) => {
     const key = slot.dataset.serviceVisual;
     const imageSrc = services.visuals[key];
-    if (!imageSrc) return;
+    if (!imageSrc) {
+      slot.classList.remove('has-managed-image');
+      slot.innerHTML = createServicePlaceholder(key);
+      return;
+    }
 
     slot.classList.add('has-managed-image');
     slot.innerHTML = `<img class="managed-slot-image" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(key + ' service visual')}" loading="lazy" />`;

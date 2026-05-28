@@ -3,7 +3,6 @@
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.body.classList.add('js-ready');
   applyFooterYear();
   initNavbar();
   initMobileMenu();
@@ -61,19 +60,7 @@ function initRevealObserver() {
   const reveals = document.querySelectorAll('.reveal');
   if (!reveals.length) return;
 
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -56px 0px' }
-  );
-
-  reveals.forEach((element) => revealObserver.observe(element));
+  reveals.forEach((element) => element.classList.add('visible'));
 }
 
 function initializeDynamicSections() {
