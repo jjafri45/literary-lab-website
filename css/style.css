@@ -140,7 +140,7 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
    ============================================================ */
 .navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 800;
-  padding: 26px 0; transition: var(--transition);
+  padding: 24px 0; transition: var(--transition);
 }
 .navbar.scrolled {
   background: rgba(9,6,17,0.96);
@@ -198,7 +198,7 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
 }
 .mobile-nav .wa-btn::after { display: none !important; }
 
-@media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } }
+@media (max-width: 1100px) { .nav-links { display: none; } .hamburger { display: flex; } }
 @media (max-width: 600px) {
   .mobile-nav {
     padding: 120px 22px 40px;
@@ -228,10 +228,10 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
    HERO — HOME
    ============================================================ */
 .hero {
-  min-height: 100vh;
-  padding: 170px 0 120px;
+  min-height: min(92vh, 920px);
+  padding: 132px 0 92px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   position: relative; overflow: hidden;
 }
 .hero-bg {
@@ -256,7 +256,7 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
   display: grid;
   grid-template-columns: minmax(0, 1.14fr) minmax(360px, 0.86fr);
   gap: clamp(36px, 5vw, 88px);
-  align-items: center;
+  align-items: start;
 }
 .hero-content { position: relative; z-index: 1; max-width: 720px; }
 
@@ -434,6 +434,47 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
 .portfolio-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; align-items: stretch; }
 @media (max-width: 900px) { .portfolio-grid { grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 480px)  { .portfolio-grid { grid-template-columns: 1fr; } }
+
+.toolkit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  max-width: 980px;
+  margin: 0 auto;
+}
+.toolkit-grid-item {
+  background: var(--bg-card);
+  padding: 32px 24px;
+  text-align: center;
+}
+.toolkit-grid-item .toolkit-mark {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.toolkit-grid-item h4 {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+.toolkit-grid-item p {
+  font-size: 0.82rem;
+}
+@media (max-width: 1100px) {
+  .toolkit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 640px;
+  }
+}
+@media (max-width: 540px) {
+  .toolkit-grid {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+}
 
 .portfolio-item {
   position: relative; aspect-ratio: 3/4; overflow: hidden;

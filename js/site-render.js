@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 function renderCurrentPage(page, data) {
   const selectedBlog = page === 'blog.html' ? findBlogBySlug(data.blogs) : null;
 
+  applyCustomSnippets(data.snippets);
   applySharedContent(data.shared);
   applySeoMetadata(page, selectedBlog);
   injectStructuredData(page, data, selectedBlog);
@@ -53,9 +54,76 @@ function renderCurrentPage(page, data) {
     renderBlogPage(selectedBlog);
   }
 
+  applyAdvancedBlocks(page, data.advancedBlocks || {});
+
   document.dispatchEvent(new CustomEvent('literarylab:content-rendered', {
     detail: { page, data }
   }));
+}
+
+function applyCustomSnippets(snippets = {}) {
+  document.querySelectorAll('[data-custom-snippet]').forEach((node) => node.remove());
+
+  injectSnippetMarkup(document.head, snippets.headHtml, 'head');
+
+  const body = document.body;
+  if (!body) return;
+
+  injectSnippetMarkup(body, snippets.bodyOpenHtml, 'body-open', true);
+  injectSnippetMarkup(body, snippets.bodyCloseHtml, 'body-close', false);
+}
+
+function injectSnippetMarkup(target, html, location, prepend = false) {
+  if (!target || !html || !html.trim()) return;
+
+  const wrapper = document.createElement('div');
+  wrapper.setAttribute('data-custom-snippet', location);
+  wrapper.innerHTML = html;
+
+  if (prepend && target.firstChild) {
+    target.insertBefore(wrapper, target.firstChild);
+  } else {
+    target.appendChild(wrapper);
+  }
+}
+
+function applyAdvancedBlocks(page, blocks) {
+  if (!blocks) return;
+
+  const assignments = [];
+
+  if (page === 'index.html') {
+    assignments.push(
+      ['#homeQuickPathsGrid', blocks.homeQuickPathsHtml],
+      ['#homeProofGrid', blocks.homeProofCardsHtml],
+      ['#homeCaseStudiesGrid', blocks.homeCaseStudiesHtml],
+      ['#homeFaqBlock', blocks.homeFaqHtml]
+    );
+  }
+
+  if (page === 'services.html') {
+    assignments.push(['#serviceGuidesWrap', blocks.servicesGuidesHtml]);
+  }
+
+  if (page === 'published.html') {
+    assignments.push(
+      ['#publishedClientBooksGrid', blocks.publishedClientBooksHtml],
+      ['#publishedStudioBooksGrid', blocks.publishedStudioBooksHtml]
+    );
+  }
+
+  if (page === 'contact.html') {
+    assignments.push(
+      ['#contactSidebarCards', blocks.contactSidebarHtml],
+      ['#contactFaqList', blocks.contactFaqHtml]
+    );
+  }
+
+  assignments.forEach(([selector, html]) => {
+    if (!html || !html.trim()) return;
+    const target = document.querySelector(selector);
+    if (target) target.innerHTML = html;
+  });
 }
 
 function applySeoMetadata(page, selectedBlog) {
@@ -361,11 +429,11 @@ function createServicePlaceholder(key) {
   `;
 }
 
-function buildPortfolioCard(item, index, tall = false) {
+function buildPortfolioCard(item, index, tall = false, loadingModeOverride = null) {
   const classes = ['portfolio-item'];
   if (tall) classes.push('portfolio-item-tall');
   const imageFit = item.imageFit === 'contain' ? 'fit-contain' : 'fit-cover';
-  const loadingMode = tall ? 'eager' : 'lazy';
+  const loadingMode = loadingModeOverride || (tall ? 'eager' : 'lazy');
   const decodingMode = tall ? 'sync' : 'async';
   const fetchPriority = tall && index < 4 ? 'high' : 'auto';
 
@@ -441,7 +509,7 @@ function renderHomePage(data) {
   const previewGrid = document.querySelector('.portfolio-grid');
   if (previewGrid) {
     const homeItems = portfolio.items.filter((item) => item.showOnHome !== false).slice(0, 6);
-    previewGrid.innerHTML = homeItems.map((item, index) => buildPortfolioCard(item, index, false)).join('');
+    previewGrid.innerHTML = homeItems.map((item, index) => buildPortfolioCard(item, index, false, 'eager')).join('');
   }
 
   const testimonialsGrid = document.querySelector('.testimonials-grid');
@@ -555,6 +623,11 @@ function renderAboutPage(about) {
 }
 
 function renderContactPage(shared) {
+  const form = document.getElementById('contactForm');
+  if (form && shared.contactFormAction) {
+    form.action = shared.contactFormAction;
+  }
+
   const whatsappLink = Array.from(document.querySelectorAll('.contact-method a')).find((link) => link.href.includes('wa.me/'));
   if (whatsappLink) {
     whatsappLink.textContent = shared.whatsappDisplay;

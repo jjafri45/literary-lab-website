@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const statusEl = document.getElementById('adminStatus');
   const sharedSection = document.getElementById('sharedSection');
+  const snippetSection = document.getElementById('snippetSection');
   const homeSection = document.getElementById('homeSection');
   const portfolioSection = document.getElementById('portfolioSection');
   const pricingSection = document.getElementById('pricingSection');
   const blogsSection = document.getElementById('blogsSection');
   const aboutSection = document.getElementById('aboutSection');
   const imageSection = document.getElementById('imageSection');
+  const advancedBlocksSection = document.getElementById('advancedBlocksSection');
   const githubTokenInput = document.getElementById('githubToken');
   const rememberTokenInput = document.getElementById('rememberToken');
   const repoSummary = document.getElementById('repoSummary');
@@ -80,12 +82,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function renderAll() {
     renderShared();
+    renderSnippets();
     renderHome();
     renderPortfolio();
     renderPricing();
     renderBlogs();
     renderAbout();
     renderImages();
+    renderAdvancedBlocks();
   }
 
   function renderShared() {
@@ -111,6 +115,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           <label>Footer Credit URL</label>
           <input type="url" id="sharedFooterCreditUrl" value="${escapeAttr(data.shared.footerCreditUrl)}" />
         </div>
+        <div class="admin-field" style="grid-column:1 / -1;">
+          <label>Contact Form Action</label>
+          <input type="url" id="sharedContactFormAction" value="${escapeAttr(data.shared.contactFormAction || '')}" placeholder="https://formspree.io/f/your_form_id" />
+        </div>
       </div>
     `;
 
@@ -128,6 +136,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     sharedSection.querySelector('#sharedFooterCreditUrl').addEventListener('input', (event) => {
       data.shared.footerCreditUrl = event.target.value;
+    });
+    sharedSection.querySelector('#sharedContactFormAction').addEventListener('input', (event) => {
+      data.shared.contactFormAction = event.target.value;
     });
   }
 
@@ -459,6 +470,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         data.services.pricing.splice(Number(button.dataset.index), 1);
         renderPricing();
       });
+    });
+  }
+
+  function renderSnippets() {
+    snippetSection.innerHTML = `
+      <div class="admin-grid">
+        <div class="admin-field" style="grid-column:1 / -1;">
+          <label>Head Snippets</label>
+          <textarea id="snippetHeadHtml" placeholder="Optional code added before </head>">${escapeHtml(data.snippets?.headHtml || '')}</textarea>
+        </div>
+        <div class="admin-field" style="grid-column:1 / -1;">
+          <label>Body Open Snippets</label>
+          <textarea id="snippetBodyOpenHtml" placeholder="Optional code added right after <body>">${escapeHtml(data.snippets?.bodyOpenHtml || '')}</textarea>
+        </div>
+        <div class="admin-field" style="grid-column:1 / -1;">
+          <label>Body Close Snippets</label>
+          <textarea id="snippetBodyCloseHtml" placeholder="Optional code added before </body>">${escapeHtml(data.snippets?.bodyCloseHtml || '')}</textarea>
+        </div>
+      </div>
+    `;
+
+    snippetSection.querySelector('#snippetHeadHtml').addEventListener('input', (event) => {
+      data.snippets.headHtml = event.target.value;
+    });
+    snippetSection.querySelector('#snippetBodyOpenHtml').addEventListener('input', (event) => {
+      data.snippets.bodyOpenHtml = event.target.value;
+    });
+    snippetSection.querySelector('#snippetBodyCloseHtml').addEventListener('input', (event) => {
+      data.snippets.bodyCloseHtml = event.target.value;
     });
   }
 
@@ -962,6 +1002,44 @@ function sanitizeRichHtml(html) {
         node.removeAttribute('rel');
       }
     }
+  }
+
+  function renderAdvancedBlocks() {
+    const blockFields = [
+      ['homeQuickPathsHtml', 'Home: Start Here Cards'],
+      ['homeProofCardsHtml', 'Home: Proof Cards'],
+      ['homeCaseStudiesHtml', 'Home: Case Studies'],
+      ['homeFaqHtml', 'Home: FAQ Items'],
+      ['servicesGuidesHtml', 'Services: Guide Cards'],
+      ['publishedClientBooksHtml', 'Published: Client Book Cards'],
+      ['publishedStudioBooksHtml', 'Published: Studio Book Cards'],
+      ['contactSidebarHtml', 'Contact: Sidebar Cards'],
+      ['contactFaqHtml', 'Contact: FAQ Items']
+    ];
+
+    advancedBlocksSection.innerHTML = `
+      <div class="admin-list">
+        ${blockFields.map(([key, label]) => `
+          <div class="admin-card">
+            <div class="admin-card-head">
+              <h3>${label}</h3>
+            </div>
+            <div class="admin-field">
+              <label>${label}</label>
+              <textarea data-advanced-block="${key}" placeholder="Leave blank to use the built-in site content.">${escapeHtml(data.advancedBlocks?.[key] || '')}</textarea>
+              <p class="admin-micro">This field accepts raw HTML. If left blank, the public page uses its normal built-in content.</p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    advancedBlocksSection.querySelectorAll('[data-advanced-block]').forEach((input) => {
+      input.addEventListener('input', (event) => {
+        const key = event.target.dataset.advancedBlock;
+        data.advancedBlocks[key] = event.target.value;
+      });
+    });
   }
 
   toRemove.forEach((node) => node.remove());

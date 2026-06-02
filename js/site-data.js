@@ -18,7 +18,13 @@
       whatsappNumber: '923472590983',
       whatsappDisplay: '+923472590983',
       footerCreditText: 'Created by Zorq Studio',
-      footerCreditUrl: 'https://zorqstudio.com/'
+      footerCreditUrl: 'https://zorqstudio.com/',
+      contactFormAction: 'https://formspree.io/f/YOUR_FORM_ID'
+    },
+    snippets: {
+      headHtml: '',
+      bodyOpenHtml: '',
+      bodyCloseHtml: ''
     },
     home: {
       heroEyebrow: 'For self-published and first-time authors',
@@ -70,15 +76,15 @@
         { category: 'ebook', label: 'eBook Conversion', title: 'eBook Design', alt: 'eBook design portfolio item', imageSrc: 'images/cms/portfolio/20260523202116-ebook-design.jpg', imageFit: 'cover', showOnHome: true },
         { category: 'covers', label: 'Cover Design', title: 'Non-Fiction Cover', alt: 'Non-fiction cover design portfolio item', imageSrc: 'images/cms/portfolio/20260523202117-non-fiction-cover.jpg', imageFit: 'cover', showOnHome: true },
         { category: 'interior', label: 'Book Interior', title: 'Chapter Layouts', alt: 'Chapter layouts portfolio item', imageSrc: 'images/cms/portfolio/20260522234531-chapter-layouts.png', imageFit: 'contain', showOnHome: true },
-        { category: 'covers', label: 'Cover Design', title: 'Fiction Cover', alt: 'Fiction cover portfolio item', imageSrc: 'images/cms/portfolio/20260523202119-fiction-cover.png', imageFit: 'cover', showOnHome: false },
+        { category: 'covers', label: 'Cover Design', title: 'Fiction Cover', alt: 'Fiction cover portfolio item', imageSrc: 'images/cms/portfolio/20260524145645-new-portfolio-item.jpg', imageFit: 'cover', showOnHome: false },
         { category: 'interior', label: 'Book Interior', title: 'Formatted Spread', alt: 'Formatted spread portfolio item', imageSrc: 'images/cms/portfolio/20260522234539-formatted-spread.png', imageFit: 'contain', showOnHome: false },
         { category: 'ebook', label: 'eBook', title: 'Kindle Edition', alt: 'Kindle edition portfolio item', imageSrc: 'images/cms/portfolio/20260523202127-kindle-edition.jpg', imageFit: 'cover', showOnHome: false }
       ]
     },
     services: {
       visuals: {
-        interior: 'images/cms/services/20260522234549-interior.jpg',
-        covers: 'images/cms/services/20260522234551-covers.png',
+        interior: 'images/cms/portfolio/20260522234515-interior-formatting.png',
+        covers: 'images/cms/portfolio/20260523202114-creative-cover.jpg',
         ebook: '',
         consult: ''
       },
@@ -180,6 +186,17 @@
           imageSrc: ''
         }
       ]
+    },
+    advancedBlocks: {
+      homeQuickPathsHtml: '',
+      homeProofCardsHtml: '',
+      homeCaseStudiesHtml: '',
+      homeFaqHtml: '',
+      servicesGuidesHtml: '',
+      publishedClientBooksHtml: '',
+      publishedStudioBooksHtml: '',
+      contactSidebarHtml: '',
+      contactFaqHtml: ''
     }
   };
 

@@ -4,7 +4,8 @@
     "whatsappNumber": "923472590983",
     "whatsappDisplay": "+923472590983",
     "footerCreditText": "Created by Zorq Studio",
-    "footerCreditUrl": "https://zorqstudio.com/"
+    "footerCreditUrl": "https://zorqstudio.com/",
+    "contactFormAction": "https://formspree.io/f/YOUR_FORM_ID"
   },
   "home": {
     "heroEyebrow": "For self-published and first-time authors",
@@ -129,7 +130,7 @@
         "label": "",
         "title": "",
         "alt": "Fiction cover portfolio item",
-        "imageSrc": "images/cms/portfolio/20260523202119-fiction-cover.png",
+        "imageSrc": "images/cms/portfolio/20260524145645-new-portfolio-item.jpg",
         "imageFit": "cover",
         "showOnHome": false
       },
@@ -164,8 +165,8 @@
   },
   "services": {
     "visuals": {
-      "interior": "images/cms/services/20260522234549-interior.jpg",
-      "covers": "images/cms/services/20260522234551-covers.png",
+      "interior": "images/cms/portfolio/20260522234515-interior-formatting.png",
+      "covers": "images/cms/portfolio/20260523202114-creative-cover.jpg",
       "ebook": "",
       "consult": ""
     },
