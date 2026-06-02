@@ -451,10 +451,6 @@ function buildPortfolioCard(item, index, tall = false, loadingModeOverride = nul
   return `
     <div class="${classes.join(' ')}" data-category="${escapeHtml(item.category || 'covers')}">
       ${imageMarkup}
-      <div class="portfolio-overlay">
-        <h4>${escapeHtml(item.title || 'Portfolio Item')}</h4>
-        <span>${escapeHtml(item.label || 'Portfolio')}</span>
-      </div>
     </div>
   `;
 }

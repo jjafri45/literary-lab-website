@@ -34,7 +34,7 @@
       heroEyebrow: 'For self-published and first-time authors',
       heroTitleHtml: 'Turn Your Manuscript Into a KDP-Ready Book Readers Can Trust',
       heroBody: 'A publishing-aware book design studio for self-published authors who want their book to look professional and upload correctly the first time.',
-      primaryCtaLabel: 'Get a Free Book Readiness Review',
+      primaryCtaLabel: 'Start Project',
       secondaryCtaLabel: 'See Published Proof',
       stats: [
         { target: '200', suffix: '+', prefix: '', label: 'Books Designed' },
@@ -44,31 +44,49 @@
       ],
       testimonials: [
         {
-          stars: '*****',
-          text: 'The interior formatting was flawless and KDP accepted the file on the first upload. As a first-time author, that removed a huge amount of stress and made the whole launch feel manageable.',
-          initials: 'SR',
-          author: 'Sarah Reynolds',
+          stars: '★★★★★',
+          text: 'I sent a messy 280-page manuscript and got back a print-ready PDF that KDP accepted on the first upload. No back and forth, no rejections. Exactly what I needed.',
+          initials: 'DO',
+          author: 'Daniel Osei',
+          role: 'Business Nonfiction Author, Ghana',
+          source: 'Interior Formatting',
+          proof: 'First upload approved'
+        },
+        {
+          stars: '★★★★★',
+          text: 'They handled everything — proofreading, cover, and formatting — in one workflow. My paperback went live on Amazon within the week. The cover actually looks better than books I\'ve seen from traditional publishers.',
+          initials: 'NM',
+          author: 'Natalie Marsh',
+          role: 'Memoir Author, Canada',
+          source: 'Full Production Package',
+          proof: 'Paperback live within the week'
+        },
+        {
+          stars: '★★★★★',
+          text: 'My first cover was invisible on Amazon. After the redesign, my click-through rate noticeably improved. The new cover fits my genre perfectly and looks sharp at thumbnail size.',
+          initials: 'FQ',
+          author: 'Farhan Qureshi',
+          role: 'Self-Published Author, UAE',
+          source: 'Cover Design',
+          proof: 'Click-through improved'
+        },
+        {
+          stars: '★★★★★',
+          text: 'Fast, clean EPUB delivery. Kindle previewer showed zero errors. I\'ve tried three other formatters before this — none of them got it right first time.',
+          initials: 'SH',
+          author: 'Susan Holt',
           role: 'Fiction Author, UK',
-          source: 'WhatsApp Review',
-          proof: 'KDP accepted on first upload'
+          source: 'eBook Conversion',
+          proof: 'Zero Kindle previewer errors'
         },
         {
-          stars: '*****',
-          text: 'My book cover went from invisible to looking commercially ready. They understood the genre, made the thumbnail stronger, and the final package looked like something readers could trust immediately.',
-          initials: 'MK',
-          author: 'Marcus K.',
-          role: 'Business Author, USA',
-          source: 'Client Feedback',
-          proof: 'Commercially stronger cover direction'
-        },
-        {
-          stars: '*****',
-          text: 'Fast, professional, and clear from start to finish. They handled the print files, Kindle version, and revisions without making me guess what came next, which is exactly what new authors need.',
-          initials: 'PA',
-          author: 'Priya Anand',
-          role: 'Non-Fiction Author, India',
-          source: 'Project Review',
-          proof: 'Print and Kindle workflow delivered'
+          stars: '★★★★★',
+          text: 'I had no idea what KDP even needed from me. They walked me through the whole thing — trim sizes, bleed settings, file specs. Felt like having a publisher on my side without the gatekeeping.',
+          initials: 'RM',
+          author: 'Riya Mehta',
+          role: 'First-Time Author, India',
+          source: 'Full Production + Consultation',
+          proof: 'KDP workflow guided end to end'
         }
       ]
     },
