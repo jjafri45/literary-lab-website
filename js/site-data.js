@@ -14,11 +14,11 @@
 
   const DEFAULT_DATA = {
     shared: {
-      email: 'lab@zorqstudio.com',
+      email: 'hello@literarylabstudio.com',
       whatsappNumber: '923472590983',
       whatsappDisplay: '+923472590983',
-      footerCreditText: 'Created by Zorq Studio',
-      footerCreditUrl: 'https://zorqstudio.com/',
+      footerCreditText: 'literarylabstudio.com',
+      footerCreditUrl: 'https://literarylabstudio.com/',
       contactFormAction: 'https://formspree.io/f/YOUR_FORM_ID'
     },
     snippets: {

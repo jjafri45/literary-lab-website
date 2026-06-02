@@ -252,7 +252,7 @@ function injectStructuredData(page, data, selectedBlog) {
     name: 'Literary Lab',
     url: `${baseUrl}/`,
     image: `${baseUrl}/images/cms/published/brand-loud-amazon-laptop.png`,
-    email: 'mailto:lab@zorqstudio.com',
+    email: 'mailto:hello@literarylabstudio.com',
     telephone: '+923472590983',
     areaServed: 'Worldwide',
     address: {
@@ -475,6 +475,35 @@ function applySharedContent(shared) {
   document.querySelectorAll('.footer-bottom p a').forEach((link) => {
     link.href = shared.footerCreditUrl;
     link.textContent = shared.footerCreditText;
+  });
+
+  ensureLegalFooterLinks();
+}
+
+function ensureLegalFooterLinks() {
+  const legalLinks = [
+    ['privacy-policy.html', 'Privacy Policy'],
+    ['refund-policy.html', 'Refund Policy'],
+    ['terms-and-conditions.html', 'Terms & Conditions'],
+    ['cookie-policy.html', 'Cookie Policy']
+  ];
+
+  document.querySelectorAll('.footer-col').forEach((column) => {
+    const heading = column.querySelector('h5');
+    const list = column.querySelector('ul');
+    if (!heading || !list) return;
+    if (heading.textContent.trim() !== 'Company') return;
+
+    const existing = new Set(Array.from(list.querySelectorAll('a')).map((link) => link.getAttribute('href')));
+    legalLinks.forEach(([href, label]) => {
+      if (existing.has(href)) return;
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = href;
+      link.textContent = label;
+      item.appendChild(link);
+      list.appendChild(item);
+    });
   });
 }
 
