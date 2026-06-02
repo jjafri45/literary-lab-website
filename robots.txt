@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
 
-Sitemap: https://jjafri45.github.io/literary-lab-website/sitemap.xml
+Sitemap: https://literarylabstudio.com/sitemap.xml

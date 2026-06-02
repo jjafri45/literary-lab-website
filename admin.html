@@ -4,14 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Literary Lab Admin</title>
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/admin.css" />
 </head>
-<body class="admin-page">
-  <main class="admin-shell">
+<body class="admin-page admin-locked">
+  <div class="admin-gate" id="adminGate" aria-hidden="false">
+    <div class="admin-gate-card">
+      <span class="admin-kicker">Protected Admin</span>
+      <h1>Admin Access Required</h1>
+      <p>Enter the admin passcode to unlock this session. This is a browser-side access gate. When you move to FTP hosting, add server-level authentication as well.</p>
+      <form id="adminGateForm" class="admin-gate-form">
+        <div class="admin-field">
+          <label for="adminPasscode">Admin Passcode</label>
+          <input type="password" id="adminPasscode" autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary">Unlock Admin</button>
+      </form>
+      <p class="admin-status" id="adminGateStatus" role="status"></p>
+    </div>
+  </div>
+
+  <main class="admin-shell" id="adminShell">
     <header class="admin-header">
       <div>
         <span class="admin-kicker">Literary Lab CMS</span>
@@ -52,6 +69,14 @@
         <input type="checkbox" id="rememberToken" />
         <span>Remember this token in this browser</span>
       </label>
+    </section>
+
+    <section class="admin-section">
+      <div class="admin-section-head">
+        <h2>Admin Security</h2>
+        <p>Protect the public admin page with a passcode gate and session timeout. This is client-side protection; use server auth too when you move off GitHub Pages.</p>
+      </div>
+      <div id="securitySection"></div>
     </section>
 
     <section class="admin-section">

@@ -186,6 +186,11 @@ function initContactForm() {
 
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
+    if (form.dataset.actionReady !== 'true' || !form.action) {
+      alert('The contact form is not configured yet. Please use WhatsApp or email instead.');
+      return;
+    }
+
     const button = form.querySelector('[type="submit"]');
     const original = button.textContent;
     button.textContent = 'Sending...';

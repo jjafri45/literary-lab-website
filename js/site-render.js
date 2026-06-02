@@ -127,18 +127,18 @@ function applyAdvancedBlocks(page, blocks) {
 }
 
 function applySeoMetadata(page, selectedBlog) {
-  const origin = getSiteOrigin();
+  const baseUrl = getSiteBaseUrl();
   const pageUrls = {
-    'index.html': `${origin}/literary-lab-website/`,
-    'services.html': `${origin}/literary-lab-website/services.html`,
-    'portfolio.html': `${origin}/literary-lab-website/portfolio.html`,
-    'about.html': `${origin}/literary-lab-website/about.html`,
-    'contact.html': `${origin}/literary-lab-website/contact.html`,
-    'published.html': `${origin}/literary-lab-website/published.html`,
-    'blogs.html': `${origin}/literary-lab-website/blogs.html`,
+    'index.html': `${baseUrl}/`,
+    'services.html': `${baseUrl}/services.html`,
+    'portfolio.html': `${baseUrl}/portfolio.html`,
+    'about.html': `${baseUrl}/about.html`,
+    'contact.html': `${baseUrl}/contact.html`,
+    'published.html': `${baseUrl}/published.html`,
+    'blogs.html': `${baseUrl}/blogs.html`,
     'blog.html': selectedBlog
-      ? `${origin}/literary-lab-website/blog.html?slug=${encodeURIComponent(selectedBlog.slug)}`
-      : `${origin}/literary-lab-website/blog.html`
+      ? `${baseUrl}/blog.html?slug=${encodeURIComponent(selectedBlog.slug)}`
+      : `${baseUrl}/blog.html`
   };
 
   const metaMap = {
@@ -243,8 +243,7 @@ function injectStructuredData(page, data, selectedBlog) {
   const existing = document.getElementById(schemaId);
   if (existing) existing.remove();
 
-  const origin = getSiteOrigin();
-  const baseUrl = `${origin}/literary-lab-website`;
+  const baseUrl = getSiteBaseUrl();
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
@@ -365,7 +364,15 @@ function injectStructuredData(page, data, selectedBlog) {
 function getSiteOrigin() {
   const origin = window.location.origin;
   if (!origin || origin === 'null' || origin.startsWith('file')) {
-    return 'https://jjafri45.github.io';
+    return 'https://literarylabstudio.com';
+  }
+  return origin;
+}
+
+function getSiteBaseUrl() {
+  const origin = getSiteOrigin();
+  if (origin.includes('github.io')) {
+    return `${origin}/literary-lab-website`;
   }
   return origin;
 }
@@ -653,8 +660,27 @@ function renderAboutPage(about) {
 
 function renderContactPage(shared) {
   const form = document.getElementById('contactForm');
-  if (form && shared.contactFormAction) {
-    form.action = shared.contactFormAction;
+  if (form) {
+    const submitButton = form.querySelector('[type="submit"]');
+    let notice = document.getElementById('contactFormNotice');
+
+    if (shared.contactFormAction) {
+      form.action = shared.contactFormAction;
+      form.dataset.actionReady = 'true';
+      if (submitButton) submitButton.disabled = false;
+      if (notice) notice.remove();
+    } else {
+      form.removeAttribute('action');
+      form.dataset.actionReady = 'false';
+      if (submitButton) submitButton.disabled = true;
+      if (!notice) {
+        notice = document.createElement('p');
+        notice.id = 'contactFormNotice';
+        notice.className = 'admin-security-note';
+        notice.textContent = 'Direct form submission is not configured yet. Use WhatsApp or email until the live form endpoint is added in the admin panel.';
+        form.appendChild(notice);
+      }
+    }
   }
 
   const whatsappLink = Array.from(document.querySelectorAll('.contact-method a')).find((link) => link.href.includes('wa.me/'));

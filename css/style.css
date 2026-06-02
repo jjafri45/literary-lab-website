@@ -115,6 +115,13 @@ p  { font-size: 1.03rem; color: var(--text-secondary); line-height: 1.8; }
 .btn-whatsapp { background: var(--whatsapp); color: #fff; font-size: 0.95rem; padding: 16px 36px; }
 .btn-whatsapp:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,211,102,0.35); }
 .btn-whatsapp svg { width: 20px; height: 20px; flex-shrink: 0; }
+.btn:disabled,
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
 
 /* ============================================================
    FLOATING WHATSAPP BUTTON

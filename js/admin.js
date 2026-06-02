@@ -8,9 +8,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   const cms = window.LiteraryLabCMS;
   let data = await cms.loadSiteData({ forceFresh: true });
   const pendingAssets = new Map();
+  let pendingAdminPasscode = '';
+  let pendingAdminPasscodeConfirm = '';
+  let lockTimer = null;
 
   const statusEl = document.getElementById('adminStatus');
+  const gateEl = document.getElementById('adminGate');
+  const gateForm = document.getElementById('adminGateForm');
+  const gateStatusEl = document.getElementById('adminGateStatus');
+  const adminShell = document.getElementById('adminShell');
   const sharedSection = document.getElementById('sharedSection');
+  const securitySection = document.getElementById('securitySection');
   const snippetSection = document.getElementById('snippetSection');
   const homeSection = document.getElementById('homeSection');
   const portfolioSection = document.getElementById('portfolioSection');
@@ -26,6 +34,103 @@ document.addEventListener('DOMContentLoaded', async () => {
   repoSummary.textContent = `${cms.REPO_CONFIG.owner}/${cms.REPO_CONFIG.repo} (${cms.REPO_CONFIG.branch})`;
   githubTokenInput.value = cms.loadAdminToken();
   rememberTokenInput.checked = Boolean(githubTokenInput.value);
+
+  const ADMIN_SESSION_KEY = 'literary-lab-admin-unlocked-until-v1';
+
+  function sessionMinutes() {
+    return Math.max(5, Number(data.adminSecurity?.sessionMinutes || 30));
+  }
+
+  function setGateStatus(message, isError = false) {
+    gateStatusEl.textContent = message;
+    gateStatusEl.classList.toggle('is-error', isError);
+  }
+
+  async function sha256Hex(value) {
+    const bytes = new TextEncoder().encode(value);
+    const hash = await crypto.subtle.digest('SHA-256', bytes);
+    return Array.from(new Uint8Array(hash)).map((byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  function clearAdminSession() {
+    sessionStorage.removeItem(ADMIN_SESSION_KEY);
+    if (lockTimer) {
+      clearTimeout(lockTimer);
+      lockTimer = null;
+    }
+  }
+
+  function armAutoLock() {
+    if (lockTimer) clearTimeout(lockTimer);
+    const unlockedUntil = Number(sessionStorage.getItem(ADMIN_SESSION_KEY) || 0);
+    const remaining = unlockedUntil - Date.now();
+    if (remaining <= 0) {
+      lockAdmin('Session expired. Enter the admin passcode again.');
+      return;
+    }
+    lockTimer = window.setTimeout(() => {
+      lockAdmin('Session expired. Enter the admin passcode again.');
+    }, remaining);
+  }
+
+  function refreshAdminSession() {
+    const unlockedUntil = Date.now() + sessionMinutes() * 60 * 1000;
+    sessionStorage.setItem(ADMIN_SESSION_KEY, String(unlockedUntil));
+    armAutoLock();
+  }
+
+  function unlockAdmin() {
+    document.body.classList.remove('admin-locked');
+    gateEl.setAttribute('aria-hidden', 'true');
+    adminShell.setAttribute('aria-hidden', 'false');
+    setGateStatus('');
+    gateForm.reset();
+    refreshAdminSession();
+  }
+
+  function lockAdmin(message = 'Enter the admin passcode to continue.') {
+    clearAdminSession();
+    document.body.classList.add('admin-locked');
+    gateEl.setAttribute('aria-hidden', 'false');
+    adminShell.setAttribute('aria-hidden', 'true');
+    setGateStatus(message, false);
+  }
+
+  async function verifyAdminPasscode(passcode) {
+    const expectedHash = data.adminSecurity?.passcodeHash || '';
+    if (!expectedHash) return true;
+    const candidateHash = await sha256Hex(passcode);
+    return candidateHash === expectedHash;
+  }
+
+  async function ensureAdminAccess() {
+    const unlockedUntil = Number(sessionStorage.getItem(ADMIN_SESSION_KEY) || 0);
+    if (unlockedUntil > Date.now()) {
+      unlockAdmin();
+      return;
+    }
+
+    lockAdmin();
+
+    await new Promise((resolve) => {
+      gateForm.addEventListener('submit', async function handleGateSubmit(event) {
+        event.preventDefault();
+        const passcode = document.getElementById('adminPasscode').value.trim();
+        if (!passcode) {
+          setGateStatus('Enter the admin passcode.', true);
+          return;
+        }
+
+        if (await verifyAdminPasscode(passcode)) {
+          unlockAdmin();
+          resolve();
+          return;
+        }
+
+        setGateStatus('Incorrect passcode.', true);
+      });
+    });
+  }
 
   function setStatus(message, isError = false) {
     statusEl.textContent = message;
@@ -61,6 +166,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function saveAll() {
     try {
+      if (pendingAdminPasscode || pendingAdminPasscodeConfirm) {
+        if (pendingAdminPasscode.length < 12) {
+          setStatus('Admin passcode must be at least 12 characters.', true);
+          return;
+        }
+        if (pendingAdminPasscode !== pendingAdminPasscodeConfirm) {
+          setStatus('Admin passcode confirmation does not match.', true);
+          return;
+        }
+        data.adminSecurity.passcodeHash = await sha256Hex(pendingAdminPasscode);
+      }
+
       const token = activeToken();
       if (!token) {
         setStatus('Enter a GitHub token with repository contents write access before saving.', true);
@@ -72,6 +189,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const published = await cms.publishSiteData(data, Array.from(pendingAssets.values()), token);
       data = published;
       pendingAssets.clear();
+      pendingAdminPasscode = '';
+      pendingAdminPasscodeConfirm = '';
       renderAll();
       setStatus('Published to GitHub. GitHub Pages will update after the new commit deploys.');
     } catch (error) {
@@ -81,6 +200,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function renderAll() {
+    renderSecurity();
     renderShared();
     renderSnippets();
     renderHome();
@@ -90,6 +210,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderAbout();
     renderImages();
     renderAdvancedBlocks();
+  }
+
+  function renderSecurity() {
+    securitySection.innerHTML = `
+      <div class="admin-grid">
+        <div class="admin-field">
+          <label>Session Timeout (minutes)</label>
+          <input type="number" min="5" max="240" id="adminSessionMinutes" value="${escapeAttr(data.adminSecurity?.sessionMinutes || 30)}" />
+        </div>
+        <div class="admin-field">
+          <label>Lock Current Session</label>
+          <button type="button" class="btn btn-outline" id="lockAdminNowBtn">Lock Admin Now</button>
+        </div>
+        <div class="admin-field">
+          <label>New Admin Passcode</label>
+          <input type="password" id="adminNewPasscode" value="${escapeAttr(pendingAdminPasscode)}" autocomplete="new-password" />
+        </div>
+        <div class="admin-field">
+          <label>Confirm New Passcode</label>
+          <input type="password" id="adminNewPasscodeConfirm" value="${escapeAttr(pendingAdminPasscodeConfirm)}" autocomplete="new-password" />
+        </div>
+      </div>
+      <p class="admin-security-note">The admin page is public on a static host, so this passcode is a client-side gate. Keep using the GitHub token for publishing, and add server-level auth when you move to FTP hosting.</p>
+    `;
+
+    securitySection.querySelector('#adminSessionMinutes').addEventListener('input', (event) => {
+      data.adminSecurity.sessionMinutes = Math.max(5, Number(event.target.value || 30));
+      refreshAdminSession();
+    });
+    securitySection.querySelector('#adminNewPasscode').addEventListener('input', (event) => {
+      pendingAdminPasscode = event.target.value;
+    });
+    securitySection.querySelector('#adminNewPasscodeConfirm').addEventListener('input', (event) => {
+      pendingAdminPasscodeConfirm = event.target.value;
+    });
+    securitySection.querySelector('#lockAdminNowBtn').addEventListener('click', () => {
+      lockAdmin('Session locked. Enter the admin passcode again.');
+    });
   }
 
   function renderShared() {
@@ -117,7 +275,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div class="admin-field" style="grid-column:1 / -1;">
           <label>Contact Form Action</label>
-          <input type="url" id="sharedContactFormAction" value="${escapeAttr(data.shared.contactFormAction || '')}" placeholder="https://formspree.io/f/your_form_id" />
+          <input type="url" id="sharedContactFormAction" value="${escapeAttr(data.shared.contactFormAction || '')}" placeholder="https://your-live-form-endpoint.example" />
         </div>
       </div>
     `;
@@ -520,7 +678,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         slug: `new-blog-post-${Date.now()}`,
         metaDescription: '',
         tags: [],
-        contentHtml: '<p>Start writing here...</p>'
+        contentHtml: ''
       });
       renderBlogs();
     });
@@ -930,6 +1088,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   rememberTokenInput.addEventListener('change', syncTokenPreference);
 
+  ['click', 'keydown', 'input'].forEach((eventName) => {
+    document.addEventListener(eventName, () => {
+      if (!document.body.classList.contains('admin-locked')) {
+        refreshAdminSession();
+      }
+    });
+  });
+
+  await ensureAdminAccess();
   renderAll();
   setStatus('Loaded the live content file. Uploads are staged locally until you click Save to Website.');
 });
