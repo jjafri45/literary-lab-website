@@ -781,7 +781,7 @@ function renderBlogPage(selectedBlog) {
   description.textContent = selectedBlog.metaDescription || selectedBlog.excerpt;
   kicker.textContent = selectedBlog.tags[0] || 'Literary Lab Blog';
   breadcrumb.innerHTML = `
-    <a href="index.html">Home</a>
+    <a href="/">Home</a>
     <span class="breadcrumb-sep">></span>
     <a href="blogs.html">Blog</a>
     <span class="breadcrumb-sep">></span>

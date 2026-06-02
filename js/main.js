@@ -174,7 +174,9 @@ function initActiveNavLink() {
   const page = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach((link) => {
     const href = link.getAttribute('href');
-    if (href === page || (page === '' && href === 'index.html')) {
+    const isHomeLink = href === '/' || href === 'index.html';
+    const isHomePage = page === 'index.html' || page === '';
+    if (href === page || (isHomeLink && isHomePage)) {
       link.classList.add('active');
     }
   });
