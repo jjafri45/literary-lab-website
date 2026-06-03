@@ -461,6 +461,15 @@ function buildWhatsAppHref(currentHref, number) {
   return `https://wa.me/${number}${query}`;
 }
 
+function shuffleItems(items) {
+  const copy = Array.isArray(items) ? [...items] : [];
+  for (let index = copy.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+  }
+  return copy;
+}
+
 function applySharedContent(shared) {
   document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
     link.href = `mailto:${shared.email}`;
@@ -539,7 +548,7 @@ function renderHomePage(data) {
 
   const previewGrid = document.querySelector('.portfolio-grid');
   if (previewGrid) {
-    const homeItems = portfolio.items.filter((item) => item.showOnHome !== false).slice(0, 6);
+    const homeItems = shuffleItems(portfolio.items.filter((item) => item.showOnHome !== false)).slice(0, 6);
     previewGrid.innerHTML = homeItems.map((item, index) => buildPortfolioCard(item, index, false, 'eager')).join('');
   }
 
