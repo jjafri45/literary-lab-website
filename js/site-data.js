@@ -7,7 +7,8 @@
   const ADMIN_API_CONFIG = {
     loginPath: '/admin-login.php',
     savePath: '/admin-save.php',
-    logoutPath: '/admin-logout.php'
+    logoutPath: '/admin-logout.php',
+    uploadAssetsPath: '/admin-upload-assets.php'
   };
   const REPO_CONFIG = {
     owner: 'jjafri45',
@@ -377,6 +378,14 @@
     current[finalPart] = value;
   }
 
+  function chunkArray(items, size) {
+    const output = [];
+    for (let index = 0; index < items.length; index += size) {
+      output.push(items.slice(index, index + size));
+    }
+    return output;
+  }
+
   function arrayBufferToBase64(buffer) {
     let binary = '';
     const bytes = new Uint8Array(buffer);
@@ -522,23 +531,46 @@
 
   async function saveSiteDataToHost(data, assets) {
     const payload = deepClone(data);
-    const formData = new FormData();
-    const assetManifest = [];
+    const assetChunks = chunkArray(assets, 10);
 
-    for (const [index, asset] of assets.entries()) {
-      const targetPath = createAssetPath(asset);
-      setByPath(payload, asset.path, targetPath);
-      const field = `asset_${index}`;
-      assetManifest.push({
-        field,
-        path: asset.path,
-        targetPath
+    for (const chunk of assetChunks) {
+      const formData = new FormData();
+      const assetManifest = [];
+
+      for (const [index, asset] of chunk.entries()) {
+        const targetPath = createAssetPath(asset);
+        const field = `asset_${index}`;
+        assetManifest.push({
+          field,
+          path: asset.path,
+          targetPath
+        });
+        formData.append(field, asset.file, asset.file.name);
+      }
+
+      formData.append('assets', JSON.stringify(assetManifest));
+
+      const uploadResponse = await fetch(ADMIN_API_CONFIG.uploadAssetsPath, {
+        method: 'POST',
+        credentials: 'same-origin',
+        body: formData
       });
-      formData.append(field, asset.file, asset.file.name);
+
+      const uploadResult = await uploadResponse.json().catch(() => ({}));
+      if (!uploadResponse.ok || !uploadResult.ok) {
+        throw new Error(uploadResult.message || 'Uploading images to the live website failed.');
+      }
+
+      for (const uploaded of uploadResult.assets || []) {
+        if (uploaded && uploaded.path && uploaded.targetPath) {
+          setByPath(payload, uploaded.path, uploaded.targetPath);
+        }
+      }
     }
 
+    const formData = new FormData();
     formData.append('content', JSON.stringify(payload));
-    formData.append('assets', JSON.stringify(assetManifest));
+    formData.append('assets', '[]');
 
     const response = await fetch(ADMIN_API_CONFIG.savePath, {
       method: 'POST',
