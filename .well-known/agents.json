@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "name": "Literary Lab",
+  "description": "A publishing-aware book design studio for self-published authors offering proofreading, cover design, interior formatting, eBook conversion, and publishing support.",
+  "url": "https://literarylabstudio.com/",
+  "capabilities": [
+    "search",
+    "contact",
+    "services",
+    "portfolio",
+    "published-books",
+    "blog"
+  ],
+  "contact": "hello@literarylabstudio.com"
+}
