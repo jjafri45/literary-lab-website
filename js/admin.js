@@ -374,6 +374,53 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="admin-toolbar admin-toolbar-stack">
         <p class="admin-note">Portfolio items are organized into two live sections: Book Cover Design and Interior Layout Design. Anything marked interior goes to the interior section; all other items go to the cover section.</p>
       </div>
+      <div class="admin-card">
+        <div class="admin-card-head">
+          <h3>Bulk Upload Portfolio Images</h3>
+        </div>
+        <div class="admin-grid">
+          <div class="admin-field">
+            <label>Portfolio Section</label>
+            <select id="bulkPortfolioCategory">
+              <option value="covers">Book Cover Design</option>
+              <option value="interior">Interior Layout Design</option>
+              <option value="ebook">Book Cover Design (eBook)</option>
+            </select>
+          </div>
+          <div class="admin-field">
+            <label>Category Label</label>
+            <input type="text" id="bulkPortfolioLabel" value="Cover Design" />
+          </div>
+          <div class="admin-field">
+            <label>Image Fit</label>
+            <select id="bulkPortfolioFit">
+              <option value="cover">cover</option>
+              <option value="contain">contain</option>
+            </select>
+          </div>
+          <div class="admin-field">
+            <label>Show On Homepage</label>
+            <select id="bulkPortfolioShowOnHome">
+              <option value="false" selected>No</option>
+              <option value="true">Yes</option>
+            </select>
+          </div>
+          <div class="admin-field" style="grid-column:1 / -1;">
+            <label>Upload Many Images</label>
+            <div class="admin-inline">
+              <label class="btn btn-outline admin-upload-button">
+                Choose Images
+                <input type="file" id="bulkPortfolioImagesInput" accept="image/*" multiple hidden />
+              </label>
+              <label class="btn btn-outline admin-upload-button">
+                Choose Folder
+                <input type="file" id="bulkPortfolioFolderInput" accept="image/*" multiple webkitdirectory directory hidden />
+              </label>
+            </div>
+            <p class="admin-micro">Each selected image becomes its own portfolio item. Titles and alt text are generated from the filename and can still be edited afterward.</p>
+          </div>
+        </div>
+      </div>
       <div class="admin-list" id="portfolioList"></div>
       <div class="admin-toolbar admin-toolbar-bottom">
         <button type="button" class="btn btn-outline" id="addPortfolioItemBtn">Add Portfolio Item</button>
@@ -391,6 +438,79 @@ document.addEventListener('DOMContentLoaded', async () => {
         showOnHome: true
       });
       renderPortfolio();
+    });
+
+    const bulkCategoryInput = portfolioSection.querySelector('#bulkPortfolioCategory');
+    const bulkLabelInput = portfolioSection.querySelector('#bulkPortfolioLabel');
+    const bulkFitInput = portfolioSection.querySelector('#bulkPortfolioFit');
+    const bulkShowOnHomeInput = portfolioSection.querySelector('#bulkPortfolioShowOnHome');
+    const bulkLabelMap = {
+      covers: 'Cover Design',
+      interior: 'Interior Layout Design',
+      ebook: 'eBook Conversion'
+    };
+
+    bulkCategoryInput.addEventListener('input', () => {
+      if (!bulkLabelInput.value || Object.values(bulkLabelMap).includes(bulkLabelInput.value)) {
+        bulkLabelInput.value = bulkLabelMap[bulkCategoryInput.value] || 'Portfolio';
+      }
+      if (bulkCategoryInput.value === 'interior' && bulkFitInput.value !== 'contain') {
+        bulkFitInput.value = 'contain';
+      }
+      if (bulkCategoryInput.value !== 'interior' && bulkFitInput.value !== 'cover') {
+        bulkFitInput.value = 'cover';
+      }
+    });
+
+    async function handleBulkPortfolioUpload(fileList) {
+      const files = Array.from(fileList || []).filter((file) => file && file.type && file.type.startsWith('image/'));
+      if (!files.length) {
+        setStatus('No image files were selected for bulk upload.', true);
+        return;
+      }
+
+      const category = bulkCategoryInput.value || 'covers';
+      const label = (bulkLabelInput.value || bulkLabelMap[category] || 'Portfolio').trim();
+      const imageFit = bulkFitInput.value === 'contain' ? 'contain' : 'cover';
+      const showOnHome = bulkShowOnHomeInput.value === 'true';
+
+      setStatus(`Processing ${files.length} portfolio image${files.length === 1 ? '' : 's'}...`);
+
+      for (const file of files) {
+        const processedFile = await optimizeImageFile(file, {
+          maxWidth: 1400,
+          maxHeight: 2100,
+          quality: 0.82
+        });
+        const previewUrl = await fileToPreviewUrl(processedFile);
+        const title = formatPortfolioTitleFromFilename(processedFile.name || file.name || 'portfolio-item');
+        const nextIndex = data.portfolio.items.length;
+        const path = `portfolio.items.${nextIndex}.imageSrc`;
+
+        data.portfolio.items.push({
+          category,
+          label,
+          title,
+          alt: `${title} portfolio item`,
+          imageSrc: previewUrl,
+          imageFit,
+          showOnHome
+        });
+        queueAsset(path, processedFile, 'portfolio', title || `portfolio-${nextIndex + 1}`);
+      }
+
+      renderPortfolio();
+      setStatus(`Bulk upload staged ${files.length} portfolio image${files.length === 1 ? '' : 's'}. Click Save Live Changes to publish them.`);
+    }
+
+    portfolioSection.querySelector('#bulkPortfolioImagesInput').addEventListener('change', async (event) => {
+      await handleBulkPortfolioUpload(event.target.files);
+      event.target.value = '';
+    });
+
+    portfolioSection.querySelector('#bulkPortfolioFolderInput').addEventListener('change', async (event) => {
+      await handleBulkPortfolioUpload(event.target.files);
+      event.target.value = '';
     });
 
     const list = portfolioSection.querySelector('#portfolioList');
@@ -1211,6 +1331,22 @@ function slugifyText(value) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 80);
+}
+
+function formatPortfolioTitleFromFilename(filename) {
+  const clean = String(filename ?? '')
+    .replace(/^.*[\\/]/, '')
+    .replace(/\.[^.]+$/, '')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (!clean) return 'Portfolio Item';
+
+  return clean
+    .split(' ')
+    .map((word) => word ? word.charAt(0).toUpperCase() + word.slice(1) : '')
+    .join(' ');
 }
 
 function mergeImportedData(defaults, imported) {
