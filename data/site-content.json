@@ -11,6 +11,11 @@
     "passcodeHash": "c7900998341d65c8a813050d725fbd0d7f87e1441ae394e82a44d7dabd0ac8ff",
     "sessionMinutes": 30
   },
+  "snippets": {
+    "headHtml": "",
+    "bodyOpenHtml": "",
+    "bodyCloseHtml": ""
+  },
   "home": {
     "heroEyebrow": "For self-published and first-time authors",
     "heroTitleHtml": "Turn Your Manuscript Into a KDP-Ready Book Readers Can Trust",
@@ -98,16 +103,16 @@
         "label": "",
         "title": "",
         "alt": "",
-        "imageSrc": "images/cms/portfolio/20260523201557-book-cover-design.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114208-portfolio-1.png",
         "imageFit": "cover",
         "showOnHome": true
       },
       {
-        "category": "interior",
+        "category": "covers",
         "label": "",
         "title": "",
         "alt": "",
-        "imageSrc": "images/cms/portfolio/20260522234515-interior-formatting.png",
+        "imageSrc": "images/cms/portfolio/20260603114212-portfolio-2.jpg",
         "imageFit": "contain",
         "showOnHome": true
       },
@@ -116,7 +121,7 @@
         "label": "",
         "title": "",
         "alt": "Creative cover design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260523202114-creative-cover.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114214-portfolio-3.jpg",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -125,7 +130,7 @@
         "label": "",
         "title": "",
         "alt": "eBook design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260523202116-ebook-design.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114215-portfolio-4.jpg",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -134,16 +139,16 @@
         "label": "",
         "title": "",
         "alt": "Non-fiction cover design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260523202117-non-fiction-cover.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114217-portfolio-5.jpg",
         "imageFit": "cover",
         "showOnHome": true
       },
       {
-        "category": "interior",
+        "category": "covers",
         "label": "",
         "title": "",
         "alt": "Chapter layouts portfolio item",
-        "imageSrc": "images/cms/portfolio/20260522234531-chapter-layouts.png",
+        "imageSrc": "images/cms/portfolio/20260603114218-portfolio-6.jpg",
         "imageFit": "contain",
         "showOnHome": true
       },
@@ -152,25 +157,25 @@
         "label": "",
         "title": "",
         "alt": "Fiction cover portfolio item",
-        "imageSrc": "images/cms/portfolio/20260524145645-new-portfolio-item.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114220-portfolio-7.jpg",
         "imageFit": "cover",
         "showOnHome": false
       },
       {
-        "category": "interior",
+        "category": "covers",
         "label": "",
         "title": "",
         "alt": "Formatted spread portfolio item",
-        "imageSrc": "images/cms/portfolio/20260522234539-formatted-spread.png",
+        "imageSrc": "images/cms/portfolio/20260603114220-portfolio-8.png",
         "imageFit": "contain",
         "showOnHome": false
       },
       {
-        "category": "ebook",
+        "category": "covers",
         "label": "",
         "title": "",
         "alt": "Kindle edition portfolio item",
-        "imageSrc": "images/cms/portfolio/20260523202127-kindle-edition.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114224-portfolio-9.jpg",
         "imageFit": "cover",
         "showOnHome": false
       },
@@ -179,7 +184,16 @@
         "label": "",
         "title": "",
         "alt": "Portfolio item",
-        "imageSrc": "images/cms/portfolio/20260524145645-new-portfolio-item.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114204-portfolio-10.png",
+        "imageFit": "cover",
+        "showOnHome": true
+      },
+      {
+        "category": "covers",
+        "label": "Cover Design",
+        "title": "New Portfolio Item",
+        "alt": "Portfolio item",
+        "imageSrc": "images/cms/portfolio/20260603114225-new-portfolio-item.png",
         "imageFit": "cover",
         "showOnHome": true
       }
@@ -442,5 +456,16 @@
         "imageSrc": ""
       }
     ]
+  },
+  "advancedBlocks": {
+    "homeQuickPathsHtml": "",
+    "homeProofCardsHtml": "",
+    "homeCaseStudiesHtml": "",
+    "homeFaqHtml": "",
+    "servicesGuidesHtml": "",
+    "publishedClientBooksHtml": "",
+    "publishedStudioBooksHtml": "",
+    "contactSidebarHtml": "",
+    "contactFaqHtml": ""
   }
 }
