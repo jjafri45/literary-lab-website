@@ -28,7 +28,7 @@
     },
     adminSecurity: {
       passcodeHash: 'c7900998341d65c8a813050d725fbd0d7f87e1441ae394e82a44d7dabd0ac8ff',
-      sessionMinutes: 30
+      sessionMinutes: 40
     },
     snippets: {
       headHtml: '',

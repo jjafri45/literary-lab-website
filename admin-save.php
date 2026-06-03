@@ -9,6 +9,11 @@ session_start([
 
 header('Content-Type: application/json; charset=UTF-8');
 
+$contentLength = (int) ($_SERVER['CONTENT_LENGTH'] ?? 0);
+if ($contentLength > 0 && empty($_POST) && empty($_FILES)) {
+    fail(413, 'Payload too large for the current server limits. Please wait a minute and try Save Live Changes again.');
+}
+
 function fail(int $status, string $message): void
 {
     http_response_code($status);
@@ -58,7 +63,25 @@ foreach ($assets as $index => $asset) {
         fail(422, 'Asset path is not allowed.');
     }
 
-    if (!isset($_FILES[$field]) || !is_uploaded_file($_FILES[$field]['tmp_name'])) {
+    if (!isset($_FILES[$field])) {
+        fail(422, 'Uploaded file missing.');
+    }
+
+    $uploadError = (int) ($_FILES[$field]['error'] ?? UPLOAD_ERR_OK);
+    if ($uploadError !== UPLOAD_ERR_OK) {
+        $uploadMessages = [
+            UPLOAD_ERR_INI_SIZE => 'One or more uploaded images exceeded the server upload limit.',
+            UPLOAD_ERR_FORM_SIZE => 'One or more uploaded images exceeded the form upload limit.',
+            UPLOAD_ERR_PARTIAL => 'One or more uploaded images uploaded only partially.',
+            UPLOAD_ERR_NO_FILE => 'One or more uploaded images were missing.',
+            UPLOAD_ERR_NO_TMP_DIR => 'Server upload temp directory is missing.',
+            UPLOAD_ERR_CANT_WRITE => 'Server could not write one or more uploaded images.',
+            UPLOAD_ERR_EXTENSION => 'A server extension stopped one or more image uploads.',
+        ];
+        fail(422, $uploadMessages[$uploadError] ?? 'An uploaded image failed before it could be saved.');
+    }
+
+    if (!is_uploaded_file($_FILES[$field]['tmp_name'])) {
         fail(422, 'Uploaded file missing.');
     }
 
