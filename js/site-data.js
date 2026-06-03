@@ -19,7 +19,7 @@
       whatsappDisplay: '+923472590983',
       footerCreditText: 'literarylabstudio.com',
       footerCreditUrl: 'https://literarylabstudio.com/',
-      contactFormAction: ''
+      contactFormAction: '/submit-contact.php'
     },
     adminSecurity: {
       passcodeHash: 'c7900998341d65c8a813050d725fbd0d7f87e1441ae394e82a44d7dabd0ac8ff',
