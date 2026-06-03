@@ -27,13 +27,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const aboutSection = document.getElementById('aboutSection');
   const imageSection = document.getElementById('imageSection');
   const advancedBlocksSection = document.getElementById('advancedBlocksSection');
-  const githubTokenInput = document.getElementById('githubToken');
-  const rememberTokenInput = document.getElementById('rememberToken');
-  const repoSummary = document.getElementById('repoSummary');
+  const publishSummary = document.getElementById('publishSummary');
 
-  repoSummary.textContent = `${cms.REPO_CONFIG.owner}/${cms.REPO_CONFIG.repo} (${cms.REPO_CONFIG.branch})`;
-  githubTokenInput.value = cms.loadAdminToken();
-  rememberTokenInput.checked = Boolean(githubTokenInput.value);
+  if (publishSummary) {
+    publishSummary.textContent = 'Direct save to literarylabstudio.com hosting';
+  }
 
   const ADMIN_SESSION_KEY = 'literary-lab-admin-unlocked-until-v1';
 
@@ -58,6 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       clearTimeout(lockTimer);
       lockTimer = null;
     }
+    cms.logoutAdminHost();
   }
 
   function armAutoLock() {
@@ -97,10 +96,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   async function verifyAdminPasscode(passcode) {
-    const expectedHash = data.adminSecurity?.passcodeHash || '';
-    if (!expectedHash) return true;
-    const candidateHash = await sha256Hex(passcode);
-    return candidateHash === expectedHash;
+    await cms.loginAdminHost(passcode);
+    return true;
   }
 
   async function ensureAdminAccess() {
@@ -121,13 +118,16 @@ document.addEventListener('DOMContentLoaded', async () => {
           return;
         }
 
-        if (await verifyAdminPasscode(passcode)) {
-          unlockAdmin();
-          resolve();
-          return;
+        try {
+          if (await verifyAdminPasscode(passcode)) {
+            unlockAdmin();
+            resolve();
+            return;
+          }
+          setGateStatus('Incorrect passcode.', true);
+        } catch (error) {
+          setGateStatus(error.message || 'Unable to verify passcode.', true);
         }
-
-        setGateStatus('Incorrect passcode.', true);
       });
     });
   }
@@ -135,18 +135,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   function setStatus(message, isError = false) {
     statusEl.textContent = message;
     statusEl.classList.toggle('is-error', isError);
-  }
-
-  function activeToken() {
-    return githubTokenInput.value.trim();
-  }
-
-  function syncTokenPreference() {
-    if (rememberTokenInput.checked) {
-      cms.saveAdminToken(activeToken());
-    } else {
-      cms.saveAdminToken('');
-    }
   }
 
   function queueAsset(path, file, folder, label) {
@@ -161,7 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     data = await cms.loadSiteData({ forceFresh: true });
     pendingAssets.clear();
     renderAll();
-    setStatus('Loaded the latest live content file from GitHub Pages.');
+    setStatus('Loaded the latest live content file from the website.');
   }
 
   async function saveAll() {
@@ -178,21 +166,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         data.adminSecurity.passcodeHash = await sha256Hex(pendingAdminPasscode);
       }
 
-      const token = activeToken();
-      if (!token) {
-        setStatus('Enter a GitHub token with repository contents write access before saving.', true);
-        return;
-      }
-
-      syncTokenPreference();
-      setStatus('Publishing content and uploaded images to GitHub...');
-      const published = await cms.publishSiteData(data, Array.from(pendingAssets.values()), token);
+      setStatus('Saving content and uploaded images to the live website...');
+      const published = await cms.saveSiteDataToHost(data, Array.from(pendingAssets.values()));
       data = published;
       pendingAssets.clear();
       pendingAdminPasscode = '';
       pendingAdminPasscodeConfirm = '';
       renderAll();
-      setStatus('Published to GitHub. GitHub Pages will update after the new commit deploys.');
+      setStatus('Saved to the live website.');
     } catch (error) {
       console.error(error);
       setStatus(error.message || 'Publishing failed.', true);
@@ -232,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <input type="password" id="adminNewPasscodeConfirm" value="${escapeAttr(pendingAdminPasscodeConfirm)}" autocomplete="new-password" />
         </div>
       </div>
-      <p class="admin-security-note">The admin page is public on a static host, so this passcode is a client-side gate. Keep using the GitHub token for publishing, and add server-level auth when you move to FTP hosting.</p>
+      <p class="admin-security-note">This passcode now authenticates against the live server before saves are allowed. Add stronger server auth later if you want IP restrictions or HTTP auth.</p>
     `;
 
     securitySection.querySelector('#adminSessionMinutes').addEventListener('input', (event) => {
@@ -510,7 +491,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         data.portfolio.items[index].imageSrc = await fileToPreviewUrl(processedFile);
         queueAsset(path, processedFile, 'portfolio', data.portfolio.items[index].title || `portfolio-${index + 1}`);
         renderPortfolio();
-        setStatus('Portfolio image optimized and staged. Save to Website to commit it to GitHub.');
+        setStatus('Portfolio image optimized and staged. Save to Website to publish it live.');
       });
     });
   }
@@ -956,7 +937,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         data.about.team[index].imageSrc = await fileToPreviewUrl(processedFile);
         queueAsset(path, processedFile, 'team', data.about.team[index].name || `team-${index + 1}`);
         renderAbout();
-        setStatus('Team image optimized and staged. Save to Website to commit it to GitHub.');
+        setStatus('Team image optimized and staged. Save to Website to publish it live.');
       });
     });
   }
@@ -1045,7 +1026,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         queueAsset(path, processedFile, folder, key);
         renderImages();
-        setStatus('Page image optimized and staged. Save to Website to commit it to GitHub.');
+        setStatus('Page image optimized and staged. Save to Website to publish it live.');
       });
     });
   }
@@ -1082,12 +1063,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setStatus('Reset the editor to default content. Save to Website if you want to publish this reset.');
   });
 
-  githubTokenInput.addEventListener('input', () => {
-    if (rememberTokenInput.checked) syncTokenPreference();
-  });
-
-  rememberTokenInput.addEventListener('change', syncTokenPreference);
-
   ['click', 'keydown', 'input'].forEach((eventName) => {
     document.addEventListener(eventName, () => {
       if (!document.body.classList.contains('admin-locked')) {
@@ -1098,7 +1073,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   await ensureAdminAccess();
   renderAll();
-  setStatus('Loaded the live content file. Uploads are staged locally until you click Save to Website.');
+  setStatus('Loaded the live content file. Uploads are staged locally until you click Save Live Changes.');
 });
 
 function escapeAttr(value) {

@@ -25,7 +25,7 @@
     <div class="admin-gate-card">
       <span class="admin-kicker">Protected Admin</span>
       <h1>Admin Access Required</h1>
-      <p>Enter the admin passcode to unlock this session. This is a browser-side access gate. When you move to FTP hosting, add server-level authentication as well.</p>
+      <p>Enter the admin passcode to unlock this session. Saves now go directly to the live server.</p>
       <form id="adminGateForm" class="admin-gate-form">
         <div class="admin-field">
           <label for="adminPasscode">Admin Passcode</label>
@@ -42,7 +42,7 @@
       <div>
         <span class="admin-kicker">Literary Lab CMS</span>
         <h1>Content Dashboard</h1>
-        <p>Uploads and text changes publish into the GitHub repo so the live website updates after GitHub Pages deploys the new commit.</p>
+        <p>Uploads and text changes save directly into the live website on literarylabstudio.com.</p>
       </div>
       <div class="admin-actions">
         <button type="button" class="btn btn-outline" id="loadLiveDataBtn">Reload Live Data</button>
@@ -52,7 +52,7 @@
           <input type="file" id="importDataInput" accept="application/json" hidden />
         </label>
         <button type="button" class="btn btn-outline" id="resetDataBtn">Reset</button>
-        <button type="button" class="btn btn-primary" id="saveDataBtn">Save To Website</button>
+        <button type="button" class="btn btn-primary" id="saveDataBtn">Save Live Changes</button>
       </div>
     </header>
 
@@ -60,30 +60,21 @@
 
     <section class="admin-section">
       <div class="admin-section-head">
-        <h2>Publishing</h2>
-        <p>Use a GitHub fine-grained personal access token with contents write access to this repo.</p>
+        <h2>Live Publishing</h2>
+        <p>Changes save directly to the live website on hosting. No GitHub token is required here.</p>
       </div>
       <div class="admin-publish-grid">
         <div class="admin-field">
-          <label>Repository</label>
-          <div class="admin-static-field" id="repoSummary"></div>
-        </div>
-        <div class="admin-field">
-          <label>GitHub Token</label>
-          <input type="password" id="githubToken" placeholder="github_pat_..." autocomplete="off" />
-          <p class="admin-micro">Token is only used from this browser to create commits in the repo.</p>
+          <label>Publish Target</label>
+          <div class="admin-static-field" id="publishSummary"></div>
         </div>
       </div>
-      <label class="admin-checkbox">
-        <input type="checkbox" id="rememberToken" />
-        <span>Remember this token in this browser</span>
-      </label>
     </section>
 
     <section class="admin-section">
       <div class="admin-section-head">
         <h2>Admin Security</h2>
-        <p>Protect the public admin page with a passcode gate and session timeout. This is client-side protection; use server auth too when you move off GitHub Pages.</p>
+        <p>Protect the public admin page with a passcode gate and session timeout. This now authenticates against the live server before save actions are allowed.</p>
       </div>
       <div id="securitySection"></div>
     </section>

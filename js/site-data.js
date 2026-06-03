@@ -4,6 +4,11 @@
 
 (function () {
   const ADMIN_TOKEN_STORAGE_KEY = 'literary-lab-github-token-v1';
+  const ADMIN_API_CONFIG = {
+    loginPath: '/admin-login.php',
+    savePath: '/admin-save.php',
+    logoutPath: '/admin-logout.php'
+  };
   const REPO_CONFIG = {
     owner: 'jjafri45',
     repo: 'literary-lab-website',
@@ -332,6 +337,31 @@
     return `${REPO_CONFIG.assetBasePath}/${folder}/${stamp}-${label}.${ext}`;
   }
 
+  async function loginAdminHost(passcode) {
+    const response = await fetch(ADMIN_API_CONFIG.loginPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({ passcode })
+    });
+
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.ok) {
+      throw new Error(payload.message || 'Admin login failed.');
+    }
+    return payload;
+  }
+
+  async function logoutAdminHost() {
+    await fetch(ADMIN_API_CONFIG.logoutPath, {
+      method: 'POST',
+      credentials: 'same-origin'
+    }).catch(() => null);
+  }
+
   function setByPath(target, path, value) {
     const parts = Array.isArray(path) ? path : String(path).split('.');
     let current = target;
@@ -490,8 +520,43 @@
     throw new Error('Publishing failed after multiple retries.');
   }
 
+  async function saveSiteDataToHost(data, assets) {
+    const payload = deepClone(data);
+    const formData = new FormData();
+    const assetManifest = [];
+
+    for (const [index, asset] of assets.entries()) {
+      const targetPath = createAssetPath(asset);
+      setByPath(payload, asset.path, targetPath);
+      const field = `asset_${index}`;
+      assetManifest.push({
+        field,
+        path: asset.path,
+        targetPath
+      });
+      formData.append(field, asset.file, asset.file.name);
+    }
+
+    formData.append('content', JSON.stringify(payload));
+    formData.append('assets', JSON.stringify(assetManifest));
+
+    const response = await fetch(ADMIN_API_CONFIG.savePath, {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: formData
+    });
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.ok) {
+      throw new Error(result.message || 'Saving to the live website failed.');
+    }
+
+    return result.data || payload;
+  }
+
   window.LiteraryLabCMS = {
     ADMIN_TOKEN_STORAGE_KEY,
+    ADMIN_API_CONFIG: { ...ADMIN_API_CONFIG },
     REPO_CONFIG: { ...REPO_CONFIG },
     DEFAULT_DATA: deepClone(DEFAULT_DATA),
     deepClone,
@@ -499,6 +564,10 @@
     resetSiteData,
     loadAdminToken,
     saveAdminToken,
-    publishSiteData
+    publishSiteData,
+    createAssetPath,
+    loginAdminHost,
+    logoutAdminHost,
+    saveSiteDataToHost
   };
 })();
