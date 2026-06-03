@@ -5,35 +5,36 @@
 document.addEventListener('DOMContentLoaded', async () => {
   if (!window.LiteraryLabCMS) return;
 
-  const cms = window.LiteraryLabCMS;
-  let data = await cms.loadSiteData({ forceFresh: true });
-  const pendingAssets = new Map();
-  let pendingAdminPasscode = '';
-  let pendingAdminPasscodeConfirm = '';
-  let lockTimer = null;
+  try {
+    const cms = window.LiteraryLabCMS;
+    let data = typeof cms.resetSiteData === 'function' ? cms.resetSiteData() : {};
+    const pendingAssets = new Map();
+    let pendingAdminPasscode = '';
+    let pendingAdminPasscodeConfirm = '';
+    let lockTimer = null;
 
-  const statusEl = document.getElementById('adminStatus');
-  const gateEl = document.getElementById('adminGate');
-  const gateForm = document.getElementById('adminGateForm');
-  const gateStatusEl = document.getElementById('adminGateStatus');
-  const adminShell = document.getElementById('adminShell');
-  const sharedSection = document.getElementById('sharedSection');
-  const securitySection = document.getElementById('securitySection');
-  const snippetSection = document.getElementById('snippetSection');
-  const homeSection = document.getElementById('homeSection');
-  const portfolioSection = document.getElementById('portfolioSection');
-  const pricingSection = document.getElementById('pricingSection');
-  const blogsSection = document.getElementById('blogsSection');
-  const aboutSection = document.getElementById('aboutSection');
-  const imageSection = document.getElementById('imageSection');
-  const advancedBlocksSection = document.getElementById('advancedBlocksSection');
-  const publishSummary = document.getElementById('publishSummary');
+    const statusEl = document.getElementById('adminStatus');
+    const gateEl = document.getElementById('adminGate');
+    const gateForm = document.getElementById('adminGateForm');
+    const gateStatusEl = document.getElementById('adminGateStatus');
+    const adminShell = document.getElementById('adminShell');
+    const sharedSection = document.getElementById('sharedSection');
+    const securitySection = document.getElementById('securitySection');
+    const snippetSection = document.getElementById('snippetSection');
+    const homeSection = document.getElementById('homeSection');
+    const portfolioSection = document.getElementById('portfolioSection');
+    const pricingSection = document.getElementById('pricingSection');
+    const blogsSection = document.getElementById('blogsSection');
+    const aboutSection = document.getElementById('aboutSection');
+    const imageSection = document.getElementById('imageSection');
+    const advancedBlocksSection = document.getElementById('advancedBlocksSection');
+    const publishSummary = document.getElementById('publishSummary');
 
-  if (publishSummary) {
-    publishSummary.textContent = 'Direct save to literarylabstudio.com hosting';
-  }
+    if (publishSummary) {
+      publishSummary.textContent = 'Direct save to literarylabstudio.com hosting';
+    }
 
-  const ADMIN_SESSION_KEY = 'literary-lab-admin-unlocked-until-v1';
+    const ADMIN_SESSION_KEY = 'literary-lab-admin-unlocked-until-v1';
 
   function sessionMinutes() {
     return Math.max(5, Number(data.adminSecurity?.sessionMinutes || 30));
@@ -146,10 +147,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   async function loadLiveData() {
-    data = await cms.loadSiteData({ forceFresh: true });
-    pendingAssets.clear();
-    renderAll();
-    setStatus('Loaded the latest live content file from the website.');
+    try {
+      setStatus('Loading the latest live content file from the website...');
+      data = await cms.loadSiteData({ forceFresh: true });
+      pendingAssets.clear();
+      renderAll();
+      setStatus('Loaded the latest live content file from the website.');
+    } catch (error) {
+      console.error(error);
+      pendingAssets.clear();
+      renderAll();
+      setStatus('Unable to load the live content file. Showing fallback content instead.', true);
+    }
   }
 
   async function saveAll() {
@@ -1031,10 +1040,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  document.getElementById('saveDataBtn').addEventListener('click', saveAll);
-  document.getElementById('loadLiveDataBtn').addEventListener('click', loadLiveData);
+    document.getElementById('saveDataBtn').addEventListener('click', saveAll);
+    document.getElementById('loadLiveDataBtn').addEventListener('click', loadLiveData);
 
-  document.getElementById('exportDataBtn').addEventListener('click', () => {
+    document.getElementById('exportDataBtn').addEventListener('click', () => {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -1045,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setStatus('Exported the current dashboard data as JSON.');
   });
 
-  document.getElementById('importDataInput').addEventListener('change', async (event) => {
+    document.getElementById('importDataInput').addEventListener('change', async (event) => {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
     const text = await file.text();
@@ -1056,24 +1065,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     event.target.value = '';
   });
 
-  document.getElementById('resetDataBtn').addEventListener('click', () => {
+    document.getElementById('resetDataBtn').addEventListener('click', () => {
     data = cms.resetSiteData();
     pendingAssets.clear();
     renderAll();
     setStatus('Reset the editor to default content. Save to Website if you want to publish this reset.');
   });
 
-  ['click', 'keydown', 'input'].forEach((eventName) => {
-    document.addEventListener(eventName, () => {
-      if (!document.body.classList.contains('admin-locked')) {
-        refreshAdminSession();
-      }
+    ['click', 'keydown', 'input'].forEach((eventName) => {
+      document.addEventListener(eventName, () => {
+        if (!document.body.classList.contains('admin-locked')) {
+          refreshAdminSession();
+        }
+      });
     });
-  });
 
-  await ensureAdminAccess();
-  renderAll();
-  setStatus('Loaded the live content file. Uploads are staged locally until you click Save Live Changes.');
+    await ensureAdminAccess();
+    renderAll();
+    await loadLiveData();
+  } catch (error) {
+    console.error(error);
+    const gateStatusEl = document.getElementById('adminGateStatus');
+    if (gateStatusEl) {
+      gateStatusEl.textContent = error?.message || 'Admin failed to initialize.';
+      gateStatusEl.classList.add('is-error');
+    }
+  }
 });
 
 function escapeAttr(value) {
