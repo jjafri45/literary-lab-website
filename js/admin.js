@@ -1040,6 +1040,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
+  function renderAdvancedBlocks() {
+    const blockFields = [
+      ['homeQuickPathsHtml', 'Home: Start Here Cards'],
+      ['homeProofCardsHtml', 'Home: Proof Cards'],
+      ['homeCaseStudiesHtml', 'Home: Case Studies'],
+      ['homeFaqHtml', 'Home: FAQ Items'],
+      ['servicesGuidesHtml', 'Services: Guide Cards'],
+      ['publishedClientBooksHtml', 'Published: Client Book Cards'],
+      ['publishedStudioBooksHtml', 'Published: Studio Book Cards'],
+      ['contactSidebarHtml', 'Contact: Sidebar Cards'],
+      ['contactFaqHtml', 'Contact: FAQ Items']
+    ];
+
+    advancedBlocksSection.innerHTML = `
+      <div class="admin-list">
+        ${blockFields.map(([key, label]) => `
+          <div class="admin-card">
+            <div class="admin-card-head">
+              <h3>${label}</h3>
+            </div>
+            <div class="admin-field">
+              <label>${label}</label>
+              <textarea data-advanced-block="${key}" placeholder="Leave blank to use the built-in site content.">${escapeHtml(data.advancedBlocks?.[key] || '')}</textarea>
+              <p class="admin-micro">This field accepts raw HTML. If left blank, the public page uses its normal built-in content.</p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    advancedBlocksSection.querySelectorAll('[data-advanced-block]').forEach((input) => {
+      input.addEventListener('input', (event) => {
+        const key = event.target.dataset.advancedBlock;
+        data.advancedBlocks[key] = event.target.value;
+      });
+    });
+  }
+
     document.getElementById('saveDataBtn').addEventListener('click', saveAll);
     document.getElementById('loadLiveDataBtn').addEventListener('click', loadLiveData);
 
@@ -1161,44 +1199,6 @@ function sanitizeRichHtml(html) {
         node.removeAttribute('rel');
       }
     }
-  }
-
-  function renderAdvancedBlocks() {
-    const blockFields = [
-      ['homeQuickPathsHtml', 'Home: Start Here Cards'],
-      ['homeProofCardsHtml', 'Home: Proof Cards'],
-      ['homeCaseStudiesHtml', 'Home: Case Studies'],
-      ['homeFaqHtml', 'Home: FAQ Items'],
-      ['servicesGuidesHtml', 'Services: Guide Cards'],
-      ['publishedClientBooksHtml', 'Published: Client Book Cards'],
-      ['publishedStudioBooksHtml', 'Published: Studio Book Cards'],
-      ['contactSidebarHtml', 'Contact: Sidebar Cards'],
-      ['contactFaqHtml', 'Contact: FAQ Items']
-    ];
-
-    advancedBlocksSection.innerHTML = `
-      <div class="admin-list">
-        ${blockFields.map(([key, label]) => `
-          <div class="admin-card">
-            <div class="admin-card-head">
-              <h3>${label}</h3>
-            </div>
-            <div class="admin-field">
-              <label>${label}</label>
-              <textarea data-advanced-block="${key}" placeholder="Leave blank to use the built-in site content.">${escapeHtml(data.advancedBlocks?.[key] || '')}</textarea>
-              <p class="admin-micro">This field accepts raw HTML. If left blank, the public page uses its normal built-in content.</p>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-
-    advancedBlocksSection.querySelectorAll('[data-advanced-block]').forEach((input) => {
-      input.addEventListener('input', (event) => {
-        const key = event.target.dataset.advancedBlock;
-        data.advancedBlocks[key] = event.target.value;
-      });
-    });
   }
 
   toRemove.forEach((node) => node.remove());
