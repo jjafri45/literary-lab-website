@@ -250,7 +250,7 @@ function injectStructuredData(page, data, selectedBlog) {
     '@id': `${baseUrl}/#organization`,
     name: 'Literary Lab',
     url: `${baseUrl}/`,
-    image: `${baseUrl}/images/cms/published/brand-loud-amazon-laptop.png`,
+    image: `${baseUrl}/images/cms/published/brand-loud-amazon-laptop.webp`,
     email: 'mailto:hello@literarylabstudio.com',
     telephone: '+923472590983',
     areaServed: 'Worldwide',

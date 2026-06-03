@@ -103,7 +103,7 @@
         "label": "",
         "title": "",
         "alt": "",
-        "imageSrc": "images/cms/portfolio/20260603114208-portfolio-1.png",
+        "imageSrc": "images/cms/portfolio/20260603114208-portfolio-1.webp",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -112,7 +112,7 @@
         "label": "",
         "title": "",
         "alt": "",
-        "imageSrc": "images/cms/portfolio/20260603114212-portfolio-2.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114212-portfolio-2.webp",
         "imageFit": "contain",
         "showOnHome": true
       },
@@ -121,7 +121,7 @@
         "label": "",
         "title": "",
         "alt": "Creative cover design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114214-portfolio-3.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114214-portfolio-3.webp",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -130,7 +130,7 @@
         "label": "",
         "title": "",
         "alt": "eBook design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114215-portfolio-4.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114215-portfolio-4.webp",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -139,7 +139,7 @@
         "label": "",
         "title": "",
         "alt": "Non-fiction cover design portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114217-portfolio-5.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114217-portfolio-5.webp",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -148,7 +148,7 @@
         "label": "",
         "title": "",
         "alt": "Chapter layouts portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114218-portfolio-6.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114218-portfolio-6.webp",
         "imageFit": "contain",
         "showOnHome": true
       },
@@ -157,7 +157,7 @@
         "label": "",
         "title": "",
         "alt": "Fiction cover portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114220-portfolio-7.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114220-portfolio-7.webp",
         "imageFit": "cover",
         "showOnHome": false
       },
@@ -166,7 +166,7 @@
         "label": "",
         "title": "",
         "alt": "Formatted spread portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114220-portfolio-8.png",
+        "imageSrc": "images/cms/portfolio/20260603114220-portfolio-8.webp",
         "imageFit": "contain",
         "showOnHome": false
       },
@@ -175,7 +175,7 @@
         "label": "",
         "title": "",
         "alt": "Kindle edition portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114224-portfolio-9.jpg",
+        "imageSrc": "images/cms/portfolio/20260603114224-portfolio-9.webp",
         "imageFit": "cover",
         "showOnHome": false
       },
@@ -184,7 +184,7 @@
         "label": "",
         "title": "",
         "alt": "Portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114204-portfolio-10.png",
+        "imageSrc": "images/cms/portfolio/20260603114204-portfolio-10.webp",
         "imageFit": "cover",
         "showOnHome": true
       },
@@ -193,7 +193,7 @@
         "label": "Cover Design",
         "title": "New Portfolio Item",
         "alt": "Portfolio item",
-        "imageSrc": "images/cms/portfolio/20260603114225-new-portfolio-item.png",
+        "imageSrc": "images/cms/portfolio/20260603114225-new-portfolio-item.webp",
         "imageFit": "cover",
         "showOnHome": true
       }
@@ -201,8 +201,8 @@
   },
   "services": {
     "visuals": {
-      "interior": "images/cms/portfolio/20260522234515-interior-formatting.png",
-      "covers": "images/cms/portfolio/20260523202114-creative-cover.jpg",
+      "interior": "images/cms/portfolio/20260522234515-interior-formatting.webp",
+      "covers": "images/cms/portfolio/20260523202114-creative-cover.webp",
       "ebook": "",
       "consult": ""
     },
@@ -421,7 +421,7 @@
     ]
   },
   "about": {
-    "visualImage": "images/cms/about/20260522234548-visualimage.png",
+    "visualImage": "images/cms/about/20260522234548-visualimage.webp",
     "storyStats": [
       {
         "value": "200+",

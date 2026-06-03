@@ -501,10 +501,10 @@ button:disabled {
   border: 1px solid rgba(255,255,255,0.06);
 }
 .managed-portfolio-image.fit-cover {
-  object-fit: cover !important;
-  background: none;
-  padding: 0;
-  border: none;
+  object-fit: contain !important;
+  background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(159,122,234,0.08));
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
 }
 .managed-portfolio-image.fit-contain {
   object-fit: contain !important;
@@ -519,7 +519,7 @@ button:disabled {
   background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(159,122,234,0.08));
   padding: 12px;
 }
-.portfolio-item:hover .managed-portfolio-image { transform: scale(1.03); }
+.portfolio-item:hover .managed-portfolio-image { transform: scale(1.01); }
 
 .portfolio-overlay {
   position: absolute; inset: 0;

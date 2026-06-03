@@ -1377,6 +1377,7 @@ function fileToPreviewUrl(file) {
 
 async function optimizeImageFile(file, options) {
   if (!file.type.startsWith('image/')) return file;
+  if (file.type === 'image/svg+xml' || file.type === 'image/gif') return file;
 
   const bitmap = await createImageBitmap(file);
   const scale = Math.min(1, options.maxWidth / bitmap.width, options.maxHeight / bitmap.height);
@@ -1389,13 +1390,13 @@ async function optimizeImageFile(file, options) {
   context.drawImage(bitmap, 0, 0, width, height);
   bitmap.close();
 
-  const outputType = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+  const outputType = 'image/webp';
   const blob = await new Promise((resolve) => {
-    canvas.toBlob(resolve, outputType, outputType === 'image/png' ? undefined : options.quality);
+    canvas.toBlob(resolve, outputType, options.quality ?? 0.8);
   });
 
   if (!blob || blob.size >= file.size) return file;
-  const extension = outputType === 'image/png' ? 'png' : 'jpg';
+  const extension = 'webp';
   const nextName = file.name.replace(/\.[^.]+$/, '') || 'image';
   return new File([blob], `${nextName}.${extension}`, { type: outputType });
 }
