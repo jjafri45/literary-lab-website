@@ -38,8 +38,8 @@
     },
     home: {
       heroEyebrow: 'For self-published and first-time authors',
-      heroTitleHtml: 'Turn Your Manuscript Into a KDP-Ready Book Readers Can Trust',
-      heroBody: 'A publishing-aware book design studio for self-published authors who want their book to look professional and upload correctly the first time.',
+      heroTitleHtml: 'Professional Book Design & Formatting Services for Self-Published Authors',
+      heroBody: 'Literary Lab Studio provides professional book formatting, book cover design services, ebook formatting, and self-publishing support for indie authors, first-time authors, coaches, consultants, and nonfiction or fiction writers.',
       primaryCtaLabel: 'Start Project',
       secondaryCtaLabel: 'See Published Proof',
       stats: [

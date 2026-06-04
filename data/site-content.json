@@ -18,8 +18,8 @@
   },
   "home": {
     "heroEyebrow": "For self-published and first-time authors",
-    "heroTitleHtml": "Turn Your Manuscript Into a KDP-Ready Book Readers Can Trust",
-    "heroBody": "A publishing-aware book design studio for self-published authors who want their book to look professional and upload correctly the first time.",
+    "heroTitleHtml": "Professional Book Design & Formatting Services for Self-Published Authors",
+    "heroBody": "Literary Lab Studio provides professional book formatting, book cover design services, ebook formatting, and self-publishing support for indie authors, first-time authors, coaches, consultants, and nonfiction or fiction writers.",
     "primaryCtaLabel": "Start Project",
     "secondaryCtaLabel": "See Published Proof",
     "stats": [
@@ -60,7 +60,7 @@
       },
       {
         "stars": "★★★★★",
-        "text": "They handled everything — proofreading, cover, and formatting — in one workflow. My paperback went live on Amazon within the week. The cover actually looks better than books I've seen from traditional publishers.",
+        "text": "They handled everything - proofreading, cover, and formatting - in one workflow. My paperback went live on Amazon within the week. The cover actually looks better than books I've seen from traditional publishers.",
         "initials": "NM",
         "author": "Natalie Marsh",
         "role": "Memoir Author, Canada",
@@ -78,7 +78,7 @@
       },
       {
         "stars": "★★★★★",
-        "text": "Fast, clean EPUB delivery. Kindle previewer showed zero errors. I've tried three other formatters before this — none of them got it right first time.",
+        "text": "Fast, clean EPUB delivery. Kindle previewer showed zero errors. I've tried three other formatters before this - none of them got it right first time.",
         "initials": "SH",
         "author": "Susan Holt",
         "role": "Fiction Author, UK",
@@ -87,7 +87,7 @@
       },
       {
         "stars": "★★★★★",
-        "text": "I had no idea what KDP even needed from me. They walked me through the whole thing — trim sizes, bleed settings, file specs. Felt like having a publisher on my side without the gatekeeping.",
+        "text": "I had no idea what KDP even needed from me. They walked me through the whole thing - trim sizes, bleed settings, file specs. Felt like having a publisher on my side without the gatekeeping.",
         "initials": "RM",
         "author": "Riya Mehta",
         "role": "First-Time Author, India",
@@ -102,7 +102,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114208-portfolio-1.webp",
         "imageFit": "cover",
         "showOnHome": true
@@ -111,7 +111,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114212-portfolio-2.webp",
         "imageFit": "contain",
         "showOnHome": true
@@ -120,7 +120,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "Creative cover design portfolio item",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114214-portfolio-3.webp",
         "imageFit": "cover",
         "showOnHome": true
@@ -129,7 +129,7 @@
         "category": "ebook",
         "label": "",
         "title": "",
-        "alt": "eBook design portfolio item",
+        "alt": "eBook cover design sample prepared for Kindle publishing",
         "imageSrc": "images/cms/portfolio/20260603114215-portfolio-4.webp",
         "imageFit": "cover",
         "showOnHome": true
@@ -138,7 +138,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "Non-fiction cover design portfolio item",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114217-portfolio-5.webp",
         "imageFit": "cover",
         "showOnHome": true
@@ -147,7 +147,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "Chapter layouts portfolio item",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114218-portfolio-6.webp",
         "imageFit": "contain",
         "showOnHome": true
@@ -156,7 +156,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "Fiction cover portfolio item",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114220-portfolio-7.webp",
         "imageFit": "cover",
         "showOnHome": false
@@ -165,7 +165,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "Formatted spread portfolio item",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114220-portfolio-8.webp",
         "imageFit": "contain",
         "showOnHome": false
@@ -174,7 +174,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "Kindle edition portfolio item",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114224-portfolio-9.webp",
         "imageFit": "cover",
         "showOnHome": false
@@ -183,7 +183,7 @@
         "category": "covers",
         "label": "",
         "title": "",
-        "alt": "Portfolio item",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114204-portfolio-10.webp",
         "imageFit": "cover",
         "showOnHome": true
@@ -192,7 +192,7 @@
         "category": "covers",
         "label": "Cover Design",
         "title": "New Portfolio Item",
-        "alt": "Portfolio item",
+        "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114225-new-portfolio-item.webp",
         "imageFit": "cover",
         "showOnHome": true
@@ -276,6 +276,42 @@
   },
   "blogs": {
     "posts": [
+      {
+        "id": "blog-kdp-formatting-guide",
+        "title": "How to Format a Book for Amazon KDP: A Beginner-Friendly Guide",
+        "slug": "how-to-format-a-book-for-amazon-kdp",
+        "metaDescription": "Learn how to format a book for Amazon KDP with a beginner-friendly guide covering trim size, margins, bleed, print-ready PDF files, and Kindle formatting basics.",
+        "tags": [
+          "Amazon KDP formatting",
+          "book formatting services",
+          "self publishing support"
+        ],
+        "contentHtml": "\n      <p>If you are trying to figure out how to format a book for Amazon KDP, the most important thing to understand is that KDP is not checking whether your writing is good. It is checking whether your files are technically correct, readable, and ready for production. That means the real job is not only writing the manuscript. It is turning the manuscript into a clean interior, a compliant cover, and the right export files for the format you want to publish.</p>\n      <p>For first-time authors, this is where confusion usually starts. A Word document may look acceptable on your screen, but that does not mean it is ready for paperback, hardcover, or Kindle delivery. KDP formatting involves trim size, margins, bleed, chapter layout, page numbering, front matter, export settings, and file types. If one of those is handled poorly, the upload becomes more difficult than it needs to be.</p>\n      <p>This guide breaks the process down in plain terms so you know what Amazon KDP actually needs, where authors usually make mistakes, and when it makes sense to use a <a href=\"kdp-formatting-services.html\">KDP book formatting service</a> instead of trying to force a manuscript into production alone.</p>\n      <h2>Start with the format you are publishing</h2>\n      <p>KDP does not have one universal formatting workflow. The exact file you need depends on whether you are publishing a paperback, hardcover, Kindle eBook, or a combination of formats. Print books need a print-ready interior PDF and a matching cover file. Kindle books need a digital file prepared for reflowable reading. That means your first step is deciding exactly what versions of the book you want to release.</p>\n      <p>If you want paperback and hardcover, your interior has to be designed around print behavior. If you want Kindle, your text also has to be prepared for digital reading, which behaves differently from a printed page. Many first-time authors assume one file will do everything. In practice, you often need separate production outputs for print and ebook delivery.</p>\n      <h2>Choose a trim size before you design the interior</h2>\n      <p>Trim size is one of the first structural decisions in Amazon KDP formatting. It affects the proportions of the page, the number of lines per page, the final page count, the spine width, and the overall feel of the finished book. A business or self-help title may suit one trim size while a workbook, journal, or fiction title may suit another.</p>\n      <p>This is why professional book formatting starts with production planning, not decoration. If you format the full manuscript and then change the trim size later, the whole layout can shift. That creates unnecessary rework and often breaks the cover calculations too.</p>\n      <h2>Set margins, bleed, and page flow correctly</h2>\n      <p>KDP formatting is not only about making text look tidy. It is about preparing pages so they print correctly. Margins need to be comfortable for reading and wide enough for binding. If your book includes full-page images or artwork that runs to the edge of the page, bleed settings must be handled correctly. If it does not, non-bleed setup must stay consistent throughout the file.</p>\n      <p>Authors often underestimate how much these settings matter. A book can look fine in a draft PDF and still have problems once it is uploaded or printed. That is why <a href=\"book-formatting-services.html\">professional book formatting</a> focuses on page architecture, not only styling.</p>\n      <h2>Build a clean interior structure</h2>\n      <p>A professional print interior usually includes front matter, chapter styling, consistent spacing, clean paragraph hierarchy, readable line lengths, and predictable page numbering. KDP does not require your book to look identical to a traditionally published title, but readers still expect a professional reading experience. If the chapter openings feel random, line spacing changes from page to page, or headings do not feel intentional, the book will look amateur even if the text itself is strong.</p>\n      <p>This is where book interior layout design matters. Good layout makes the book feel stable and easier to trust. It also reduces the chance of accidental blank pages, odd widow and orphan lines, or inconsistent chapter spacing.</p>\n      <h2>Prepare the cover around the final page count</h2>\n      <p>For KDP print books, the cover cannot be finalized accurately until the interior is close to final. That is because the spine width depends on the page count. If the page count changes after the cover is built, the wrap dimensions can change too. That is one reason many authors handle the files in the wrong order: they try to lock the cover before the interior is fully settled.</p>\n      <p>A better workflow is to treat the interior and the cover as connected production steps. If you need both, it is usually cleaner to use one team for <a href=\"book-cover-design-services.html\">book cover design services</a> and print formatting so the final files stay aligned.</p>\n      <h2>Export the right files for KDP</h2>\n      <p>When the interior is complete, the next step is exporting the correct files. For print, that usually means a press-ready PDF with embedded fonts and the correct page size. For Kindle, it means a digital file prepared for device reading. The exact export depends on the format and workflow you are using, but the principle is the same: every file should be intentionally prepared for its destination, not improvised at the end.</p>\n      <p>This is also why manuscript formatting and publishing formatting are not the same thing. A manuscript is written for editing. A production file is built for printing or digital delivery.</p>\n      <h2>Common mistakes first-time authors make with Amazon KDP formatting</h2>\n      <p>The most common issues are choosing the wrong trim size too late, relying on default Word formatting, exporting the wrong PDF settings, building the cover before the page count is final, and assuming a Kindle file can be treated like a print interior. Another frequent mistake is underestimating the importance of front matter, spacing, or typography. These details seem small until the finished book looks noticeably weaker than the books around it.</p>\n      <p>Authors also sometimes think they need to solve every technical issue themselves. In reality, the better question is whether your time should be spent on file troubleshooting or on the book itself. For many authors, especially coaches, consultants, or first-time nonfiction writers, outsourcing the production stage is the more practical choice.</p>\n      <h2>When to use a professional KDP book formatting service</h2>\n      <p>If your manuscript is final but you do not feel confident about trim size, bleed, print setup, or Kindle delivery, that is usually the point where a <a href=\"kdp-formatting-services.html\">KDP formatting support</a> service makes sense. The same applies if you need a cleaner launch process, want fewer upload issues, or need one team to manage formatting and related production steps.</p>\n      <p>At Literary Lab Studio, we help authors move from manuscript to upload-ready files with clear deliverables, practical formatting decisions, and production-ready exports. That can include print interiors, covers, Kindle preparation, and related <a href=\"self-publishing-consultation.html\">self-publishing support for authors</a> who want a clearer path.</p>\n      <h2>Final takeaway</h2>\n      <p>Learning how to format a book for Amazon KDP is really about learning how publishing production works. Once you understand trim size, page structure, cover timing, file exports, and platform expectations, the process becomes much easier to control. If you want help with your specific manuscript, <a href=\"contact.html\">contact Literary Lab Studio</a> and we will tell you what format path makes the most sense before you spend time fixing the wrong thing.</p>\n    "
+      },
+      {
+        "id": "blog-formatting-vs-cover-design",
+        "title": "Book Formatting vs Book Cover Design: What Self-Published Authors Need",
+        "slug": "book-formatting-vs-book-cover-design",
+        "metaDescription": "Understand the difference between book formatting and book cover design, what each service includes, and what self-published authors actually need before publishing.",
+        "tags": [
+          "book formatting and book cover design",
+          "book design services",
+          "self publishing support"
+        ],
+        "contentHtml": "\n      <p>One of the most common questions self-published authors ask is whether book formatting and book cover design are basically the same thing. They are not. Both affect how professional your book looks, but they solve different problems. The cover helps readers decide whether the book is worth clicking. The formatting helps readers trust the book once they open it.</p>\n      <p>If you are publishing your own book, understanding this difference matters because it affects budgeting, production order, and the type of support you actually need. Some authors only need one of these services. Others need both, plus ebook formatting or publishing guidance. The mistake is treating everything as one vague design task when each part has a different job.</p>\n      <h2>What book cover design actually does</h2>\n      <p>Book cover design is about market positioning and first impression. The cover is usually the first thing a reader sees, whether that is on Amazon, in a social post, or in a bookstore thumbnail. A strong cover tells the reader what kind of book this is, what tone to expect, and whether the book feels credible at a glance.</p>\n      <p>Good <a href=\"book-cover-design-services.html\">book cover design services</a> do more than make something pretty. They consider genre expectations, typography, image hierarchy, color behavior at thumbnail size, print wrap dimensions, and the production needs of paperback or hardcover editions. If the cover is weak, the book may look unprofessional before anyone reads a single page.</p>\n      <h2>What book formatting actually does</h2>\n      <p>Book formatting deals with the inside of the book. It turns a raw manuscript into a readable interior with proper spacing, margins, chapter styling, headers, page numbers, front matter, and export settings. In practical terms, formatting is what makes the manuscript behave like a real book instead of a text document.</p>\n      <p>Professional <a href=\"book-formatting-services.html\">book formatting services</a> are not just cosmetic. They affect readability, production quality, print behavior, and whether your files are ready for KDP, IngramSpark, paperback, hardcover, or Kindle delivery. If the inside is badly formatted, the reader notices immediately.</p>\n      <h2>Why self-published authors often need both</h2>\n      <p>Many first-time authors focus only on the cover because it is visible and easy to understand. But readers also judge the inside. If the cover looks polished and the pages look awkward, the book still feels self-published in the wrong way. On the other hand, if the interior is excellent but the cover feels amateur, readers may never click in the first place.</p>\n      <p>That is why the strongest path for many authors is to treat cover and formatting as connected production steps. The cover handles market-facing presentation. The interior handles reading experience and file readiness. Together, they make the book look credible.</p>\n      <h2>Where ebook formatting fits into the conversation</h2>\n      <p>Authors also often forget that print and ebook production are not identical. A print interior is laid out for fixed pages. A Kindle or EPUB file is designed for reflowable reading. So when someone says they need formatting, the real question is whether they need print formatting, ebook formatting, or both.</p>\n      <p>If you are releasing on Amazon Kindle as well as paperback or hardcover, you may need separate outputs. That is where an <a href=\"ebook-conversion-services.html\">ebook formatting service</a> becomes part of the production stack rather than an afterthought.</p>\n      <h2>How the workflow should usually happen</h2>\n      <p>In most cases, the manuscript should be cleaned first, the interior planned second, and the final cover dimensions locked after the interior is stable enough to confirm the page count. This matters because the spine width for print depends on the final page count. If the page count changes after the wrap is designed, you can create avoidable rework.</p>\n      <p>That is one reason self-published authors benefit from a publishing-aware workflow rather than separate disconnected freelancers. When the formatting and cover are handled with the final production context in mind, the result is more consistent and technically safer.</p>\n      <h2>What authors often think they need vs what they actually need</h2>\n      <p>Some authors think they only need a cover because the manuscript is already written. But if the manuscript has not been professionally formatted, the job is only half done. Others think they only need formatting, but the existing cover does not work at thumbnail size or does not fit the genre. In both cases, the production problem is bigger than they first assume.</p>\n      <p>The better question is not whether you need cover design or formatting. It is whether your book is complete enough to look professional in both discovery and reading. That is the standard readers compare you against.</p>\n      <h2>When a single-service project is enough</h2>\n      <p>If your cover already performs well and you only need the manuscript prepared for print, then a formatting-only project can make sense. If your interior files are already production-ready but the cover is weak, then a cover-only project may be the right move. The key is knowing what is already strong and what still creates risk.</p>\n      <p>This is why a brief project review is useful before committing to scope. It helps determine whether you need only one service or a broader package.</p>\n      <h2>When a bundled production path is smarter</h2>\n      <p>For many first-time authors, the cleanest option is one bundle that covers proofreading, cover, formatting, and file preparation together. That reduces handoff mistakes and makes the production timeline easier to manage. It is especially useful when the author is aiming for Kindle, paperback, and hardcover together or when the manuscript still needs cleanup before design starts.</p>\n      <p>If that sounds like your situation, the relevant next step is not guessing between disconnected tasks. It is getting a clear production path through our <a href=\"services.html\">book design and formatting services</a> or a direct project review through the <a href=\"contact.html\">contact page</a>.</p>\n      <h2>Final takeaway</h2>\n      <p>Book formatting and book cover design solve different but equally important publishing problems. The cover earns attention. The formatting earns trust. Self-published authors who understand both are far more likely to publish a book that feels credible from the first click to the final page. If you want help deciding which part your book needs most, <a href=\"contact.html\">contact Literary Lab Studio</a> and we will help you scope it properly.</p>\n    "
+      },
+      {
+        "id": "blog-common-formatting-mistakes",
+        "title": "Common Book Formatting Mistakes That Can Delay Your KDP Upload",
+        "slug": "common-book-formatting-mistakes-that-can-delay-your-kdp-upload",
+        "metaDescription": "Learn the most common book formatting mistakes that delay Amazon KDP uploads, including trim size problems, margin issues, wrong file exports, and weak interior structure.",
+        "tags": [
+          "common book formatting mistakes",
+          "Amazon KDP formatting",
+          "professional book formatting"
+        ],
+        "contentHtml": "\n      <p>Most KDP upload delays do not happen because Amazon is mysterious. They happen because the book files were never prepared with publishing production in mind. A manuscript may be complete, but that does not mean it is a finished book file. Once you move into print or Kindle delivery, small formatting mistakes can create avoidable friction.</p>\n      <p>The good news is that most of these mistakes are predictable. If you know what to look for, you can prevent a lot of wasted time before you reach the upload screen. This guide covers the most common book formatting mistakes that delay KDP uploads and what authors can do instead.</p>\n      <h2>Changing trim size too late</h2>\n      <p>Trim size is one of the earliest decisions that affects the rest of the book. It influences page count, margins, page flow, and the final cover setup. When authors change trim size after formatting has already started, the layout can shift in ways that cause new problems. Chapters repaginate, whitespace changes, and the cover dimensions may need to be recalculated.</p>\n      <p>A better approach is to choose the trim size before the production layout is locked. If you are unsure which size is right, that is where <a href=\"kdp-formatting-services.html\">KDP formatting support</a> can prevent unnecessary rework.</p>\n      <h2>Using a writing document as if it were a production file</h2>\n      <p>A manuscript written in Word or Google Docs is not automatically ready for Amazon KDP. Writing software is for drafting and editing. Production formatting is about margins, page breaks, front matter, chapter flow, print behavior, and export settings. When authors rely on default drafting layouts, the interior often looks inconsistent or prints poorly.</p>\n      <p>This is one of the clearest reasons authors use <a href=\"book-formatting-services.html\">professional book formatting</a>. The goal is not only to make the file look cleaner. It is to make the file behave correctly when uploaded and printed.</p>\n      <h2>Incorrect margin or gutter setup</h2>\n      <p>Margins affect both readability and binding. If the inside margin is too narrow, text can feel crowded near the spine. If the page is not designed with print behavior in mind, the book may technically upload but still feel poorly produced. For longer books, this becomes even more noticeable.</p>\n      <p>Margin setup is one of those details readers rarely notice when it is done well, but they definitely notice when it is not.</p>\n      <h2>Wrong bleed decisions</h2>\n      <p>Bleed matters when images or design elements run all the way to the edge of the page. If the book needs bleed and is prepared as non-bleed, the output can fail or print incorrectly. If the book does not need bleed but it is handled inconsistently, that can create production confusion too.</p>\n      <p>This is especially common in workbooks, journals, image-heavy nonfiction, and heavily designed interiors. Authors with complex books should assume they may need a custom workflow rather than a simple text-only setup.</p>\n      <h2>Weak front matter and inconsistent chapter starts</h2>\n      <p>Another common formatting mistake is treating the beginning of the book casually. Front matter, title page spacing, copyright page placement, acknowledgments, table of contents, and chapter-opening patterns all affect whether the interior feels professionally published. Inconsistent chapter starts or awkward blank pages make the book look unfinished even when the writing is strong.</p>\n      <p>Good interior layout design creates a stable reading rhythm. It tells the reader that the book was produced intentionally, not assembled in a hurry.</p>\n      <h2>Exporting the wrong file settings</h2>\n      <p>Even if the layout looks correct on screen, the export can still cause problems. Fonts need to be handled correctly, page size has to match the trim, and the final PDF has to be prepared as a print file rather than a casual viewing document. This is one of the biggest reasons authors get frustrated: the book appears finished, but the exported file is not truly production-ready.</p>\n      <p>For Kindle, digital export is a separate issue. A print interior is not the same as an ebook file. If you are releasing a Kindle edition too, you may need a distinct <a href=\"ebook-conversion-services.html\">ebook formatting service</a> rather than treating it like a side export.</p>\n      <h2>Finalizing the cover before the interior is stable</h2>\n      <p>The print cover depends on the final page count. If the page count changes after the wrap is built, the spine calculation changes too. That can create misalignment and unnecessary revisions. Many authors do this in the wrong order because the cover feels more visible and urgent than the interior. In production terms, the interior often has to stabilize first.</p>\n      <p>If you need both, a combined workflow covering <a href=\"book-cover-design-services.html\">book cover design services</a> and formatting usually keeps the process cleaner.</p>\n      <h2>Ignoring platform-specific needs</h2>\n      <p>KDP, IngramSpark, and other platforms overlap, but they are not identical. If you are aiming for Amazon KDP, the files should be prepared with current KDP expectations in mind. If you want broader print distribution as well, that can affect the production path. Authors sometimes assume the same setup works everywhere with no adjustments, which is not always true.</p>\n      <p>This is why platform-aware file prep matters. It reduces surprises later.</p>\n      <h2>Not checking whether the book is actually ready for production</h2>\n      <p>Sometimes the formatting problems are a symptom of an earlier issue: the manuscript is not actually ready. If the text still needs proofreading, chapter names are inconsistent, or structural edits are still happening, pushing straight into layout can create delays downstream. A cleaner process is to confirm the manuscript stage first, then move into formatting once the content is stable enough to support it.</p>\n      <p>If the manuscript still feels uncertain, <a href=\"book-proofreading-services.html\">proofreading services</a> or broader <a href=\"self-publishing-consultation.html\">self-publishing support for authors</a> may be the better first step.</p>\n      <h2>Final takeaway</h2>\n      <p>Most book formatting mistakes that delay a KDP upload are preventable. They usually come down to production decisions being made too late, too casually, or in the wrong order. If you want a smoother launch, treat formatting as part of the publishing process, not as a finishing touch. And if you need a second opinion on your current files, <a href=\"contact.html\">contact Literary Lab Studio</a> for a project review before you upload the wrong thing.</p>\n    "
+      },
       {
         "id": "blog-01",
         "title": "How Can I Design My Book? (What Nobody Tells First-Time Authors)",
