@@ -98,15 +98,510 @@
     },
     portfolio: {
       items: [
-        { category: 'covers', label: 'Cover Design', title: 'Book Cover Design', alt: 'Book cover design portfolio item', imageSrc: 'images/cms/portfolio/20260523201557-book-cover-design.jpg', imageFit: 'cover', showOnHome: true },
-        { category: 'interior', label: 'Book Interior', title: 'Interior Formatting', alt: 'Interior formatting portfolio item', imageSrc: 'images/cms/portfolio/20260522234515-interior-formatting.webp', imageFit: 'contain', showOnHome: true },
-        { category: 'covers', label: 'Cover Design', title: 'Creative Cover', alt: 'Creative cover design portfolio item', imageSrc: 'images/cms/portfolio/20260523202114-creative-cover.webp', imageFit: 'cover', showOnHome: true },
-        { category: 'ebook', label: 'eBook Conversion', title: 'eBook Design', alt: 'eBook design portfolio item', imageSrc: 'images/cms/portfolio/20260523202116-ebook-design.jpg', imageFit: 'cover', showOnHome: true },
-        { category: 'covers', label: 'Cover Design', title: 'Non-Fiction Cover', alt: 'Non-fiction cover design portfolio item', imageSrc: 'images/cms/portfolio/20260523202117-non-fiction-cover.jpg', imageFit: 'cover', showOnHome: true },
-        { category: 'interior', label: 'Book Interior', title: 'Chapter Layouts', alt: 'Chapter layouts portfolio item', imageSrc: 'images/cms/portfolio/20260522234531-chapter-layouts.png', imageFit: 'contain', showOnHome: true },
-        { category: 'covers', label: 'Cover Design', title: 'Fiction Cover', alt: 'Fiction cover portfolio item', imageSrc: 'images/cms/portfolio/20260524145645-new-portfolio-item.jpg', imageFit: 'cover', showOnHome: false },
-        { category: 'interior', label: 'Book Interior', title: 'Formatted Spread', alt: 'Formatted spread portfolio item', imageSrc: 'images/cms/portfolio/20260522234539-formatted-spread.png', imageFit: 'contain', showOnHome: false },
-        { category: 'ebook', label: 'eBook', title: 'Kindle Edition', alt: 'Kindle edition portfolio item', imageSrc: 'images/cms/portfolio/20260523202127-kindle-edition.jpg', imageFit: 'cover', showOnHome: false }
+              {
+                      "category": "interior",
+                      "label": "",
+                      "title": "Interior Formatting",
+                      "alt": "Book interior layout design sample showing formatted pages for a self-published book",
+                      "imageSrc": "images/cms/portfolio/20260522234515-interior-formatting.webp",
+                      "imageFit": "contain",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Creative Cover",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260523202114-creative-cover.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 10",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114204-portfolio-10.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 1",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114208-portfolio-1.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114212-portfolio-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114214-portfolio-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 4",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114215-portfolio-4.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 5",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114217-portfolio-5.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 6",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114218-portfolio-6.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 7",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114220-portfolio-7.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 8",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114220-portfolio-8.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Portfolio 9",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114224-portfolio-9.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "New Portfolio Item",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603114225-new-portfolio-item.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Ai Cash Machine",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192117-ai-cash-machine.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Alex Hansley 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192117-alex-hansley-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192117-cover-1-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192117-cover-1-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1 4",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192117-cover-1-4.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1 5",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192117-cover-1-5.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1 02",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192124-cover-1-02.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1 6",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192124-cover-1-6.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1 7",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192124-cover-1-7.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1 8",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192124-cover-1-8.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 1",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192124-cover-1.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 2 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192124-cover-2-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 2 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192124-cover-2-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 2 4",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192129-cover-2-4.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 2 5",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192129-cover-2-5.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 2 Rev",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192129-cover-2-rev.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192129-cover-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 3 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192129-cover-3-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 3 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192129-cover-3-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192129-cover-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 02",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192133-cover-02.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192133-cover-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 4",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192133-cover-4.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 5 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192133-cover-5-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover 5",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192133-cover-5.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Cover",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192133-cover.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Ebook Cover 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192133-ebook-cover-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Ebook Cover",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-ebook-cover.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Ebook",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-ebook.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Emily Hart",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-emily-hart.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Evidence Of Afterlife 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-evidence-of-afterlife-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Feathers Of Insight 3",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-feathers-of-insight-3.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "How To Turn Crap Into Diamonds 5 1",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-how-to-turn-crap-into-diamonds-5-1.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Love",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-love.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Mark Adler 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-mark-adler-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Mathieu Louis 1",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-mathieu-louis-1.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Pickleball 1",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192137-pickleball-1.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Tatiana Stone 2",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192142-tatiana-stone-2.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "The Lazy Girl Cookbook V7",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192142-the-lazy-girl-cookbook-v7.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "The Lazy Girl Workout Plan Final",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192142-the-lazy-girl-workout-plan-final.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Untitled 1",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192142-untitled-1.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Whisky Trail",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192142-whisky-trail.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              },
+              {
+                      "category": "covers",
+                      "label": "",
+                      "title": "Yucatan",
+                      "alt": "Book cover design sample for a self-published author",
+                      "imageSrc": "images/cms/portfolio/20260603192142-yucatan.webp",
+                      "imageFit": "cover",
+                      "showOnHome": true
+              }
       ]
     },
     services: {
