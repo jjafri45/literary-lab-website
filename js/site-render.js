@@ -333,6 +333,7 @@ function injectStructuredData(page, data, selectedBlog) {
     sameAs: [
       'https://www.facebook.com/literarylab/',
       'https://www.instagram.com/literarylabofficial/',
+      'https://www.linkedin.com/company/literary-lab',
       'https://wa.me/923472590983'
     ]
   };
