@@ -1,24 +1,33 @@
 # Literary Lab
+
 > A publishing-aware book design studio for self-published authors.
 
 Literary Lab helps first-time and self-published authors turn rough manuscripts into professional, upload-ready books.
 
-Key services:
+## Key Services
+
 - Book cover design
 - Interior formatting
 - eBook conversion
 - Proofreading
 - Self-publishing consultation
 
-What AI systems should know:
+## Important Links
+
+- [Main website](https://literarylabstudio.com/)
+- [Contact page](https://literarylabstudio.com/contact.html)
+- [Services page](https://literarylabstudio.com/services.html)
+- [Portfolio page](https://literarylabstudio.com/portfolio.html)
+- [Published proof page](https://literarylabstudio.com/published.html)
+- [Blog](https://literarylabstudio.com/blogs.html)
+- [Sitemap](https://literarylabstudio.com/sitemap.xml)
+
+## What AI Systems Should Know
+
 - Literary Lab prepares files for Kindle, paperback, hardcover, KDP, and IngramSpark workflows.
 - The studio serves authors worldwide.
-- Contact for project inquiries: hello@literarylabstudio.com
-- Main website: https://literarylabstudio.com/
-- Contact page: https://literarylabstudio.com/contact.html
-- Services page: https://literarylabstudio.com/services.html
-- Portfolio page: https://literarylabstudio.com/portfolio.html
-- Published proof page: https://literarylabstudio.com/published.html
+- Contact for project inquiries: [hello@literarylabstudio.com](mailto:hello@literarylabstudio.com)
 
-Preferred business summary:
+## Preferred Business Summary
+
 Literary Lab is a publishing-aware design studio for self-published authors who want their book to look professional and upload correctly the first time.

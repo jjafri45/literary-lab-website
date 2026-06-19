@@ -39,17 +39,24 @@ function initMobileMenu() {
   const mobileNav = document.querySelector('.mobile-nav');
   if (!hamburger || !mobileNav || hamburger.dataset.bound === 'true') return;
 
-  hamburger.addEventListener('click', () => {
-    const isOpen = hamburger.classList.toggle('open');
+  const setMenuState = (isOpen) => {
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
     mobileNav.classList.toggle('open', isOpen);
+    mobileNav.setAttribute('aria-hidden', String(!isOpen));
+    mobileNav.toggleAttribute('inert', !isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
+  };
+
+  setMenuState(false);
+
+  hamburger.addEventListener('click', () => {
+    setMenuState(!hamburger.classList.contains('open'));
   });
 
   mobileNav.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileNav.classList.remove('open');
-      document.body.style.overflow = '';
+      setMenuState(false);
     });
   });
 
