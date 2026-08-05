@@ -200,6 +200,11 @@ function initContactForm() {
       return;
     }
 
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
     const button = form.querySelector('[type="submit"]');
     const original = button.textContent;
     button.textContent = 'Sending...';
@@ -211,13 +216,14 @@ function initContactForm() {
         body: new FormData(form),
         headers: { Accept: 'application/json' }
       });
+      const payload = await response.json().catch(() => ({}));
 
       if (response.ok) {
         form.style.display = 'none';
         const success = document.getElementById('formSuccess');
         if (success) success.style.display = 'block';
       } else {
-        alert('Something went wrong. Please try WhatsApp instead.');
+        alert(payload.message || 'Something went wrong. Please try WhatsApp instead.');
         button.textContent = original;
         button.disabled = false;
       }
