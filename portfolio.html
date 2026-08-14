@@ -49,6 +49,22 @@
 
     .portfolio-item-tall { aspect-ratio: 2/3; }  /* standard book cover ratio */
     .portfolio-item-tall[data-category="interior"] { aspect-ratio: 4/3; }
+    #portfolioInteriorGrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    #portfolioInteriorGrid > *:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: min(720px, 100%);
+      width: 100%;
+      justify-self: center;
+    }
+    @media (max-width: 900px) {
+      #portfolioInteriorGrid { grid-template-columns: 1fr; }
+      #portfolioInteriorGrid > *:last-child:nth-child(odd) {
+        max-width: 100%;
+      }
+    }
     .portfolio-section-block + .portfolio-section-block { margin-top: 88px; }
     .portfolio-section-intro {
       display: flex;
