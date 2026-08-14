@@ -155,15 +155,6 @@
       {
         "category": "covers",
         "label": "",
-        "title": "Portfolio 4",
-        "alt": "Book cover design sample for a self-published author",
-        "imageSrc": "images/cms/portfolio/20260603114215-portfolio-4.webp",
-        "imageFit": "cover",
-        "showOnHome": true
-      },
-      {
-        "category": "covers",
-        "label": "",
         "title": "Portfolio 5",
         "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603114217-portfolio-5.webp",
@@ -600,6 +591,42 @@
         "alt": "Book cover design sample for a self-published author",
         "imageSrc": "images/cms/portfolio/20260603192142-yucatan.webp",
         "imageFit": "cover",
+        "showOnHome": true
+      },
+      {
+        "category": "interior",
+        "label": "Cover Design",
+        "title": "New Portfolio Item",
+        "alt": "Portfolio item",
+        "imageSrc": "images/cms/portfolio/20260814114048-new-portfolio-item.webp",
+        "imageFit": "contain",
+        "showOnHome": true
+      },
+      {
+        "category": "interior",
+        "label": "Cover Design",
+        "title": "New Portfolio Itemv ",
+        "alt": "Portfolio item",
+        "imageSrc": "images/cms/portfolio/20260814114215-new-portfolio-item.webp",
+        "imageFit": "contain",
+        "showOnHome": true
+      },
+      {
+        "category": "interior",
+        "label": "Cover Design",
+        "title": "New Portfolio Item1",
+        "alt": "Portfolio item",
+        "imageSrc": "images/cms/portfolio/20260814114257-new-portfolio-item1.webp",
+        "imageFit": "contain",
+        "showOnHome": true
+      },
+      {
+        "category": "interior",
+        "label": "Cover Design",
+        "title": "New Portfolio Item",
+        "alt": "Portfolio item",
+        "imageSrc": "images/cms/portfolio/20260814114446-new-portfolio-item.webp",
+        "imageFit": "contain",
         "showOnHome": true
       }
     ]
